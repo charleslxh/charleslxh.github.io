@@ -202,13 +202,13 @@
     
       <category term="Linux" scheme="http://dev.charles.com/tags/linux/"/>
     
+      <category term="Security" scheme="http://dev.charles.com/tags/security/"/>
+    
       <category term="Ubuntu" scheme="http://dev.charles.com/tags/ubuntu/"/>
     
       <category term="Firewall" scheme="http://dev.charles.com/tags/firewall/"/>
     
       <category term="UFW" scheme="http://dev.charles.com/tags/ufw/"/>
-    
-      <category term="Security" scheme="http://dev.charles.com/tags/security/"/>
     
   </entry>
   
