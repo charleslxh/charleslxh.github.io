@@ -102,7 +102,7 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title=" 廖学辉的博客" type="application/atom+xml" />
+  <link rel="alternate" href="/atom.xml" title="计算机那些事儿" type="application/atom+xml" />
 
 
 
@@ -115,11 +115,11 @@
 
 
 <meta property="og:type" content="website">
-<meta property="og:title" content=" 廖学辉的博客">
-<meta property="og:url" content="http://dev.charles.com/categories/Test/index.html">
-<meta property="og:site_name" content=" 廖学辉的博客">
+<meta property="og:title" content="计算机那些事儿">
+<meta property="og:url" content="http://dev.charles.com/categories/test/index.html">
+<meta property="og:site_name" content="计算机那些事儿">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content=" 廖学辉的博客">
+<meta name="twitter:title" content="计算机那些事儿">
 
 
 
@@ -128,7 +128,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":true},
     fancybox: true,
     motion: true,
     duoshuo: {
@@ -147,13 +147,13 @@
 
 
 
-  <link rel="canonical" href="http://dev.charles.com/categories/Test/"/>
+  <link rel="canonical" href="http://dev.charles.com/categories/test/"/>
 
 
 
 
 
-  <title>分类: Test |  廖学辉的博客</title>
+  <title>分类: Test | 计算机那些事儿</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -200,12 +200,12 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title"> 廖学辉的博客</span>
+        <span class="site-title">计算机那些事儿</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
       
-        <p class="site-subtitle">博客</p>
+        <h1 class="site-subtitle" itemprop="description">博客</h1>
       
   </div>
 
@@ -339,8 +339,8 @@
 
   <section id="posts" class="posts-collapse">
     <div class="collection-title">
-      <h1>Test<small>分类</small>
-      </h1>
+      <h2>Test<small>分类</small>
+      </h2>
     </div>
 
     
@@ -349,7 +349,7 @@
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
     <header class="post-header">
 
-      <h2 class="post-title">
+      <h3 class="post-title">
         
             <a class="post-title-link" href="/2017/05/17/hello-world/" itemprop="url">
               
@@ -357,7 +357,7 @@
               
             </a>
         
-      </h2>
+      </h3>
 
       <div class="post-meta">
         <time class="post-time" itemprop="dateCreated"
@@ -406,19 +406,19 @@
       <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="http://oq3ny21e5.bkt.clouddn.com/WechatIMG4.jpeg"
+               src="http://oq3ny21e5.bkt.clouddn.com/avatar-blog.jpeg"
                alt="Charles Liao" />
           <p class="site-author-name" itemprop="name">Charles Liao</p>
            
               <p class="site-description motion-element" itemprop="description"></p>
-          
+           
         </div>
         <nav class="site-state motion-element">
 
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -429,7 +429,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">3</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -440,7 +440,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -548,7 +548,7 @@
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy;  2015 - 
+  &copy; 
   <span itemprop="copyrightYear">2017</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
@@ -556,17 +556,6 @@
   <span class="author" itemprop="copyrightHolder">Charles Liao</span>
 </div>
 
-
-<div class="powered-by">
-  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
-</div>
-
-<div class="theme-info">
-  主题 -
-  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT.Mist
-  </a>
-</div>
 
 
         
@@ -578,6 +567,8 @@
     
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
         
       </div>
     
@@ -602,8 +593,6 @@
 
   
 
-
-  
 
 
 
@@ -632,9 +621,6 @@
 
   
   <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
-
-  
-  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
 
 
   
@@ -1124,6 +1110,21 @@
 
 
   
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
 
   
   
