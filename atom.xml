@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>计算机那些事儿</title>
+  <title>互联网那些事儿</title>
   <subtitle>博客</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://dev.charles.com/"/>
-  <updated>2017-05-20T08:57:46.000Z</updated>
+  <updated>2017-05-21T01:55:37.000Z</updated>
   <id>http://dev.charles.com/</id>
   
   <author>
@@ -20,27 +20,26 @@
     <link href="http://dev.charles.com/2017/05/20/%E8%AE%A9%E4%BD%A0%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9B%B4%E5%AE%89%E5%85%A8-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/"/>
     <id>http://dev.charles.com/2017/05/20/让你的服务器更安全-初始化服务器配置/</id>
     <published>2017-05-20T02:20:33.000Z</published>
-    <updated>2017-05-20T08:57:46.000Z</updated>
+    <updated>2017-05-21T01:55:37.000Z</updated>
     
-    <content type="html"><![CDATA[<p>当你创建或购买了了一个新的的服务器的时候，有一些必要的步骤作来配置你的服务器，比如：<code>root</code> 用户权限过大问题，<code>SSH</code> 安全连接问题等等。这将增加您的服务器的安全性和可用性，并将为后续行动提供坚实的基础。</p>
+    <content type="html"><![CDATA[<p>当你创建或购买了了一个新的的服务器的时候，有一些必要的步骤作来配置你的服务器，比如：<code>root</code> 用户权限过大问题、<code>SSH</code> 安全连接问题等等、使用虚拟内存等等。这将增加您的服务器的安全性和可用性，并将为后续行动提供坚实的基础。</p>
 <p>下面我将会解释如何在 <code>Ubuntu 14.04</code> 中使用做一些安全性基本配置。</p>
-<h2 id="第一步：root-登录"><a class="header-anchor" href="#第一步：root-登录">¶</a>第一步：Root 登录</h2>
-<h2 id="第二步：创建一个新用户"><a class="header-anchor" href="#第二步：创建一个新用户">¶</a>第二步：创建一个新用户</h2>
-<h2 id="第三步：root-权限"><a class="header-anchor" href="#第三步：root-权限">¶</a>第三步：Root 权限</h2>
-<h2 id="第四步：添加公钥认证"><a class="header-anchor" href="#第四步：添加公钥认证">¶</a>第四步：添加公钥认证</h2>
-<h2 id="第五步：重新配置-ssh"><a class="header-anchor" href="#第五步：重新配置-ssh">¶</a>第五步：重新配置 SSH</h2>
-<h2 id="第五步：重启-ssh"><a class="header-anchor" href="#第五步：重启-ssh">¶</a>第五步：重启 SSH</h2>
-<h2 id="第六步：配置时区和-ntp"><a class="header-anchor" href="#第六步：配置时区和-ntp">¶</a>第六步：配置时区和 NTP</h2>
-<h2 id="第七步：创建虚拟内存"><a class="header-anchor" href="#第七步：创建虚拟内存">¶</a>第七步：创建虚拟内存</h2>
-<h2 id="第八步：配置时区和-ntp"><a class="header-anchor" href="#第八步：配置时区和-ntp">¶</a>第八步：配置时区和 NTP</h2>
-<h2 id="第八步：配置防火墙"><a class="header-anchor" href="#第八步：配置防火墙">¶</a>第八步：配置防火墙</h2>
+<h2 id="创建用户"><a class="header-anchor" href="#创建用户">¶</a>创建用户</h2>
+<h3 id="使用-root-用户登录"><a class="header-anchor" href="#使用-root-用户登录">¶</a>使用 Root 用户登录</h3>
+<h3 id="创建一个新用户"><a class="header-anchor" href="#创建一个新用户">¶</a>创建一个新用户</h3>
+<h3 id="赋予-root-权限"><a class="header-anchor" href="#赋予-root-权限">¶</a>赋予 Root 权限</h3>
+<h3 id="禁用-root-用户"><a class="header-anchor" href="#禁用-root-用户">¶</a>禁用 Root 用户</h3>
+<h2 id="添加公钥认证"><a class="header-anchor" href="#添加公钥认证">¶</a>添加公钥认证</h2>
+<h2 id="配置时区和-ntp"><a class="header-anchor" href="#配置时区和-ntp">¶</a>配置时区和 NTP</h2>
+<h2 id="创建虚拟内存"><a class="header-anchor" href="#创建虚拟内存">¶</a>创建虚拟内存</h2>
+<h2 id="配置时区和-ntp-v2"><a class="header-anchor" href="#配置时区和-ntp-v2">¶</a>配置时区和 NTP</h2>
+<h2 id="配置防火墙"><a class="header-anchor" href="#配置防火墙">¶</a>配置防火墙</h2>
 <p>配置防火墙是提高服务器安全方面很重要的一部分，他可以有限提高你的服务器的安全性和可用性，具体配置可以参考 <a href="/2017/05/20/%E8%AE%A9%E4%BD%A0%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9B%B4%E5%AE%89%E5%85%A8-%E4%BD%BF%E7%94%A8-UFW-%E5%BC%80%E5%90%AF%E9%98%B2%E7%81%AB%E5%A2%99/#more">让你的服务器更安全 - 使用 UFW 开启防火墙</a></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;当你创建或购买了了一个新的的服务器的时候，有一些必要的步骤作来配置你的服务器，比如：&lt;code&gt;root&lt;/code&gt; 用户权限过大问题，&lt;code&gt;SSH&lt;/code&gt; 安全连接问题等等。这将增加您的服务器的安全性和可用性，并将为后续行动提供坚实的基础。&lt;/p&gt;
-&lt;p&gt;下
+      &lt;p&gt;当你创建或购买了了一个新的的服务器的时候，有一些必要的步骤作来配置你的服务器，比如：&lt;code&gt;root&lt;/code&gt; 用户权限过大问题、&lt;code&gt;SSH&lt;/code&gt; 安全连接问题等等、使用虚拟内存等等。这将增加您的服务器的安全性和可用性，并将为后续行动提供坚实的基础。
     
     </summary>
     
@@ -58,7 +57,7 @@
     <link href="http://dev.charles.com/2017/05/20/%E8%AE%A9%E4%BD%A0%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9B%B4%E5%AE%89%E5%85%A8-%E4%BD%BF%E7%94%A8-UFW-%E5%BC%80%E5%90%AF%E9%98%B2%E7%81%AB%E5%A2%99/"/>
     <id>http://dev.charles.com/2017/05/20/让你的服务器更安全-使用-UFW-开启防火墙/</id>
     <published>2017-05-20T01:58:52.000Z</published>
-    <updated>2017-05-20T07:01:20.000Z</updated>
+    <updated>2017-05-21T01:59:38.000Z</updated>
     
     <content type="html"><![CDATA[<p><code>UFW</code>(Uncomplicated Firewall) 是一个非常容易上手的 <code>iptables</code> 类防火墙配置工具，这个工具可以对出入服务的网络数据进行分割、过滤、转发等等细微的控制，进而实现诸如防火墙、 <code>NAT</code> 等功能。它简化了 <code>iptable</code> 那复杂的配置过程。我们都知道 <code>iptable</code> 非常强大、灵活，但是对于初学者来学习如何使用它正确的配置防火墙是比较难的，但是你又想保护你的网络，<code>UFW</code> 将会是你最好的选择。</p>
 <p>下面我将会解释如何在 <code>Ubuntu 14.04</code> 中使用 <code>UFW</code> 安装、配置防火墙。</p>
@@ -202,13 +201,13 @@
     
       <category term="Linux" scheme="http://dev.charles.com/tags/linux/"/>
     
-      <category term="Security" scheme="http://dev.charles.com/tags/security/"/>
-    
       <category term="Ubuntu" scheme="http://dev.charles.com/tags/ubuntu/"/>
     
       <category term="Firewall" scheme="http://dev.charles.com/tags/firewall/"/>
     
       <category term="UFW" scheme="http://dev.charles.com/tags/ufw/"/>
+    
+      <category term="Security" scheme="http://dev.charles.com/tags/security/"/>
     
   </entry>
   
