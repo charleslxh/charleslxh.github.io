@@ -4,9 +4,9 @@
   <subtitle>博客</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://dev.charles.com/"/>
-  <updated>2017-05-27T09:17:05.000Z</updated>
-  <id>http://dev.charles.com/</id>
+  <link href="http://blog.charleslxh.com/"/>
+  <updated>2017-06-03T05:11:07.000Z</updated>
+  <id>http://blog.charleslxh.com/</id>
   
   <author>
     <name>Charles Liao</name>
@@ -16,167 +16,385 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Java 线程安全与非线程安全</title>
-    <link href="http://dev.charles.com/2017/05/27/java-%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B8%8E%E9%9D%9E%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8/"/>
-    <id>http://dev.charles.com/2017/05/27/java-线程安全与非线程安全/</id>
-    <published>2017-05-27T09:17:05.000Z</published>
-    <updated>2017-05-27T09:17:05.000Z</updated>
+    <title>正则表达式 - 回溯</title>
+    <link href="http://blog.charleslxh.com/2017/06/03/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-%E5%9B%9E%E6%BA%AF/"/>
+    <id>http://blog.charleslxh.com/2017/06/03/正则表达式-回溯/</id>
+    <published>2017-06-03T02:34:53.000Z</published>
+    <updated>2017-06-03T05:11:07.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在正则表达式实现中，回溯是匹配过程的基本组成部分，它是正则表达式如此好用和强大的根源。然而，回溯计算代价很高，如果设计失误，将导致失控。回溯是影响整体性能的唯一因素，理解它的工作原理，以及如何减小使用频率，可能是编写高效正则表达式的关键点。</p>
+<a id="more"></a>
+<h2 id="匹配原理"><a class="header-anchor" href="#匹配原理">¶</a>匹配原理</h2>
+<p>当一个正则表达式扫描目标字符串时，从左到右逐个扫描正则表达式的组成部分，在每个位置上测试能不能找到一个匹配。对于每一个量词和分支，都必须确定如何继续进行。如果是一个量词（如 <code>*</code>、<code>+</code>、<code>?</code>或者 <code>{2,}</code>），那么正则表达式必须确定何时尝试匹配更多的字符；如果遇到分支（通过|操作符），那么正则表达式必须从这些选项中选择一个进行尝试。</p>
+<p>当正则表达式做出这样的决定时，如果有必要，它会记住另一个选项，以备返回后使用。如果所选方案匹配成功，正则表达式将继续扫描正则表达式模板，如果其余部分匹配也成功了，那么匹配就结束了。但是，如果所选择的方案未能发现相应匹配，或者后来的匹配也失败了，正则表达式将回溯到最后一个决策点，然后在剩余的选项中选择一个。继续这样，直到找到一个匹配，或者量词和分支选项的所有可能的排列组合都尝试失败后放弃这一过程，然后移动到此过程开始位置的下一个字符上，重复此过程。</p>
+<p>例如，下面的代码演示了这一过程是如何通过回溯处理分支的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/h(ello|appy) hippo/.test(<span class="string">"hello there, happy hippo"</span>);</div></pre></td></tr></table></figure>
+<p>上面一行正则表达式用于匹配 <code>hello hippo</code> 或 <code>happy hippo</code>。测试一开始要查找一个 <code>h</code>，目标字符串的第一个字母恰好就是 <code>h</code>，立刻就找到了。接下来，子表达式<code>（ello|appy）</code>提供了两个处理选项。正则表达式选择最左边的选项（<strong>分支选择总是从左到右进行</strong>），检查 <code>ello</code> 是否匹配字符串的下一个字符，确实匹配，然后正则表达式又匹配了后面的空格。</p>
+<p>然而，在接下来的匹配中正则表达式“走进了死胡同”，因为 <code>hippo</code> 中的 <code>h</code> 不能匹配字符串中的下一个字母 <code>t</code>。此时正则表达式还不能放弃，因为它还没有尝试过所有的选择，随后它回溯到最后一个检查点（在匹配了首字母h 之后的那个位置上）并尝试匹配第二个分支选项。但由于匹配没有成功，而且也没有更多的选项了，正则表达式认为从字符串的第一个字符开始匹配是不能成功的，因此它从第二个字符开始重新进行查找。正则表达式没有找到h，继续向后找，直到第 <code>14</code> 个字母才找到，它匹配 <code>happy</code> 的那个 <code>h</code>。随后正则表达式再次进入分支过程，这次 <code>ello</code> 未能匹配，但在回溯之后的第二次分支中，它匹配了整个字符串 <code>happy hippo</code>，匹配成功了。</p>
+<p>再如，下面代码演示了带重复量词的回溯。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> str = <span class="string">"&lt;p&gt;Para 1.&lt;/p&gt;"</span> +<span class="string">"&lt;img src='smiley.jpg'&gt;"</span> +<span class="string">"&lt;p&gt;Para 2.&lt;/p&gt;"</span> +<span class="string">"&lt;div&gt;Div.&lt;/div&gt;"</span>;  </div><div class="line"><span class="regexp">/&lt;p&gt;.*&lt;\/p&gt;/i</span>.test(str);</div></pre></td></tr></table></figure>
+<p>正则表达式先匹配了字符串开始的 3 个字母 <code>&lt;p&gt;</code>，然后是 <code>.*</code>。点号表示匹配除换行符以外的任意字符，星号这个 <strong>贪性量词</strong>(表示重复零次或多次)，匹配尽量多的次数。因为目标字符串中没有换行符，正则表达式将匹配剩下的全部字符串！不过由于正则表达式模板中还有更多内容需要匹配，所以正则表达式尝试匹配 <code>&lt;</code> 。由于在字符串末尾匹配不成功，因此每次回溯一个字符，继续尝试匹配&lt;，直到正则表达式回到 <code>&lt;/div&gt;</code> 标签的 <code>&lt;</code> 位置。接下来尝试匹配 <code>\/</code>（转义反斜杠），匹配成功，然后匹配 <code>p</code>，匹配不成功。正则表达式继续回溯，重复此过程，直到第二段末尾时终于匹配了 <code>&lt;/p&gt;</code>。匹配返回成功需要从第一段头部一直扫描到最后一个的末尾，这可能不是我们想要的结果。</p>
+<p>将正则表达式中的 <code>贪性量词</code> 改为 <code>惰性量词</code>（详细请查看<a href="/2017/06/03/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-%E8%B4%AA%E6%80%A7%E4%B8%8E%E6%83%B0%E6%80%A7/#%E6%83%B0%E6%80%A7%E5%8C%B9%E9%85%8D-laziness">如何设置量词为惰性</a>），以匹配单个段落。<code>惰性量词</code>的回溯工作以相反方式进行。当正则表达式 <code>/&lt;p&gt;.*?&lt;\/p&gt;/</code> 推进到 <code>.*?</code> 时，首先尝试全部跳过，然后继续匹配 <code>&lt;\/p&gt;</code>。</p>
+<p>这样做是因为 <code>*?</code> 匹配零次或多次，尽可能少重复，尽可能少意味着可以重复零次。但是，当随后的 <code>&lt;</code> 在字符串的这一点上匹配失败时，正则表达式回溯并尝试下一个最小的字符数：1 个。正则表达式继续像这样向前回溯到第一段的末尾，在那里量词后面的 <code>&lt;\/p&gt;</code> 得到完全匹配。</p>
+<p>如果目标字符串只有一个段落，那么此正则表达式的 <code>贪性匹配</code> 和 <code>惰性匹配</code> 是等价的，但尝试匹配的过程不同。</p>
+<p>当一个正则表达式占用浏览器几秒甚至更长时间时，问题原因很可能是回溯失控。为说明此问题，给出下面的正则表达式，它的目标是匹配整个 <code>HTML</code> 文件。此表达式被拆分成多行是为了适合页面显示。与其他正则表达式不同，<code>JavaScript</code> 在没有选项时可使点号匹配任意字符，包括换行符，所以此例中以 <code>[\s\S]</code> 匹配任意字符。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/&lt;html&gt;[\s\S]*?&lt;head&gt;[\s\S]*?&lt;title&gt;[\s\S]*?&lt;\/title&gt;[\s\S]*?&lt;\/head&gt; </div><div class="line">[\s\S]*?&lt;body&gt;[\s\S]*?&lt;\/body&gt;[\s\S]*?&lt;\/html&gt;<span class="regexp">/</span></div></pre></td></tr></table></figure>
+<h2 id="参考连接"><a class="header-anchor" href="#参考连接">¶</a>参考连接</h2>
+<p><a href="http://www.regular-expressions.info/backref.html" target="_blank" rel="external">Backreferences</a><br>
+<a href="https://loveky.github.io/2017/05/31/regular-expressions-catastrophic-backtracking" target="_blank" rel="external">正则表达式中的悲观回溯</a></p>
+]]></content>
     
     <summary type="html">
     
+      &lt;p&gt;在正则表达式实现中，回溯是匹配过程的基本组成部分，它是正则表达式如此好用和强大的根源。然而，回溯计算代价很高，如果设计失误，将导致失控。回溯是影响整体性能的唯一因素，理解它的工作原理，以及如何减小使用频率，可能是编写高效正则表达式的关键点。&lt;/p&gt;
+    
     </summary>
     
+      <category term="正则表达式" scheme="http://blog.charleslxh.com/categories/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    
+    
+      <category term="正则表达式" scheme="http://blog.charleslxh.com/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>正则表达式 - 贪性与惰性</title>
+    <link href="http://blog.charleslxh.com/2017/06/03/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-%E8%B4%AA%E6%80%A7%E4%B8%8E%E6%83%B0%E6%80%A7/"/>
+    <id>http://blog.charleslxh.com/2017/06/03/正则表达式-贪性与惰性/</id>
+    <published>2017-06-03T01:57:39.000Z</published>
+    <updated>2017-06-03T04:57:39.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>使用正则表达式中的 <code>贪性</code>、<code>惰性</code>、<code>支配性</code> 的量词可以控制表达式匹配过程，我们知道量词 <code>？</code>、<code>*</code>、<code>+</code> 的意义，可以指定相关模式出现的次数，默认的情况下我们使用的量词均是是贪婪量词，它的匹配过程是从整个字符串开始查看，如果不匹配就去掉最后一个，再看看是否匹配，如此循环一直到匹配或字符串空为止。不管是 <code>贪性</code> 还是 <code>惰性</code> ，在正则表达式在匹配失败时都会触发 <code>正则表达式回溯</code>（详情查看<a href="/2017/06/03/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-%E5%9B%9E%E6%BA%AF/">正则表达式 - 回溯</a>），从而影响其性能。</p>
+<a id="more"></a>
+<h2 id="量词-quantifier"><a class="header-anchor" href="#量词-quantifier">¶</a>量词（Quantifier）</h2>
+<p>首先，我们需要了解一下正则表达式的量词，正则表达式中有如下几种量词 <code>?</code>、<code>+</code>、<code>*</code>、<code>{n}</code>、<code>{n,m}</code>、<code>{n,}</code>。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">量词</th>
+<th style="text-align:center">匹配规则</th>
+<th style="text-align:center">例子</th>
+<th style="text-align:center">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">?</td>
+<td style="text-align:center">匹配出现 0 次或 1 次</td>
+<td style="text-align:center">/a?/.test(‘abcd’);</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center">+</td>
+<td style="text-align:center">匹配出现 1 次或多次</td>
+<td style="text-align:center">/a+/.test(‘aaaaaaaa’);</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center">*</td>
+<td style="text-align:center">匹配出现 0 次或 1 次或多次</td>
+<td style="text-align:center">/a*/.test(‘bbbbb’);</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center">{n}</td>
+<td style="text-align:center">匹配刚好出现 n 次</td>
+<td style="text-align:center">/a{5}/.test(‘aaaab’);</td>
+<td style="text-align:center">false</td>
+</tr>
+<tr>
+<td style="text-align:center">{n,m}</td>
+<td style="text-align:center">匹配最少出现 n 次最多出现 m 次</td>
+<td style="text-align:center">a{1,3}/.test(‘aaabbb’);</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center">{n,}</td>
+<td style="text-align:center">匹配最少出现 n 次</td>
+<td style="text-align:center">/a{3,}/.test(‘aabbb’);</td>
+<td style="text-align:center">false</td>
+</tr>
+</tbody>
+</table>
+<h2 id="贪性匹配-greediness"><a class="header-anchor" href="#贪性匹配-greediness">¶</a>贪性匹配（greediness）</h2>
+<p>从字面意思我们就可以知道，所谓的&quot;贪婪&quot;的意思就是，如果符合要求就一直往后匹配，一直到无法匹配为止，这就是贪性匹配。默认情况下，<code>?</code>、<code>+</code>、<code>*</code>、<code>{n}</code>、<code>{n,m}</code>、<code>{n,}</code>都是贪婪的，也就是说，它会根据前导字符去匹配尽可能多的内容。</p>
+<blockquote>
+<p>贪性匹配就是匹配尽可能 <code>多</code> 的内容。</p>
+</blockquote>
+<p>假如我们有一个字符串 <code>This is a &lt;EM&gt;first&lt;/EM&gt; test</code>，我们使用 <code>/&lt;.+&gt;/g</code> 来匹配，我们期望匹配到两段文本，第一段为 <code>&lt;EM&gt;</code>，第二段匹配文本为 <code>&lt;/EM&gt;</code>，但是只得到了一段匹配文本：<code>&lt;EM&gt;first&lt;/EM&gt;</code>，很显然结果不尽人意，并不是我们想要的。</p>
+<p>出现这种情况的罪魁祸首就是 <code>+</code> 是 <code>贪性匹配（greedy）</code> 的，正则表达式引擎执行 <code>+</code> 量词时尽可能的重复匹配前面的符号 <code>.</code>  <code>回溯</code>（即：正则表达式放弃上一次匹配，吐出一个匹配的字符给剩下的字符串），再一次使用下一个正则表达式符号来匹配剩下的字符串，如此反复 <code>回溯</code> 直到匹配成功或回溯到 0。通过下面的例子，可以更加直观的解释他的过程。</p>
+<p><code>&lt;.+&gt;</code> 匹配字符串 <code>This is a &lt;EM&gt;first&lt;/EM&gt; test</code> 的过程：</p>
+<ol>
+<li>第一个符号为 <code>&lt;</code>，所以它将会匹配到字符串中的第一个 <code>&lt;</code> 字符。</li>
+<li>第二个符号为 <code>.</code>，匹配任意字符（除了换行），使用 <code>+</code> 重复匹配，所以它将会不断重复匹配，直到他匹配到句尾，则匹配失败，<code>.+</code> 匹配了 <code>EM&gt;first&lt;/EM&gt; test</code>。</li>
+<li>到目前为止 <code>&lt;.+</code> 匹配的字符串为：<code>&lt;EM&gt;first&lt;/EM&gt; test</code>。</li>
+<li>正则表达式引擎开始对下一个正则表达式符号 <code>&gt;</code> 进行匹配，但字符串还未匹配的只剩下换行符了，于是匹配失败。</li>
+<li>由于第三个符号 <code>&gt;</code> 匹配失败，正则表达式引擎回溯，回溯会使 <code>.+</code> <code>减少（吐出）</code>一个字符，回溯后的匹配状况是 <code>.+</code> 匹配 <code>EM&gt;first&lt;/EM&gt; tes</code>。</li>
+<li>正则表达式引擎使用符号 <code>&gt;</code> 匹配 <code>t</code>，结果依然不匹配。</li>
+<li>如果重复 <code>5</code>、<code>6</code> 两步，直到 <code>.+</code> 匹配 <code>EM&gt;first&lt;/EM</code> 时，正则表达式使用符号 <code>&gt;</code> 匹配 <code>&gt; test</code>，匹配成功。</li>
+<li>正则表达式引擎报告 <code>&lt;EM&gt;first&lt;/EM&gt;</code> 就是匹配上的文本。</li>
+</ol>
+<h2 id="可选性-optional"><a class="header-anchor" href="#可选性-optional">¶</a>可选性（optional）</h2>
+<p>我们都知道量词 <code>?</code> 可以使前一个正则表达式字符是可选的，如：<code>colou?r</code> 可以匹配 <code>colour</code> 和 <code>color</code>。当然你也可以使用括号 <code>()</code> 将一些字符或规则标识为可选的，如：Nov(ember)? 将会匹配 <code>Nov</code> 和 <code>November</code>，当然你也可以使用 <code>{0,1}</code> 拉替代 <code>?</code>，他们是等价的。</p>
+<p>默认情况下 <code>?</code> 也是 <code>贪性匹配</code> 的，即：他会优先尝试匹配该字符存在的情况，如果匹配失败，则尝试匹配该字符不存在的情况。例如：<br>
+我们用 <code>Feb 23(rd)?</code> 表达式匹配 <code>Today is Feb 23rd, 2003</code> 文本，匹配结果是 <code>Feb 23rd</code> 而不是 <code>Feb 23</code>。</p>
+<p>如果是：<code>Feb 23(rd)??</code> 呢？结果却是 <code>Feb 23</code>，是不是很奇妙，下面我们将会详细解答惰性匹配的原理。</p>
+<h2 id="惰性匹配-laziness"><a class="header-anchor" href="#惰性匹配-laziness">¶</a>惰性匹配（laziness）</h2>
+<p>惰性模式就是一旦匹配到合适的就结束，不在继续匹配下去了，在重复量词后面添加问号 <code>?</code> 即可形成惰性匹配。惰性匹配会尽可能少的匹配字符，但是必须要满足整个匹配模式。</p>
+<blockquote>
+<p>惰性匹配就是匹配尽可能 <code>少</code> 的内容。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">量词</th>
+<th style="text-align:center">匹配规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">??</td>
+<td style="text-align:center">匹配出现 0 次或 1 次，优先匹配 0 次</td>
+</tr>
+<tr>
+<td style="text-align:center">+?</td>
+<td style="text-align:center">匹配出现 1 次或多次，尽可能重复少的次数，不过最少次数是 1</td>
+</tr>
+<tr>
+<td style="text-align:center">*?</td>
+<td style="text-align:center">匹配出现 0 次或 1 次或多次，尽可能重复少的次数</td>
+</tr>
+<tr>
+<td style="text-align:center">{n}?</td>
+<td style="text-align:center">匹配刚好出现 n 次</td>
+</tr>
+<tr>
+<td style="text-align:center">{n,m}?</td>
+<td style="text-align:center">匹配最少出现 n 次最多出现 m 次，尽可能重复少的次数，不过最少次数是 n</td>
+</tr>
+<tr>
+<td style="text-align:center">{n,}?</td>
+<td style="text-align:center">匹配最少出现 n 次，尽可能重复少的次数，不过最少次数是 n</td>
+</tr>
+</tbody>
+</table>
+<p><code>&lt;.+?&gt;</code> 匹配字符串 <code>This is a &lt;EM&gt;first&lt;/EM&gt; test</code> 的过程：</p>
+<ol>
+<li>第一个符号为 <code>&lt;</code>，所以它将会匹配到字符串中的第一个 <code>&lt;</code> 字符。</li>
+<li>第二个符号为 <code>.</code>，匹配任意字符（除了换行），使用 <code>+?</code> 重复匹配，因为是惰性匹配，所以 <code>+</code> 会尽可能少的匹配（最少一次），第一次 <code>.+</code> 匹配了 <code>E</code>。</li>
+<li>正则表达式引擎开始对下一个正则表达式符号 <code>&gt;</code> 进行匹配，剩下的字符串 <code>M&gt;first&lt;/EM&gt; test</code> 的第一个字符为 <code>M</code>，于是匹配失败。</li>
+<li>由于第三个符号 <code>&gt;</code> 匹配失败，正则表达式引擎回溯，回溯会使 <code>.+</code> <code>扩大（吞入）</code>一个字符，而不是贪性匹配的<code>减少</code>一个字符，回溯后的匹配状况是 <code>.+</code> 匹配 <code>EM</code>。</li>
+<li>正则表达式引擎开始对下一个正则表达式符号 <code>&gt;</code> 进行匹配，剩下的字符串 <code>&gt;first&lt;/EM&gt; test</code> 的第一个字符为 <code>&gt;</code>，于是匹配成功。</li>
+<li>正则表达式引擎报告 <code>&lt;EM&gt;</code> 就是匹配上的文本。</li>
+</ol>
+<h2 id="总结"><a class="header-anchor" href="#总结">¶</a>总结</h2>
+<p>贪性匹配，正则引擎会一直匹配到字符串最后；当匹配为 <code>false</code> 时，就回溯以找到倒数第一个匹配位置，返回匹配结果。</p>
+<p>惰性匹配，正则引擎会匹配到符合 <code>pattern</code> 的末尾位置那个字符，然后再往后走一步，发现匹配为 <code>false</code> 时，就回溯以找到最近一个匹配为 <code>true</code> 的位置，返回匹配结果。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;使用正则表达式中的 &lt;code&gt;贪性&lt;/code&gt;、&lt;code&gt;惰性&lt;/code&gt;、&lt;code&gt;支配性&lt;/code&gt; 的量词可以控制表达式匹配过程，我们知道量词 &lt;code&gt;？&lt;/code&gt;、&lt;code&gt;*&lt;/code&gt;、&lt;code&gt;+&lt;/code&gt; 的意义，可以指定相关模式出现的次数，默认的情况下我们使用的量词均是是贪婪量词，它的匹配过程是从整个字符串开始查看，如果不匹配就去掉最后一个，再看看是否匹配，如此循环一直到匹配或字符串空为止。不管是 &lt;code&gt;贪性&lt;/code&gt; 还是 &lt;code&gt;惰性&lt;/code&gt; ，在正则表达式在匹配失败时都会触发 &lt;code&gt;正则表达式回溯&lt;/code&gt;（详情查看&lt;a href=&quot;/2017/06/03/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-%E5%9B%9E%E6%BA%AF/&quot;&gt;正则表达式 - 回溯&lt;/a&gt;），从而影响其性能。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="正则表达式" scheme="http://blog.charleslxh.com/categories/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    
+    
+      <category term="正则表达式" scheme="http://blog.charleslxh.com/tags/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java 线程安全与非线程安全</title>
+    <link href="http://blog.charleslxh.com/2017/05/27/java-%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%B8%8E%E9%9D%9E%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8/"/>
+    <id>http://blog.charleslxh.com/2017/05/27/java-线程安全与非线程安全/</id>
+    <published>2017-05-27T09:17:05.000Z</published>
+    <updated>2017-06-03T03:11:31.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>还记得初学 Java 的时候，老师是这样告诉我们的：ArrayList 是非线程安全的，Vector 是线程安全的；HashMap 是非线程安全的，HashTable 是线程安全的；StringBuilder 是非线程安全的，StringBuffer 是线程安全的。对，很快我们也记住了这一面试宝典，但是当面试官继续往下问你：什么是线程安全和非线程安全？他们有什么区别？什么场景用哪一种模式？这时，你是不是会吐上一口老血。</p>
+<a id="more"></a>
+<h2 id="原子性"><a class="header-anchor" href="#原子性">¶</a>原子性</h2>
+<p>首先，我们吸纳来了解一下什么是原子性，这个概念大家或许耳熟能详。</p>
+<p>在多线程访问共享资源（同一块内存），能保证在同一时间，只有一个进程访问该资源，并且该操作不可被分割，不能被打断，必须执行到结束，不会被线程切换打断，这就是原子性。</p>
+<p>这个在 Java 多线程编程中是老生常谈的话题了，所谓的原子操作是指不会被线程调度机制打断的操作，这种操作从执行开始就会一直执行结束，中间不会出现任何的 context switch（线程的切换）。</p>
+<h2 id="线程安全与非线程安全"><a class="header-anchor" href="#线程安全与非线程安全">¶</a>线程安全与非线程安全</h2>
+<p>那到底什么是线程安全呢，其实线程安全就是一个原子操作，大致是：当一个线程调用一个线程安全的方法时，其他的线程就不能调用该线程安全的方法了，而必须要等到正在执行的线程结束后才能调用。</p>
+<p>其实也是线程同步的问题，若是每个线程对共享内存都做只读操作，而无写操作，那么这块共享内存是线程安全，若是有多个线程会同时进行写操作，这时候就需要考虑线程同步的问题了，这就涉及到了线程安全之间问题。</p>
+<h2 id="线程安全模拟"><a class="header-anchor" href="#线程安全模拟">¶</a>线程安全模拟</h2>
+<p>首先，我们用 <code>ArrayList</code> 来演示非线程安全，我们在主线程有一个 <code>ArrayList</code>，在主线程开启四个子线程分别往这个列表中插入值，</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;还记得初学 Java 的时候，老师是这样告诉我们的：ArrayList 是非线程安全的，Vector 是线程安全的；HashMap 是非线程安全的，HashTable 是线程安全的；StringBuilder 是非线程安全的，StringBuffer 是线程安全的。对，很快我们也记住了这一面试宝典，但是当面试官继续往下问你：什么是线程安全和非线程安全？他们有什么区别？什么场景用哪一种模式？这时，你是不是会吐上一口老血。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Java" scheme="http://blog.charleslxh.com/categories/java/"/>
+    
+    
+      <category term="Java" scheme="http://blog.charleslxh.com/tags/java/"/>
+    
+      <category term="线程" scheme="http://blog.charleslxh.com/tags/%E7%BA%BF%E7%A8%8B/"/>
     
   </entry>
   
   <entry>
     <title>搜索引擎 ElasticSearch - 使用 Docker 搭建 ELK 系统</title>
-    <link href="http://dev.charles.com/2017/05/27/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E-elasticsearch-%E4%BD%BF%E7%94%A8-docker-%E6%90%AD%E5%BB%BA-elk-%E7%B3%BB%E7%BB%9F/"/>
-    <id>http://dev.charles.com/2017/05/27/搜索引擎-elasticsearch-使用-docker-搭建-elk-系统/</id>
+    <link href="http://blog.charleslxh.com/2017/05/27/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E-elasticsearch-%E4%BD%BF%E7%94%A8-docker-%E6%90%AD%E5%BB%BA-elk-%E7%B3%BB%E7%BB%9F/"/>
+    <id>http://blog.charleslxh.com/2017/05/27/搜索引擎-elasticsearch-使用-docker-搭建-elk-系统/</id>
     <published>2017-05-27T06:03:24.000Z</published>
-    <updated>2017-05-27T06:07:30.000Z</updated>
+    <updated>2017-05-27T10:21:58.000Z</updated>
     
     <summary type="html">
     
     </summary>
     
-      <category term="ElastciSearch" scheme="http://dev.charles.com/categories/elastcisearch/"/>
+      <category term="ElasticSearch" scheme="http://blog.charleslxh.com/categories/elasticsearch/"/>
+    
+      <category term="Docker" scheme="http://blog.charleslxh.com/categories/elasticsearch/docker/"/>
     
     
-      <category term="搜索引擎" scheme="http://dev.charles.com/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"/>
+      <category term="搜索引擎" scheme="http://blog.charleslxh.com/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"/>
     
-      <category term="ElasticSearch" scheme="http://dev.charles.com/tags/elasticsearch/"/>
+      <category term="ElasticSearch" scheme="http://blog.charleslxh.com/tags/elasticsearch/"/>
     
-      <category term="ELK" scheme="http://dev.charles.com/tags/elk/"/>
+      <category term="ELK" scheme="http://blog.charleslxh.com/tags/elk/"/>
     
-      <category term="LogStash" scheme="http://dev.charles.com/tags/logstash/"/>
+      <category term="LogStash" scheme="http://blog.charleslxh.com/tags/logstash/"/>
     
-      <category term="Kibana" scheme="http://dev.charles.com/tags/kibana/"/>
+      <category term="Kibana" scheme="http://blog.charleslxh.com/tags/kibana/"/>
     
-      <category term="Docker" scheme="http://dev.charles.com/tags/docker/"/>
+      <category term="Docker" scheme="http://blog.charleslxh.com/tags/docker/"/>
     
   </entry>
   
   <entry>
     <title>搜索引擎 ElasticSearch - 使用 IK 中文分词插件</title>
-    <link href="http://dev.charles.com/2017/05/27/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E-elasticsearch-%E4%BD%BF%E7%94%A8-ik-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E6%8F%92%E4%BB%B6/"/>
-    <id>http://dev.charles.com/2017/05/27/搜索引擎-elasticsearch-使用-ik-中文分词插件/</id>
+    <link href="http://blog.charleslxh.com/2017/05/27/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E-elasticsearch-%E4%BD%BF%E7%94%A8-ik-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E6%8F%92%E4%BB%B6/"/>
+    <id>http://blog.charleslxh.com/2017/05/27/搜索引擎-elasticsearch-使用-ik-中文分词插件/</id>
     <published>2017-05-27T06:03:13.000Z</published>
-    <updated>2017-05-27T06:07:01.000Z</updated>
+    <updated>2017-05-27T10:20:08.000Z</updated>
     
     <summary type="html">
     
     </summary>
     
-      <category term="ElastciSearch" scheme="http://dev.charles.com/categories/elastcisearch/"/>
+      <category term="ElasticSearch" scheme="http://blog.charleslxh.com/categories/elasticsearch/"/>
+    
+      <category term="NLP" scheme="http://blog.charleslxh.com/categories/elasticsearch/nlp/"/>
     
     
-      <category term="搜索引擎" scheme="http://dev.charles.com/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"/>
+      <category term="搜索引擎" scheme="http://blog.charleslxh.com/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"/>
     
-      <category term="ElasticSearch" scheme="http://dev.charles.com/tags/elasticsearch/"/>
+      <category term="ElasticSearch" scheme="http://blog.charleslxh.com/tags/elasticsearch/"/>
     
-      <category term="IK" scheme="http://dev.charles.com/tags/ik/"/>
+      <category term="IK" scheme="http://blog.charleslxh.com/tags/ik/"/>
     
   </entry>
   
   <entry>
     <title>搜索引擎 ElasticSearch - 构建自己的 HanLP 中文分词插件</title>
-    <link href="http://dev.charles.com/2017/05/27/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E-elasticsearch-%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84-hanlp-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E6%8F%92%E4%BB%B6/"/>
-    <id>http://dev.charles.com/2017/05/27/搜索引擎-elasticsearch-构建自己的-hanlp-中文分词插件/</id>
+    <link href="http://blog.charleslxh.com/2017/05/27/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E-elasticsearch-%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84-hanlp-%E4%B8%AD%E6%96%87%E5%88%86%E8%AF%8D%E6%8F%92%E4%BB%B6/"/>
+    <id>http://blog.charleslxh.com/2017/05/27/搜索引擎-elasticsearch-构建自己的-hanlp-中文分词插件/</id>
     <published>2017-05-27T06:02:57.000Z</published>
-    <updated>2017-05-27T06:05:55.000Z</updated>
+    <updated>2017-05-27T10:19:56.000Z</updated>
     
     <summary type="html">
     
     </summary>
     
-      <category term="ElastciSearch" scheme="http://dev.charles.com/categories/elastcisearch/"/>
+      <category term="ElasticSearch" scheme="http://blog.charleslxh.com/categories/elasticsearch/"/>
     
     
-      <category term="搜索引擎" scheme="http://dev.charles.com/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"/>
+      <category term="搜索引擎" scheme="http://blog.charleslxh.com/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"/>
     
-      <category term="ElasticSearch" scheme="http://dev.charles.com/tags/elasticsearch/"/>
+      <category term="ElasticSearch" scheme="http://blog.charleslxh.com/tags/elasticsearch/"/>
     
-      <category term="HanLP" scheme="http://dev.charles.com/tags/hanlp/"/>
+      <category term="HanLP" scheme="http://blog.charleslxh.com/tags/hanlp/"/>
     
   </entry>
   
   <entry>
     <title>搜索引擎 ElasticSearch - 搜索建议的实现</title>
-    <link href="http://dev.charles.com/2017/05/27/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E-elasticsearch-%E6%90%9C%E7%B4%A2%E5%BB%BA%E8%AE%AE%E7%9A%84%E5%AE%9E%E7%8E%B0/"/>
-    <id>http://dev.charles.com/2017/05/27/搜索引擎-elasticsearch-搜索建议的实现/</id>
+    <link href="http://blog.charleslxh.com/2017/05/27/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E-elasticsearch-%E6%90%9C%E7%B4%A2%E5%BB%BA%E8%AE%AE%E7%9A%84%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://blog.charleslxh.com/2017/05/27/搜索引擎-elasticsearch-搜索建议的实现/</id>
     <published>2017-05-27T06:02:43.000Z</published>
-    <updated>2017-05-27T06:07:45.000Z</updated>
+    <updated>2017-05-27T10:19:59.000Z</updated>
     
     <summary type="html">
     
     </summary>
     
-      <category term="ElastciSearch" scheme="http://dev.charles.com/categories/elastcisearch/"/>
+      <category term="ElasticSearch" scheme="http://blog.charleslxh.com/categories/elasticsearch/"/>
     
     
-      <category term="搜索引擎" scheme="http://dev.charles.com/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"/>
+      <category term="搜索引擎" scheme="http://blog.charleslxh.com/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"/>
     
-      <category term="ElasticSearch" scheme="http://dev.charles.com/tags/elasticsearch/"/>
+      <category term="ElasticSearch" scheme="http://blog.charleslxh.com/tags/elasticsearch/"/>
     
-      <category term="搜索建议" scheme="http://dev.charles.com/tags/%E6%90%9C%E7%B4%A2%E5%BB%BA%E8%AE%AE/"/>
+      <category term="搜索建议" scheme="http://blog.charleslxh.com/tags/%E6%90%9C%E7%B4%A2%E5%BB%BA%E8%AE%AE/"/>
     
   </entry>
   
   <entry>
     <title>搜索引擎 ElasticSearch - 同义词方案</title>
-    <link href="http://dev.charles.com/2017/05/27/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E-elasticsearch-%E5%90%8C%E4%B9%89%E8%AF%8D%E6%96%B9%E6%A1%88/"/>
-    <id>http://dev.charles.com/2017/05/27/搜索引擎-elasticsearch-同义词方案/</id>
+    <link href="http://blog.charleslxh.com/2017/05/27/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E-elasticsearch-%E5%90%8C%E4%B9%89%E8%AF%8D%E6%96%B9%E6%A1%88/"/>
+    <id>http://blog.charleslxh.com/2017/05/27/搜索引擎-elasticsearch-同义词方案/</id>
     <published>2017-05-27T06:02:21.000Z</published>
-    <updated>2017-05-27T06:06:49.000Z</updated>
+    <updated>2017-05-27T10:20:04.000Z</updated>
     
     <summary type="html">
     
     </summary>
     
-      <category term="ElastciSearch" scheme="http://dev.charles.com/categories/elastcisearch/"/>
+      <category term="ElasticSearch" scheme="http://blog.charleslxh.com/categories/elasticsearch/"/>
     
     
-      <category term="搜索引擎" scheme="http://dev.charles.com/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"/>
+      <category term="搜索引擎" scheme="http://blog.charleslxh.com/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"/>
     
-      <category term="ElasticSearch" scheme="http://dev.charles.com/tags/elasticsearch/"/>
+      <category term="ElasticSearch" scheme="http://blog.charleslxh.com/tags/elasticsearch/"/>
     
-      <category term="同义词" scheme="http://dev.charles.com/tags/%E5%90%8C%E4%B9%89%E8%AF%8D/"/>
+      <category term="同义词" scheme="http://blog.charleslxh.com/tags/%E5%90%8C%E4%B9%89%E8%AF%8D/"/>
     
   </entry>
   
   <entry>
     <title>搜索引擎 ElasticSearch - 如何搭配使用 IK 和 HanLP</title>
-    <link href="http://dev.charles.com/2017/05/27/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E-elasticsearch-%E5%A6%82%E4%BD%95%E6%90%AD%E9%85%8D%E4%BD%BF%E7%94%A8-ik-%E5%92%8C-hanlp/"/>
-    <id>http://dev.charles.com/2017/05/27/搜索引擎-elasticsearch-如何搭配使用-ik-和-hanlp/</id>
+    <link href="http://blog.charleslxh.com/2017/05/27/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E-elasticsearch-%E5%A6%82%E4%BD%95%E6%90%AD%E9%85%8D%E4%BD%BF%E7%94%A8-ik-%E5%92%8C-hanlp/"/>
+    <id>http://blog.charleslxh.com/2017/05/27/搜索引擎-elasticsearch-如何搭配使用-ik-和-hanlp/</id>
     <published>2017-05-27T06:01:38.000Z</published>
-    <updated>2017-05-27T06:06:27.000Z</updated>
+    <updated>2017-05-27T10:20:02.000Z</updated>
     
     <summary type="html">
     
     </summary>
     
-      <category term="ElastciSearch" scheme="http://dev.charles.com/categories/elastcisearch/"/>
+      <category term="ElasticSearch" scheme="http://blog.charleslxh.com/categories/elasticsearch/"/>
+    
+      <category term="NLP" scheme="http://blog.charleslxh.com/categories/elasticsearch/nlp/"/>
     
     
-      <category term="搜索引擎" scheme="http://dev.charles.com/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"/>
+      <category term="搜索引擎" scheme="http://blog.charleslxh.com/tags/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E/"/>
     
-      <category term="ElasticSearch" scheme="http://dev.charles.com/tags/elasticsearch/"/>
+      <category term="ElasticSearch" scheme="http://blog.charleslxh.com/tags/elasticsearch/"/>
     
-      <category term="IK" scheme="http://dev.charles.com/tags/ik/"/>
+      <category term="IK" scheme="http://blog.charleslxh.com/tags/ik/"/>
     
-      <category term="HanLP" scheme="http://dev.charles.com/tags/hanlp/"/>
+      <category term="HanLP" scheme="http://blog.charleslxh.com/tags/hanlp/"/>
     
   </entry>
   
   <entry>
     <title>让你的服务器更安全 - 初始化服务器配置</title>
-    <link href="http://dev.charles.com/2017/05/20/%E8%AE%A9%E4%BD%A0%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9B%B4%E5%AE%89%E5%85%A8-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/"/>
-    <id>http://dev.charles.com/2017/05/20/让你的服务器更安全-初始化服务器配置/</id>
+    <link href="http://blog.charleslxh.com/2017/05/20/%E8%AE%A9%E4%BD%A0%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9B%B4%E5%AE%89%E5%85%A8-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/"/>
+    <id>http://blog.charleslxh.com/2017/05/20/让你的服务器更安全-初始化服务器配置/</id>
     <published>2017-05-20T02:20:33.000Z</published>
-    <updated>2017-05-21T01:55:37.000Z</updated>
+    <updated>2017-06-03T03:10:52.000Z</updated>
     
     <content type="html"><![CDATA[<p>当你创建或购买了了一个新的的服务器的时候，有一些必要的步骤作来配置你的服务器，比如：<code>root</code> 用户权限过大问题、<code>SSH</code> 安全连接问题等等、使用虚拟内存等等。这将增加您的服务器的安全性和可用性，并将为后续行动提供坚实的基础。</p>
+<a id="more"></a>
 <p>下面我将会解释如何在 <code>Ubuntu 14.04</code> 中使用做一些安全性基本配置。</p>
 <h2 id="创建用户"><a class="header-anchor" href="#创建用户">¶</a>创建用户</h2>
 <h3 id="使用-root-用户登录"><a class="header-anchor" href="#使用-root-用户登录">¶</a>使用 Root 用户登录</h3>
@@ -193,27 +411,28 @@
     
     <summary type="html">
     
-      &lt;p&gt;当你创建或购买了了一个新的的服务器的时候，有一些必要的步骤作来配置你的服务器，比如：&lt;code&gt;root&lt;/code&gt; 用户权限过大问题、&lt;code&gt;SSH&lt;/code&gt; 安全连接问题等等、使用虚拟内存等等。这将增加您的服务器的安全性和可用性，并将为后续行动提供坚实的基础。
+      &lt;p&gt;当你创建或购买了了一个新的的服务器的时候，有一些必要的步骤作来配置你的服务器，比如：&lt;code&gt;root&lt;/code&gt; 用户权限过大问题、&lt;code&gt;SSH&lt;/code&gt; 安全连接问题等等、使用虚拟内存等等。这将增加您的服务器的安全性和可用性，并将为后续行动提供坚实的基础。&lt;/p&gt;
     
     </summary>
     
-      <category term="Linux" scheme="http://dev.charles.com/categories/linux/"/>
+      <category term="Linux" scheme="http://blog.charleslxh.com/categories/linux/"/>
     
     
-      <category term="Linux" scheme="http://dev.charles.com/tags/linux/"/>
+      <category term="Linux" scheme="http://blog.charleslxh.com/tags/linux/"/>
     
-      <category term="Security" scheme="http://dev.charles.com/tags/security/"/>
+      <category term="Security" scheme="http://blog.charleslxh.com/tags/security/"/>
     
   </entry>
   
   <entry>
     <title>让你的服务器更安全 - 使用 UFW 开启防火墙</title>
-    <link href="http://dev.charles.com/2017/05/20/%E8%AE%A9%E4%BD%A0%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9B%B4%E5%AE%89%E5%85%A8-%E4%BD%BF%E7%94%A8-UFW-%E5%BC%80%E5%90%AF%E9%98%B2%E7%81%AB%E5%A2%99/"/>
-    <id>http://dev.charles.com/2017/05/20/让你的服务器更安全-使用-UFW-开启防火墙/</id>
+    <link href="http://blog.charleslxh.com/2017/05/20/%E8%AE%A9%E4%BD%A0%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9B%B4%E5%AE%89%E5%85%A8-%E4%BD%BF%E7%94%A8-UFW-%E5%BC%80%E5%90%AF%E9%98%B2%E7%81%AB%E5%A2%99/"/>
+    <id>http://blog.charleslxh.com/2017/05/20/让你的服务器更安全-使用-UFW-开启防火墙/</id>
     <published>2017-05-20T01:58:52.000Z</published>
-    <updated>2017-05-21T01:59:38.000Z</updated>
+    <updated>2017-06-03T03:10:44.000Z</updated>
     
     <content type="html"><![CDATA[<p><code>UFW</code>(Uncomplicated Firewall) 是一个非常容易上手的 <code>iptables</code> 类防火墙配置工具，这个工具可以对出入服务的网络数据进行分割、过滤、转发等等细微的控制，进而实现诸如防火墙、 <code>NAT</code> 等功能。它简化了 <code>iptable</code> 那复杂的配置过程。我们都知道 <code>iptable</code> 非常强大、灵活，但是对于初学者来学习如何使用它正确的配置防火墙是比较难的，但是你又想保护你的网络，<code>UFW</code> 将会是你最好的选择。</p>
+<a id="more"></a>
 <p>下面我将会解释如何在 <code>Ubuntu 14.04</code> 中使用 <code>UFW</code> 安装、配置防火墙。</p>
 <h2 id="使用前提"><a class="header-anchor" href="#使用前提">¶</a>使用前提</h2>
 <p>在你使用这片教材之前，我希望你有一个独立的 <code>no-root</code> 超级管理员用户 - 拥有 <code>root</code> 的所有权限。你可以查看我这篇文章 <a href="/2017/05/20/%E8%AE%A9%E4%BD%A0%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9B%B4%E5%AE%89%E5%85%A8-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/">让你的服务器更安全 - 初始化服务器配置</a> 中创建用户相关步骤。</p>
@@ -346,29 +565,29 @@
     
     <summary type="html">
     
-      &lt;p&gt;&lt;code&gt;UFW&lt;/code&gt;(Uncomplicated Firewall) 是一个非常容易上手的 &lt;code&gt;iptables&lt;/code&gt; 类防火墙配置工具，这个工具可以对出入服务的网络数据进行分割、过滤、转发等等细微的控制，进而实现诸如防火墙、 &lt;code&gt;NAT
+      &lt;p&gt;&lt;code&gt;UFW&lt;/code&gt;(Uncomplicated Firewall) 是一个非常容易上手的 &lt;code&gt;iptables&lt;/code&gt; 类防火墙配置工具，这个工具可以对出入服务的网络数据进行分割、过滤、转发等等细微的控制，进而实现诸如防火墙、 &lt;code&gt;NAT&lt;/code&gt; 等功能。它简化了 &lt;code&gt;iptable&lt;/code&gt; 那复杂的配置过程。我们都知道 &lt;code&gt;iptable&lt;/code&gt; 非常强大、灵活，但是对于初学者来学习如何使用它正确的配置防火墙是比较难的，但是你又想保护你的网络，&lt;code&gt;UFW&lt;/code&gt; 将会是你最好的选择。&lt;/p&gt;
     
     </summary>
     
-      <category term="Linux" scheme="http://dev.charles.com/categories/linux/"/>
+      <category term="Linux" scheme="http://blog.charleslxh.com/categories/linux/"/>
     
     
-      <category term="Linux" scheme="http://dev.charles.com/tags/linux/"/>
+      <category term="Linux" scheme="http://blog.charleslxh.com/tags/linux/"/>
     
-      <category term="Security" scheme="http://dev.charles.com/tags/security/"/>
+      <category term="Ubuntu" scheme="http://blog.charleslxh.com/tags/ubuntu/"/>
     
-      <category term="Ubuntu" scheme="http://dev.charles.com/tags/ubuntu/"/>
+      <category term="Firewall" scheme="http://blog.charleslxh.com/tags/firewall/"/>
     
-      <category term="Firewall" scheme="http://dev.charles.com/tags/firewall/"/>
+      <category term="UFW" scheme="http://blog.charleslxh.com/tags/ufw/"/>
     
-      <category term="UFW" scheme="http://dev.charles.com/tags/ufw/"/>
+      <category term="Security" scheme="http://blog.charleslxh.com/tags/security/"/>
     
   </entry>
   
   <entry>
     <title>Redis 基础之命令详解</title>
-    <link href="http://dev.charles.com/2017/05/20/Redis-%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/"/>
-    <id>http://dev.charles.com/2017/05/20/Redis-基础之命令详解/</id>
+    <link href="http://blog.charleslxh.com/2017/05/20/Redis-%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%91%BD%E4%BB%A4%E8%AF%A6%E8%A7%A3/"/>
+    <id>http://blog.charleslxh.com/2017/05/20/Redis-基础之命令详解/</id>
     <published>2017-05-20T01:53:53.000Z</published>
     <updated>2017-05-20T07:01:20.000Z</updated>
     
@@ -376,17 +595,17 @@
     
     </summary>
     
-      <category term="Redis" scheme="http://dev.charles.com/categories/redis/"/>
+      <category term="Redis" scheme="http://blog.charleslxh.com/categories/redis/"/>
     
     
-      <category term="Redis" scheme="http://dev.charles.com/tags/redis/"/>
+      <category term="Redis" scheme="http://blog.charleslxh.com/tags/redis/"/>
     
   </entry>
   
   <entry>
     <title>Hello World</title>
-    <link href="http://dev.charles.com/2017/05/17/hello-world/"/>
-    <id>http://dev.charles.com/2017/05/17/hello-world/</id>
+    <link href="http://blog.charleslxh.com/2017/05/17/hello-world/"/>
+    <id>http://blog.charleslxh.com/2017/05/17/hello-world/</id>
     <published>2017-05-17T15:29:20.000Z</published>
     <updated>2017-05-20T07:01:20.000Z</updated>
     
@@ -412,10 +631,10 @@
     
     </summary>
     
-      <category term="Test" scheme="http://dev.charles.com/categories/test/"/>
+      <category term="Test" scheme="http://blog.charleslxh.com/categories/test/"/>
     
     
-      <category term="Testing" scheme="http://dev.charles.com/tags/testing/"/>
+      <category term="Testing" scheme="http://blog.charleslxh.com/tags/testing/"/>
     
   </entry>
   

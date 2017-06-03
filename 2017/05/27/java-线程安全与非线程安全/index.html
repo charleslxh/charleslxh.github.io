@@ -96,7 +96,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Java,线程," />
 
 
 
@@ -114,13 +114,17 @@
 
 
 
+<meta name="description" content="还记得初学 Java 的时候，老师是这样告诉我们的：ArrayList 是非线程安全的，Vector 是线程安全的；HashMap 是非线程安全的，HashTable 是线程安全的；StringBuilder 是非线程安全的，StringBuffer 是线程安全的。对，很快我们也记住了这一面试宝典，但是当面试官继续往下问你：什么是线程安全和非线程安全？他们有什么区别？什么场景用哪一种模式？这时，你">
+<meta name="keywords" content="Java,线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java 线程安全与非线程安全">
-<meta property="og:url" content="http://dev.charles.com/2017/05/27/java-线程安全与非线程安全/index.html">
+<meta property="og:url" content="http://blog.charleslxh.com/2017/05/27/java-线程安全与非线程安全/index.html">
 <meta property="og:site_name" content="互联网那些事儿">
-<meta property="og:updated_time" content="2017-05-27T09:17:05.000Z">
+<meta property="og:description" content="还记得初学 Java 的时候，老师是这样告诉我们的：ArrayList 是非线程安全的，Vector 是线程安全的；HashMap 是非线程安全的，HashTable 是线程安全的；StringBuilder 是非线程安全的，StringBuffer 是线程安全的。对，很快我们也记住了这一面试宝典，但是当面试官继续往下问你：什么是线程安全和非线程安全？他们有什么区别？什么场景用哪一种模式？这时，你">
+<meta property="og:updated_time" content="2017-06-03T03:11:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java 线程安全与非线程安全">
+<meta name="twitter:description" content="还记得初学 Java 的时候，老师是这样告诉我们的：ArrayList 是非线程安全的，Vector 是线程安全的；HashMap 是非线程安全的，HashTable 是线程安全的；StringBuilder 是非线程安全的，StringBuffer 是线程安全的。对，很快我们也记住了这一面试宝典，但是当面试官继续往下问你：什么是线程安全和非线程安全？他们有什么区别？什么场景用哪一种模式？这时，你">
 
 
 
@@ -148,7 +152,7 @@
 
 
 
-  <link rel="canonical" href="http://dev.charles.com/2017/05/27/java-线程安全与非线程安全/"/>
+  <link rel="canonical" href="http://blog.charleslxh.com/2017/05/27/java-线程安全与非线程安全/"/>
 
 
 
@@ -348,7 +352,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://dev.charles.com/2017/05/27/java-线程安全与非线程安全/">
+    <link itemprop="mainEntityOfPage" href="http://blog.charleslxh.com/2017/05/27/java-线程安全与非线程安全/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Charles Liao">
@@ -388,6 +392,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -424,7 +450,18 @@
       
 
       
-        
+        <p>还记得初学 Java 的时候，老师是这样告诉我们的：ArrayList 是非线程安全的，Vector 是线程安全的；HashMap 是非线程安全的，HashTable 是线程安全的；StringBuilder 是非线程安全的，StringBuffer 是线程安全的。对，很快我们也记住了这一面试宝典，但是当面试官继续往下问你：什么是线程安全和非线程安全？他们有什么区别？什么场景用哪一种模式？这时，你是不是会吐上一口老血。</p>
+<a id="more"></a>
+<h2 id="原子性"><a class="header-anchor" href="#原子性">¶</a>原子性</h2>
+<p>首先，我们吸纳来了解一下什么是原子性，这个概念大家或许耳熟能详。</p>
+<p>在多线程访问共享资源（同一块内存），能保证在同一时间，只有一个进程访问该资源，并且该操作不可被分割，不能被打断，必须执行到结束，不会被线程切换打断，这就是原子性。</p>
+<p>这个在 Java 多线程编程中是老生常谈的话题了，所谓的原子操作是指不会被线程调度机制打断的操作，这种操作从执行开始就会一直执行结束，中间不会出现任何的 context switch（线程的切换）。</p>
+<h2 id="线程安全与非线程安全"><a class="header-anchor" href="#线程安全与非线程安全">¶</a>线程安全与非线程安全</h2>
+<p>那到底什么是线程安全呢，其实线程安全就是一个原子操作，大致是：当一个线程调用一个线程安全的方法时，其他的线程就不能调用该线程安全的方法了，而必须要等到正在执行的线程结束后才能调用。</p>
+<p>其实也是线程同步的问题，若是每个线程对共享内存都做只读操作，而无写操作，那么这块共享内存是线程安全，若是有多个线程会同时进行写操作，这时候就需要考虑线程同步的问题了，这就涉及到了线程安全之间问题。</p>
+<h2 id="线程安全模拟"><a class="header-anchor" href="#线程安全模拟">¶</a>线程安全模拟</h2>
+<p>首先，我们用 <code>ArrayList</code> 来演示非线程安全，我们在主线程有一个 <code>ArrayList</code>，在主线程开启四个子线程分别往这个列表中插入值，</p>
+
       
     </div>
 
@@ -477,6 +514,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># Java</a>
+          
+            <a href="/tags/线程/" rel="tag"># 线程</a>
+          
+        </div>
+      
 
       
         
@@ -495,6 +540,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/03/正则表达式-贪性与惰性/" rel="prev" title="正则表达式 - 贪性与惰性">
+                正则表达式 - 贪性与惰性 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -570,8 +619,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://oq3ny21e5.bkt.clouddn.com/avatar-blog.jpeg"
@@ -586,7 +644,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -597,7 +655,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -608,7 +666,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -715,6 +773,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#原子性"><span class="nav-number">1.</span> <span class="nav-text">¶原子性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程安全与非线程安全"><span class="nav-number">2.</span> <span class="nav-text">¶线程安全与非线程安全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程安全模拟"><span class="nav-number">3.</span> <span class="nav-text">¶线程安全模拟</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -729,13 +803,15 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span class="author" itemprop="copyrightHolder">Charles Liao</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Charles Liao</span>
+  版权所有 备案号：赣 ICP 备 17006601 号
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  CHARLESLXH.COM
 </div>
 
 

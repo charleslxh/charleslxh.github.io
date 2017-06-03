@@ -96,7 +96,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Linux,Security,Ubuntu,Firewall,UFW," />
+  <meta name="keywords" content="Linux,Ubuntu,Firewall,UFW,Security," />
 
 
 
@@ -115,15 +115,15 @@
 
 
 <meta name="description" content="UFW(Uncomplicated Firewall) 是一个非常容易上手的 iptables 类防火墙配置工具，这个工具可以对出入服务的网络数据进行分割、过滤、转发等等细微的控制，进而实现诸如防火墙、 NAT 等功能。它简化了 iptable 那复杂的配置过程。我们都知道 iptable 非常强大、灵活，但是对于初学者来学习如何使用它正确的配置防火墙是比较难的，但是你又想保护你的网络，UFW 将">
-<meta name="keywords" content="Linux,Security,Ubuntu,Firewall,UFW">
+<meta name="keywords" content="Linux,Ubuntu,Firewall,UFW,Security">
 <meta property="og:type" content="article">
 <meta property="og:title" content="让你的服务器更安全 - 使用 UFW 开启防火墙">
-<meta property="og:url" content="http://dev.charles.com/2017/05/20/让你的服务器更安全-使用-UFW-开启防火墙/index.html">
+<meta property="og:url" content="http://blog.charleslxh.com/2017/05/20/让你的服务器更安全-使用-UFW-开启防火墙/index.html">
 <meta property="og:site_name" content="互联网那些事儿">
 <meta property="og:description" content="UFW(Uncomplicated Firewall) 是一个非常容易上手的 iptables 类防火墙配置工具，这个工具可以对出入服务的网络数据进行分割、过滤、转发等等细微的控制，进而实现诸如防火墙、 NAT 等功能。它简化了 iptable 那复杂的配置过程。我们都知道 iptable 非常强大、灵活，但是对于初学者来学习如何使用它正确的配置防火墙是比较难的，但是你又想保护你的网络，UFW 将">
 <meta property="og:image" content="https://twemoji.maxcdn.com/2/72x72/1f602.png">
 <meta property="og:image" content="https://twemoji.maxcdn.com/2/72x72/1f604.png">
-<meta property="og:updated_time" content="2017-05-21T01:59:38.000Z">
+<meta property="og:updated_time" content="2017-06-03T03:10:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="让你的服务器更安全 - 使用 UFW 开启防火墙">
 <meta name="twitter:description" content="UFW(Uncomplicated Firewall) 是一个非常容易上手的 iptables 类防火墙配置工具，这个工具可以对出入服务的网络数据进行分割、过滤、转发等等细微的控制，进而实现诸如防火墙、 NAT 等功能。它简化了 iptable 那复杂的配置过程。我们都知道 iptable 非常强大、灵活，但是对于初学者来学习如何使用它正确的配置防火墙是比较难的，但是你又想保护你的网络，UFW 将">
@@ -155,7 +155,7 @@
 
 
 
-  <link rel="canonical" href="http://dev.charles.com/2017/05/20/让你的服务器更安全-使用-UFW-开启防火墙/"/>
+  <link rel="canonical" href="http://blog.charleslxh.com/2017/05/20/让你的服务器更安全-使用-UFW-开启防火墙/"/>
 
 
 
@@ -355,7 +355,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://dev.charles.com/2017/05/20/让你的服务器更安全-使用-UFW-开启防火墙/">
+    <link itemprop="mainEntityOfPage" href="http://blog.charleslxh.com/2017/05/20/让你的服务器更安全-使用-UFW-开启防火墙/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Charles Liao">
@@ -454,6 +454,7 @@
 
       
         <p><code>UFW</code>(Uncomplicated Firewall) 是一个非常容易上手的 <code>iptables</code> 类防火墙配置工具，这个工具可以对出入服务的网络数据进行分割、过滤、转发等等细微的控制，进而实现诸如防火墙、 <code>NAT</code> 等功能。它简化了 <code>iptable</code> 那复杂的配置过程。我们都知道 <code>iptable</code> 非常强大、灵活，但是对于初学者来学习如何使用它正确的配置防火墙是比较难的，但是你又想保护你的网络，<code>UFW</code> 将会是你最好的选择。</p>
+<a id="more"></a>
 <p>下面我将会解释如何在 <code>Ubuntu 14.04</code> 中使用 <code>UFW</code> 安装、配置防火墙。</p>
 <h2 id="使用前提"><a class="header-anchor" href="#使用前提">¶</a>使用前提</h2>
 <p>在你使用这片教材之前，我希望你有一个独立的 <code>no-root</code> 超级管理员用户 - 拥有 <code>root</code> 的所有权限。你可以查看我这篇文章 <a href="/2017/05/20/%E8%AE%A9%E4%BD%A0%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9B%B4%E5%AE%89%E5%85%A8-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/">让你的服务器更安全 - 初始化服务器配置</a> 中创建用户相关步骤。</p>
@@ -639,13 +640,13 @@
           
             <a href="/tags/linux/" rel="tag"># Linux</a>
           
-            <a href="/tags/security/" rel="tag"># Security</a>
-          
             <a href="/tags/ubuntu/" rel="tag"># Ubuntu</a>
           
             <a href="/tags/firewall/" rel="tag"># Firewall</a>
           
             <a href="/tags/ufw/" rel="tag"># UFW</a>
+          
+            <a href="/tags/security/" rel="tag"># Security</a>
           
         </div>
       
@@ -771,7 +772,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -782,7 +783,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -793,7 +794,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -930,13 +931,15 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span class="author" itemprop="copyrightHolder">Charles Liao</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Charles Liao</span>
+  版权所有 备案号：赣 ICP 备 17006601 号
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  CHARLESLXH.COM
 </div>
 
 

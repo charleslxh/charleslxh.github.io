@@ -96,7 +96,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="正则表达式," />
 
 
 
@@ -114,12 +114,17 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="互联网那些事儿">
-<meta property="og:url" content="http://dev.charles.com/page/3/index.html">
+<meta name="description" content="使用正则表达式中的 贪性、惰性、支配性 的量词可以控制表达式匹配过程，我们知道量词 ？、*、+ 的意义，可以指定相关模式出现的次数，默认的情况下我们使用的量词均是是贪婪量词，它的匹配过程是从整个字符串开始查看，如果不匹配就去掉最后一个，再看看是否匹配，如此循环一直到匹配或字符串空为止。不管是 贪性 还是 惰性 ，在正则表达式在匹配失败时都会触发 正则表达式回溯（详情查看正则表达式 - 回溯），从而">
+<meta name="keywords" content="正则表达式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则表达式 - 贪性与惰性">
+<meta property="og:url" content="http://blog.charleslxh.com/2017/06/03/正则表达式-贪性与惰性/index.html">
 <meta property="og:site_name" content="互联网那些事儿">
+<meta property="og:description" content="使用正则表达式中的 贪性、惰性、支配性 的量词可以控制表达式匹配过程，我们知道量词 ？、*、+ 的意义，可以指定相关模式出现的次数，默认的情况下我们使用的量词均是是贪婪量词，它的匹配过程是从整个字符串开始查看，如果不匹配就去掉最后一个，再看看是否匹配，如此循环一直到匹配或字符串空为止。不管是 贪性 还是 惰性 ，在正则表达式在匹配失败时都会触发 正则表达式回溯（详情查看正则表达式 - 回溯），从而">
+<meta property="og:updated_time" content="2017-06-03T04:57:39.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="互联网那些事儿">
+<meta name="twitter:title" content="正则表达式 - 贪性与惰性">
+<meta name="twitter:description" content="使用正则表达式中的 贪性、惰性、支配性 的量词可以控制表达式匹配过程，我们知道量词 ？、*、+ 的意义，可以指定相关模式出现的次数，默认的情况下我们使用的量词均是是贪婪量词，它的匹配过程是从整个字符串开始查看，如果不匹配就去掉最后一个，再看看是否匹配，如此循环一直到匹配或字符串空为止。不管是 贪性 还是 惰性 ，在正则表达式在匹配失败时都会触发 正则表达式回溯（详情查看正则表达式 - 回溯），从而">
 
 
 
@@ -147,13 +152,13 @@
 
 
 
-  <link rel="canonical" href="http://dev.charles.com/page/3/"/>
+  <link rel="canonical" href="http://blog.charleslxh.com/2017/06/03/正则表达式-贪性与惰性/"/>
 
 
 
 
 
-  <title>互联网那些事儿 - 博客</title>
+  <title>正则表达式 - 贪性与惰性 | 互联网那些事儿</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -189,9 +194,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -338,9 +341,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -349,7 +352,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://dev.charles.com/2017/05/17/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://blog.charleslxh.com/2017/06/03/正则表达式-贪性与惰性/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Charles Liao">
@@ -366,9 +369,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/17/hello-world/" itemprop="url">Hello World</a></h2>
+          <h2 class="post-title" itemprop="name headline">正则表达式 - 贪性与惰性</h2>
         
 
         <div class="post-meta">
@@ -380,8 +381,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-17T23:29:20+08:00">
-                2017-05-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-03T09:57:39+08:00">
+                2017-06-03
               </time>
             
 
@@ -403,8 +404,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/test/" itemprop="url" rel="index">
-                    <span itemprop="name">Test</span>
+                  <a href="/categories/正则表达式/" itemprop="url" rel="index">
+                    <span itemprop="name">正则表达式</span>
                   </a>
                 </span>
 
@@ -420,7 +421,7 @@
 
           
           
-             <span id="/2017/05/17/hello-world/" class="leancloud_visitors" data-flag-title="Hello World">
+             <span id="/2017/06/03/正则表达式-贪性与惰性/" class="leancloud_visitors" data-flag-title="正则表达式 - 贪性与惰性">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -449,57 +450,256 @@
       
 
       
+        <p>使用正则表达式中的 <code>贪性</code>、<code>惰性</code>、<code>支配性</code> 的量词可以控制表达式匹配过程，我们知道量词 <code>？</code>、<code>*</code>、<code>+</code> 的意义，可以指定相关模式出现的次数，默认的情况下我们使用的量词均是是贪婪量词，它的匹配过程是从整个字符串开始查看，如果不匹配就去掉最后一个，再看看是否匹配，如此循环一直到匹配或字符串空为止。不管是 <code>贪性</code> 还是 <code>惰性</code> ，在正则表达式在匹配失败时都会触发 <code>正则表达式回溯</code>（详情查看<a href="/2017/06/03/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-%E5%9B%9E%E6%BA%AF/">正则表达式 - 回溯</a>），从而影响其性能。</p>
+<a id="more"></a>
+<h2 id="量词-quantifier"><a class="header-anchor" href="#量词-quantifier">¶</a>量词（Quantifier）</h2>
+<p>首先，我们需要了解一下正则表达式的量词，正则表达式中有如下几种量词 <code>?</code>、<code>+</code>、<code>*</code>、<code>{n}</code>、<code>{n,m}</code>、<code>{n,}</code>。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">量词</th>
+<th style="text-align:center">匹配规则</th>
+<th style="text-align:center">例子</th>
+<th style="text-align:center">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">?</td>
+<td style="text-align:center">匹配出现 0 次或 1 次</td>
+<td style="text-align:center">/a?/.test(‘abcd’);</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center">+</td>
+<td style="text-align:center">匹配出现 1 次或多次</td>
+<td style="text-align:center">/a+/.test(‘aaaaaaaa’);</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center">*</td>
+<td style="text-align:center">匹配出现 0 次或 1 次或多次</td>
+<td style="text-align:center">/a*/.test(‘bbbbb’);</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center">{n}</td>
+<td style="text-align:center">匹配刚好出现 n 次</td>
+<td style="text-align:center">/a{5}/.test(‘aaaab’);</td>
+<td style="text-align:center">false</td>
+</tr>
+<tr>
+<td style="text-align:center">{n,m}</td>
+<td style="text-align:center">匹配最少出现 n 次最多出现 m 次</td>
+<td style="text-align:center">a{1,3}/.test(‘aaabbb’);</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center">{n,}</td>
+<td style="text-align:center">匹配最少出现 n 次</td>
+<td style="text-align:center">/a{3,}/.test(‘aabbb’);</td>
+<td style="text-align:center">false</td>
+</tr>
+</tbody>
+</table>
+<h2 id="贪性匹配-greediness"><a class="header-anchor" href="#贪性匹配-greediness">¶</a>贪性匹配（greediness）</h2>
+<p>从字面意思我们就可以知道，所谓的&quot;贪婪&quot;的意思就是，如果符合要求就一直往后匹配，一直到无法匹配为止，这就是贪性匹配。默认情况下，<code>?</code>、<code>+</code>、<code>*</code>、<code>{n}</code>、<code>{n,m}</code>、<code>{n,}</code>都是贪婪的，也就是说，它会根据前导字符去匹配尽可能多的内容。</p>
+<blockquote>
+<p>贪性匹配就是匹配尽可能 <code>多</code> 的内容。</p>
+</blockquote>
+<p>假如我们有一个字符串 <code>This is a &lt;EM&gt;first&lt;/EM&gt; test</code>，我们使用 <code>/&lt;.+&gt;/g</code> 来匹配，我们期望匹配到两段文本，第一段为 <code>&lt;EM&gt;</code>，第二段匹配文本为 <code>&lt;/EM&gt;</code>，但是只得到了一段匹配文本：<code>&lt;EM&gt;first&lt;/EM&gt;</code>，很显然结果不尽人意，并不是我们想要的。</p>
+<p>出现这种情况的罪魁祸首就是 <code>+</code> 是 <code>贪性匹配（greedy）</code> 的，正则表达式引擎执行 <code>+</code> 量词时尽可能的重复匹配前面的符号 <code>.</code>  <code>回溯</code>（即：正则表达式放弃上一次匹配，吐出一个匹配的字符给剩下的字符串），再一次使用下一个正则表达式符号来匹配剩下的字符串，如此反复 <code>回溯</code> 直到匹配成功或回溯到 0。通过下面的例子，可以更加直观的解释他的过程。</p>
+<p><code>&lt;.+&gt;</code> 匹配字符串 <code>This is a &lt;EM&gt;first&lt;/EM&gt; test</code> 的过程：</p>
+<ol>
+<li>第一个符号为 <code>&lt;</code>，所以它将会匹配到字符串中的第一个 <code>&lt;</code> 字符。</li>
+<li>第二个符号为 <code>.</code>，匹配任意字符（除了换行），使用 <code>+</code> 重复匹配，所以它将会不断重复匹配，直到他匹配到句尾，则匹配失败，<code>.+</code> 匹配了 <code>EM&gt;first&lt;/EM&gt; test</code>。</li>
+<li>到目前为止 <code>&lt;.+</code> 匹配的字符串为：<code>&lt;EM&gt;first&lt;/EM&gt; test</code>。</li>
+<li>正则表达式引擎开始对下一个正则表达式符号 <code>&gt;</code> 进行匹配，但字符串还未匹配的只剩下换行符了，于是匹配失败。</li>
+<li>由于第三个符号 <code>&gt;</code> 匹配失败，正则表达式引擎回溯，回溯会使 <code>.+</code> <code>减少（吐出）</code>一个字符，回溯后的匹配状况是 <code>.+</code> 匹配 <code>EM&gt;first&lt;/EM&gt; tes</code>。</li>
+<li>正则表达式引擎使用符号 <code>&gt;</code> 匹配 <code>t</code>，结果依然不匹配。</li>
+<li>如果重复 <code>5</code>、<code>6</code> 两步，直到 <code>.+</code> 匹配 <code>EM&gt;first&lt;/EM</code> 时，正则表达式使用符号 <code>&gt;</code> 匹配 <code>&gt; test</code>，匹配成功。</li>
+<li>正则表达式引擎报告 <code>&lt;EM&gt;first&lt;/EM&gt;</code> 就是匹配上的文本。</li>
+</ol>
+<h2 id="可选性-optional"><a class="header-anchor" href="#可选性-optional">¶</a>可选性（optional）</h2>
+<p>我们都知道量词 <code>?</code> 可以使前一个正则表达式字符是可选的，如：<code>colou?r</code> 可以匹配 <code>colour</code> 和 <code>color</code>。当然你也可以使用括号 <code>()</code> 将一些字符或规则标识为可选的，如：Nov(ember)? 将会匹配 <code>Nov</code> 和 <code>November</code>，当然你也可以使用 <code>{0,1}</code> 拉替代 <code>?</code>，他们是等价的。</p>
+<p>默认情况下 <code>?</code> 也是 <code>贪性匹配</code> 的，即：他会优先尝试匹配该字符存在的情况，如果匹配失败，则尝试匹配该字符不存在的情况。例如：<br>
+我们用 <code>Feb 23(rd)?</code> 表达式匹配 <code>Today is Feb 23rd, 2003</code> 文本，匹配结果是 <code>Feb 23rd</code> 而不是 <code>Feb 23</code>。</p>
+<p>如果是：<code>Feb 23(rd)??</code> 呢？结果却是 <code>Feb 23</code>，是不是很奇妙，下面我们将会详细解答惰性匹配的原理。</p>
+<h2 id="惰性匹配-laziness"><a class="header-anchor" href="#惰性匹配-laziness">¶</a>惰性匹配（laziness）</h2>
+<p>惰性模式就是一旦匹配到合适的就结束，不在继续匹配下去了，在重复量词后面添加问号 <code>?</code> 即可形成惰性匹配。惰性匹配会尽可能少的匹配字符，但是必须要满足整个匹配模式。</p>
+<blockquote>
+<p>惰性匹配就是匹配尽可能 <code>少</code> 的内容。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">量词</th>
+<th style="text-align:center">匹配规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">??</td>
+<td style="text-align:center">匹配出现 0 次或 1 次，优先匹配 0 次</td>
+</tr>
+<tr>
+<td style="text-align:center">+?</td>
+<td style="text-align:center">匹配出现 1 次或多次，尽可能重复少的次数，不过最少次数是 1</td>
+</tr>
+<tr>
+<td style="text-align:center">*?</td>
+<td style="text-align:center">匹配出现 0 次或 1 次或多次，尽可能重复少的次数</td>
+</tr>
+<tr>
+<td style="text-align:center">{n}?</td>
+<td style="text-align:center">匹配刚好出现 n 次</td>
+</tr>
+<tr>
+<td style="text-align:center">{n,m}?</td>
+<td style="text-align:center">匹配最少出现 n 次最多出现 m 次，尽可能重复少的次数，不过最少次数是 n</td>
+</tr>
+<tr>
+<td style="text-align:center">{n,}?</td>
+<td style="text-align:center">匹配最少出现 n 次，尽可能重复少的次数，不过最少次数是 n</td>
+</tr>
+</tbody>
+</table>
+<p><code>&lt;.+?&gt;</code> 匹配字符串 <code>This is a &lt;EM&gt;first&lt;/EM&gt; test</code> 的过程：</p>
+<ol>
+<li>第一个符号为 <code>&lt;</code>，所以它将会匹配到字符串中的第一个 <code>&lt;</code> 字符。</li>
+<li>第二个符号为 <code>.</code>，匹配任意字符（除了换行），使用 <code>+?</code> 重复匹配，因为是惰性匹配，所以 <code>+</code> 会尽可能少的匹配（最少一次），第一次 <code>.+</code> 匹配了 <code>E</code>。</li>
+<li>正则表达式引擎开始对下一个正则表达式符号 <code>&gt;</code> 进行匹配，剩下的字符串 <code>M&gt;first&lt;/EM&gt; test</code> 的第一个字符为 <code>M</code>，于是匹配失败。</li>
+<li>由于第三个符号 <code>&gt;</code> 匹配失败，正则表达式引擎回溯，回溯会使 <code>.+</code> <code>扩大（吞入）</code>一个字符，而不是贪性匹配的<code>减少</code>一个字符，回溯后的匹配状况是 <code>.+</code> 匹配 <code>EM</code>。</li>
+<li>正则表达式引擎开始对下一个正则表达式符号 <code>&gt;</code> 进行匹配，剩下的字符串 <code>&gt;first&lt;/EM&gt; test</code> 的第一个字符为 <code>&gt;</code>，于是匹配成功。</li>
+<li>正则表达式引擎报告 <code>&lt;EM&gt;</code> 就是匹配上的文本。</li>
+</ol>
+<h2 id="总结"><a class="header-anchor" href="#总结">¶</a>总结</h2>
+<p>贪性匹配，正则引擎会一直匹配到字符串最后；当匹配为 <code>false</code> 时，就回溯以找到倒数第一个匹配位置，返回匹配结果。</p>
+<p>惰性匹配，正则引擎会匹配到符合 <code>pattern</code> 的末尾位置那个字符，然后再往后走一步，发现匹配为 <code>false</code> 时，就回溯以找到最近一个匹配为 <code>true</code> 的位置，返回匹配结果。</p>
+
+      
+    </div>
+
+    <div>
+      
         
-          
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-¶Quic
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/17/hello-world/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="Charles Liao wechat" style="width: 200px; max-width: 100%;"/>
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
         
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://oq3ny21e5.bkt.clouddn.com/wechat-reward-image.jpg" alt="Charles Liao WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://oq3ny21e5.bkt.clouddn.com/alipay-reward-image.jpg" alt="Charles Liao Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
-      
-    </div>
-
-    <div>
       
     </div>
 
     <footer class="post-footer">
       
-
+        <div class="post-tags">
+          
+            <a href="/tags/正则表达式/" rel="tag"># 正则表达式</a>
+          
+        </div>
       
 
       
+        
+      
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/27/java-线程安全与非线程安全/" rel="next" title="Java 线程安全与非线程安全">
+                <i class="fa fa-chevron-left"></i> Java 线程安全与非线程安全
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/03/正则表达式-回溯/" rel="prev" title="正则表达式 - 回溯">
+                正则表达式 - 回溯 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
       
-        <div class="post-eof"></div>
+
+      
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
-  </nav>
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
 
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
 
 
           </div>
@@ -507,6 +707,12 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yODcxMy81Mjg0"></div>
+    
+  </div>
+
 
         </div>
         
@@ -526,8 +732,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="http://oq3ny21e5.bkt.clouddn.com/avatar-blog.jpeg"
@@ -542,7 +757,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -553,7 +768,7 @@
             
             <div class="site-state-item site-state-categories">
               
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">分类</span>
               
             </div>
@@ -564,7 +779,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-count">20</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -671,6 +886,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#量词-quantifier"><span class="nav-number">1.</span> <span class="nav-text">¶量词（Quantifier）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#贪性匹配-greediness"><span class="nav-number">2.</span> <span class="nav-text">¶贪性匹配（greediness）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可选性-optional"><span class="nav-number">3.</span> <span class="nav-text">¶可选性（optional）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#惰性匹配-laziness"><span class="nav-number">4.</span> <span class="nav-text">¶惰性匹配（laziness）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">¶总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -685,13 +916,15 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright" >
-  
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span class="author" itemprop="copyrightHolder">Charles Liao</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Charles Liao</span>
+  版权所有 备案号：赣 ICP 备 17006601 号
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  CHARLESLXH.COM
 </div>
 
 
@@ -774,6 +1007,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
 
   
 
@@ -808,6 +1045,17 @@
 
 
 
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
   
 
 
@@ -1272,26 +1520,6 @@
 
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src=""></script>
   
 
 
