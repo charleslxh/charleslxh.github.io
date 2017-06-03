@@ -121,7 +121,7 @@
 <meta property="og:url" content="http://blog.charleslxh.com/2017/06/03/正则表达式-贪性与惰性/index.html">
 <meta property="og:site_name" content="互联网那些事儿">
 <meta property="og:description" content="使用正则表达式中的 贪性、惰性、支配性 的量词可以控制表达式匹配过程，我们知道量词 ？、*、+ 的意义，可以指定相关模式出现的次数，默认的情况下我们使用的量词均是是贪婪量词，它的匹配过程是从整个字符串开始查看，如果不匹配就去掉最后一个，再看看是否匹配，如此循环一直到匹配或字符串空为止。不管是 贪性 还是 惰性 ，在正则表达式在匹配失败时都会触发 正则表达式回溯（详情查看正则表达式 - 回溯），从而">
-<meta property="og:updated_time" content="2017-06-03T04:57:39.000Z">
+<meta property="og:updated_time" content="2017-06-03T05:20:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则表达式 - 贪性与惰性">
 <meta name="twitter:description" content="使用正则表达式中的 贪性、惰性、支配性 的量词可以控制表达式匹配过程，我们知道量词 ？、*、+ 的意义，可以指定相关模式出现的次数，默认的情况下我们使用的量词均是是贪婪量词，它的匹配过程是从整个字符串开始查看，如果不匹配就去掉最后一个，再看看是否匹配，如此循环一直到匹配或字符串空为止。不管是 贪性 还是 惰性 ，在正则表达式在匹配失败时都会触发 正则表达式回溯（详情查看正则表达式 - 回溯），从而">
@@ -576,6 +576,11 @@
 <h2 id="总结"><a class="header-anchor" href="#总结">¶</a>总结</h2>
 <p>贪性匹配，正则引擎会一直匹配到字符串最后；当匹配为 <code>false</code> 时，就回溯以找到倒数第一个匹配位置，返回匹配结果。</p>
 <p>惰性匹配，正则引擎会匹配到符合 <code>pattern</code> 的末尾位置那个字符，然后再往后走一步，发现匹配为 <code>false</code> 时，就回溯以找到最近一个匹配为 <code>true</code> 的位置，返回匹配结果。</p>
+<p>改善 <code>贪性</code>、<code>惰性</code>，减少回溯次数，能够有利于正则表达式的执行效率，写出更好的正则表达式。</p>
+<p>如我们可以使用 <code>&lt;[^&gt;]+&gt;</code> 来取代 <code>&lt;.+?&gt;</code> 和 <code>&lt;.+&gt;</code>，这样回溯次数就降到了 <code>0</code> 次，当然，效率和耗时都是最佳的。</p>
+<h2 id="参考连接"><a class="header-anchor" href="#参考连接">¶</a>参考连接</h2>
+<p><a href="http://www.regular-expressions.info/optional.html" target="_blank" rel="external">Optional Items</a><br>
+<a href="http://www.regular-expressions.info/repeat.html" target="_blank" rel="external">Repetition with Star and Plus</a></p>
 
       
     </div>
@@ -895,7 +900,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#量词-quantifier"><span class="nav-number">1.</span> <span class="nav-text">¶量词（Quantifier）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#贪性匹配-greediness"><span class="nav-number">2.</span> <span class="nav-text">¶贪性匹配（greediness）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可选性-optional"><span class="nav-number">3.</span> <span class="nav-text">¶可选性（optional）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#惰性匹配-laziness"><span class="nav-number">4.</span> <span class="nav-text">¶惰性匹配（laziness）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">¶总结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#量词-quantifier"><span class="nav-number">1.</span> <span class="nav-text">¶量词（Quantifier）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#贪性匹配-greediness"><span class="nav-number">2.</span> <span class="nav-text">¶贪性匹配（greediness）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可选性-optional"><span class="nav-number">3.</span> <span class="nav-text">¶可选性（optional）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#惰性匹配-laziness"><span class="nav-number">4.</span> <span class="nav-text">¶惰性匹配（laziness）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">¶总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考连接"><span class="nav-number">6.</span> <span class="nav-text">¶参考连接</span></a></li></ol></div>
             
 
           </div>

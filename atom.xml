@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.charleslxh.com/"/>
-  <updated>2017-06-03T05:11:07.000Z</updated>
+  <updated>2017-06-03T05:22:15.000Z</updated>
   <id>http://blog.charleslxh.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://blog.charleslxh.com/2017/06/03/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-%E5%9B%9E%E6%BA%AF/"/>
     <id>http://blog.charleslxh.com/2017/06/03/正则表达式-回溯/</id>
     <published>2017-06-03T02:34:53.000Z</published>
-    <updated>2017-06-03T05:11:07.000Z</updated>
+    <updated>2017-06-03T05:22:15.000Z</updated>
     
     <content type="html"><![CDATA[<p>在正则表达式实现中，回溯是匹配过程的基本组成部分，它是正则表达式如此好用和强大的根源。然而，回溯计算代价很高，如果设计失误，将导致失控。回溯是影响整体性能的唯一因素，理解它的工作原理，以及如何减小使用频率，可能是编写高效正则表达式的关键点。</p>
 <a id="more"></a>
@@ -39,9 +39,14 @@
 <p>如果目标字符串只有一个段落，那么此正则表达式的 <code>贪性匹配</code> 和 <code>惰性匹配</code> 是等价的，但尝试匹配的过程不同。</p>
 <p>当一个正则表达式占用浏览器几秒甚至更长时间时，问题原因很可能是回溯失控。为说明此问题，给出下面的正则表达式，它的目标是匹配整个 <code>HTML</code> 文件。此表达式被拆分成多行是为了适合页面显示。与其他正则表达式不同，<code>JavaScript</code> 在没有选项时可使点号匹配任意字符，包括换行符，所以此例中以 <code>[\s\S]</code> 匹配任意字符。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/&lt;html&gt;[\s\S]*?&lt;head&gt;[\s\S]*?&lt;title&gt;[\s\S]*?&lt;\/title&gt;[\s\S]*?&lt;\/head&gt; </div><div class="line">[\s\S]*?&lt;body&gt;[\s\S]*?&lt;\/body&gt;[\s\S]*?&lt;\/html&gt;<span class="regexp">/</span></div></pre></td></tr></table></figure>
+<h2 id="总结"><a class="header-anchor" href="#总结">¶</a>总结</h2>
+<p>回溯会大大降低我们正则表达式的执行效率与时间，所以我们需要尽量减少回溯的次数，这需要我们更加仔细的考虑每一个正则表达式。</p>
 <h2 id="参考连接"><a class="header-anchor" href="#参考连接">¶</a>参考连接</h2>
 <p><a href="http://www.regular-expressions.info/backref.html" target="_blank" rel="external">Backreferences</a><br>
-<a href="https://loveky.github.io/2017/05/31/regular-expressions-catastrophic-backtracking" target="_blank" rel="external">正则表达式中的悲观回溯</a></p>
+<a href="https://loveky.github.io/2017/05/31/regular-expressions-catastrophic-backtracking" target="_blank" rel="external">正则表达式中的悲观回溯</a><br>
+<a href="http://www.regular-expressions.info/catastrophic.html" target="_blank" rel="external">Runaway Regular Expressions: Catastrophic Backtracking</a><br>
+<a href="http://www.regular-expressions.info/possessive.html" target="_blank" rel="external">Regex Tutorial - Possessive Quantifiers</a><br>
+<a href="http://www.regular-expressions.info/atomic.html" target="_blank" rel="external">Regex Tutorial - Atomic Grouping</a></p>
 ]]></content>
     
     <summary type="html">
@@ -62,7 +67,7 @@
     <link href="http://blog.charleslxh.com/2017/06/03/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-%E8%B4%AA%E6%80%A7%E4%B8%8E%E6%83%B0%E6%80%A7/"/>
     <id>http://blog.charleslxh.com/2017/06/03/正则表达式-贪性与惰性/</id>
     <published>2017-06-03T01:57:39.000Z</published>
-    <updated>2017-06-03T04:57:39.000Z</updated>
+    <updated>2017-06-03T05:20:55.000Z</updated>
     
     <content type="html"><![CDATA[<p>使用正则表达式中的 <code>贪性</code>、<code>惰性</code>、<code>支配性</code> 的量词可以控制表达式匹配过程，我们知道量词 <code>？</code>、<code>*</code>、<code>+</code> 的意义，可以指定相关模式出现的次数，默认的情况下我们使用的量词均是是贪婪量词，它的匹配过程是从整个字符串开始查看，如果不匹配就去掉最后一个，再看看是否匹配，如此循环一直到匹配或字符串空为止。不管是 <code>贪性</code> 还是 <code>惰性</code> ，在正则表达式在匹配失败时都会触发 <code>正则表达式回溯</code>（详情查看<a href="/2017/06/03/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-%E5%9B%9E%E6%BA%AF/">正则表达式 - 回溯</a>），从而影响其性能。</p>
 <a id="more"></a>
@@ -190,6 +195,11 @@
 <h2 id="总结"><a class="header-anchor" href="#总结">¶</a>总结</h2>
 <p>贪性匹配，正则引擎会一直匹配到字符串最后；当匹配为 <code>false</code> 时，就回溯以找到倒数第一个匹配位置，返回匹配结果。</p>
 <p>惰性匹配，正则引擎会匹配到符合 <code>pattern</code> 的末尾位置那个字符，然后再往后走一步，发现匹配为 <code>false</code> 时，就回溯以找到最近一个匹配为 <code>true</code> 的位置，返回匹配结果。</p>
+<p>改善 <code>贪性</code>、<code>惰性</code>，减少回溯次数，能够有利于正则表达式的执行效率，写出更好的正则表达式。</p>
+<p>如我们可以使用 <code>&lt;[^&gt;]+&gt;</code> 来取代 <code>&lt;.+?&gt;</code> 和 <code>&lt;.+&gt;</code>，这样回溯次数就降到了 <code>0</code> 次，当然，效率和耗时都是最佳的。</p>
+<h2 id="参考连接"><a class="header-anchor" href="#参考连接">¶</a>参考连接</h2>
+<p><a href="http://www.regular-expressions.info/optional.html" target="_blank" rel="external">Optional Items</a><br>
+<a href="http://www.regular-expressions.info/repeat.html" target="_blank" rel="external">Repetition with Star and Plus</a></p>
 ]]></content>
     
     <summary type="html">
@@ -574,13 +584,13 @@
     
       <category term="Linux" scheme="http://blog.charleslxh.com/tags/linux/"/>
     
+      <category term="Security" scheme="http://blog.charleslxh.com/tags/security/"/>
+    
       <category term="Ubuntu" scheme="http://blog.charleslxh.com/tags/ubuntu/"/>
     
       <category term="Firewall" scheme="http://blog.charleslxh.com/tags/firewall/"/>
     
       <category term="UFW" scheme="http://blog.charleslxh.com/tags/ufw/"/>
-    
-      <category term="Security" scheme="http://blog.charleslxh.com/tags/security/"/>
     
   </entry>
   

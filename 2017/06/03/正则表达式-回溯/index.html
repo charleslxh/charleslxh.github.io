@@ -121,7 +121,7 @@
 <meta property="og:url" content="http://blog.charleslxh.com/2017/06/03/正则表达式-回溯/index.html">
 <meta property="og:site_name" content="互联网那些事儿">
 <meta property="og:description" content="在正则表达式实现中，回溯是匹配过程的基本组成部分，它是正则表达式如此好用和强大的根源。然而，回溯计算代价很高，如果设计失误，将导致失控。回溯是影响整体性能的唯一因素，理解它的工作原理，以及如何减小使用频率，可能是编写高效正则表达式的关键点。">
-<meta property="og:updated_time" content="2017-06-03T05:11:07.000Z">
+<meta property="og:updated_time" content="2017-06-03T05:22:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则表达式 - 回溯">
 <meta name="twitter:description" content="在正则表达式实现中，回溯是匹配过程的基本组成部分，它是正则表达式如此好用和强大的根源。然而，回溯计算代价很高，如果设计失误，将导致失控。回溯是影响整体性能的唯一因素，理解它的工作原理，以及如何减小使用频率，可能是编写高效正则表达式的关键点。">
@@ -467,9 +467,14 @@
 <p>如果目标字符串只有一个段落，那么此正则表达式的 <code>贪性匹配</code> 和 <code>惰性匹配</code> 是等价的，但尝试匹配的过程不同。</p>
 <p>当一个正则表达式占用浏览器几秒甚至更长时间时，问题原因很可能是回溯失控。为说明此问题，给出下面的正则表达式，它的目标是匹配整个 <code>HTML</code> 文件。此表达式被拆分成多行是为了适合页面显示。与其他正则表达式不同，<code>JavaScript</code> 在没有选项时可使点号匹配任意字符，包括换行符，所以此例中以 <code>[\s\S]</code> 匹配任意字符。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/&lt;html&gt;[\s\S]*?&lt;head&gt;[\s\S]*?&lt;title&gt;[\s\S]*?&lt;\/title&gt;[\s\S]*?&lt;\/head&gt; </div><div class="line">[\s\S]*?&lt;body&gt;[\s\S]*?&lt;\/body&gt;[\s\S]*?&lt;\/html&gt;<span class="regexp">/</span></div></pre></td></tr></table></figure>
+<h2 id="总结"><a class="header-anchor" href="#总结">¶</a>总结</h2>
+<p>回溯会大大降低我们正则表达式的执行效率与时间，所以我们需要尽量减少回溯的次数，这需要我们更加仔细的考虑每一个正则表达式。</p>
 <h2 id="参考连接"><a class="header-anchor" href="#参考连接">¶</a>参考连接</h2>
 <p><a href="http://www.regular-expressions.info/backref.html" target="_blank" rel="external">Backreferences</a><br>
-<a href="https://loveky.github.io/2017/05/31/regular-expressions-catastrophic-backtracking" target="_blank" rel="external">正则表达式中的悲观回溯</a></p>
+<a href="https://loveky.github.io/2017/05/31/regular-expressions-catastrophic-backtracking" target="_blank" rel="external">正则表达式中的悲观回溯</a><br>
+<a href="http://www.regular-expressions.info/catastrophic.html" target="_blank" rel="external">Runaway Regular Expressions: Catastrophic Backtracking</a><br>
+<a href="http://www.regular-expressions.info/possessive.html" target="_blank" rel="external">Regex Tutorial - Possessive Quantifiers</a><br>
+<a href="http://www.regular-expressions.info/atomic.html" target="_blank" rel="external">Regex Tutorial - Atomic Grouping</a></p>
 
       
     </div>
@@ -785,7 +790,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#匹配原理"><span class="nav-number">1.</span> <span class="nav-text">¶匹配原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考连接"><span class="nav-number">2.</span> <span class="nav-text">¶参考连接</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#匹配原理"><span class="nav-number">1.</span> <span class="nav-text">¶匹配原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">2.</span> <span class="nav-text">¶总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考连接"><span class="nav-number">3.</span> <span class="nav-text">¶参考连接</span></a></li></ol></div>
             
 
           </div>
