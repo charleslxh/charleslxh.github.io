@@ -1,0 +1,1533 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="正则表达式,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="互联网那些事儿" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
+
+
+
+
+
+
+<meta name="description" content="使用正则表达式中的 贪性、惰性、支配性 的量词可以控制表达式匹配过程，我们知道量词 ？、*、+ 的意义，可以指定相关模式出现的次数，默认的情况下我们使用的量词均是是贪婪量词，它的匹配过程是从整个字符串开始查看，如果不匹配就去掉最后一个，再看看是否匹配，如此循环一直到匹配或字符串空为止。不管是 贪性 还是 惰性 ，在正则表达式在匹配失败时都会触发 正则表达式回溯（详情查看正则表达式 - 回溯），从而">
+<meta name="keywords" content="正则表达式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则表达式 - 贪性与惰性">
+<meta property="og:url" content="http://blog.charleslxh.com/2017/06/03/正则表达式-贪性与惰性/index.html">
+<meta property="og:site_name" content="互联网那些事儿">
+<meta property="og:description" content="使用正则表达式中的 贪性、惰性、支配性 的量词可以控制表达式匹配过程，我们知道量词 ？、*、+ 的意义，可以指定相关模式出现的次数，默认的情况下我们使用的量词均是是贪婪量词，它的匹配过程是从整个字符串开始查看，如果不匹配就去掉最后一个，再看看是否匹配，如此循环一直到匹配或字符串空为止。不管是 贪性 还是 惰性 ，在正则表达式在匹配失败时都会触发 正则表达式回溯（详情查看正则表达式 - 回溯），从而">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-06-03T05:20:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="正则表达式 - 贪性与惰性">
+<meta name="twitter:description" content="使用正则表达式中的 贪性、惰性、支配性 的量词可以控制表达式匹配过程，我们知道量词 ？、*、+ 的意义，可以指定相关模式出现的次数，默认的情况下我们使用的量词均是是贪婪量词，它的匹配过程是从整个字符串开始查看，如果不匹配就去掉最后一个，再看看是否匹配，如此循环一直到匹配或字符串空为止。不管是 贪性 还是 惰性 ，在正则表达式在匹配失败时都会触发 正则表达式回溯（详情查看正则表达式 - 回溯），从而">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'R2LOSP734T',
+      apiKey: '0b0cd32448112bb3c7d61e4dc76bbd96',
+      indexName: 'blog',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://blog.charleslxh.com/2017/06/03/正则表达式-贪性与惰性/">
+
+
+
+
+
+  <title>正则表达式 - 贪性与惰性 | 互联网那些事儿</title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?b552606261728aeddf17801f4a7db1b4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">互联网那些事儿</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">博客</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://blog.charleslxh.com/2017/06/03/正则表达式-贪性与惰性/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Charles Liao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://oq3ny21e5.bkt.clouddn.com/avatar-blog.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="互联网那些事儿">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">正则表达式 - 贪性与惰性</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-03T09:57:39+08:00">
+                2017-06-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/正则表达式/" itemprop="url" rel="index">
+                    <span itemprop="name">正则表达式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/06/03/正则表达式-贪性与惰性/" class="leancloud_visitors" data-flag-title="正则表达式 - 贪性与惰性">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>使用正则表达式中的 <code>贪性</code>、<code>惰性</code>、<code>支配性</code> 的量词可以控制表达式匹配过程，我们知道量词 <code>？</code>、<code>*</code>、<code>+</code> 的意义，可以指定相关模式出现的次数，默认的情况下我们使用的量词均是是贪婪量词，它的匹配过程是从整个字符串开始查看，如果不匹配就去掉最后一个，再看看是否匹配，如此循环一直到匹配或字符串空为止。不管是 <code>贪性</code> 还是 <code>惰性</code> ，在正则表达式在匹配失败时都会触发 <code>正则表达式回溯</code>（详情查看<a href="/2017/06/03/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-%E5%9B%9E%E6%BA%AF/">正则表达式 - 回溯</a>），从而影响其性能。</p>
+<a id="more"></a>
+<h2 id="量词-quantifier"><a class="header-anchor" href="#量词-quantifier">¶</a>量词（Quantifier）</h2>
+<p>首先，我们需要了解一下正则表达式的量词，正则表达式中有如下几种量词 <code>?</code>、<code>+</code>、<code>*</code>、<code>{n}</code>、<code>{n,m}</code>、<code>{n,}</code>。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">量词</th>
+<th style="text-align:center">匹配规则</th>
+<th style="text-align:center">例子</th>
+<th style="text-align:center">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">?</td>
+<td style="text-align:center">匹配出现 0 次或 1 次</td>
+<td style="text-align:center">/a?/.test(‘abcd’);</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center">+</td>
+<td style="text-align:center">匹配出现 1 次或多次</td>
+<td style="text-align:center">/a+/.test(‘aaaaaaaa’);</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center">*</td>
+<td style="text-align:center">匹配出现 0 次或 1 次或多次</td>
+<td style="text-align:center">/a*/.test(‘bbbbb’);</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center">{n}</td>
+<td style="text-align:center">匹配刚好出现 n 次</td>
+<td style="text-align:center">/a{5}/.test(‘aaaab’);</td>
+<td style="text-align:center">false</td>
+</tr>
+<tr>
+<td style="text-align:center">{n,m}</td>
+<td style="text-align:center">匹配最少出现 n 次最多出现 m 次</td>
+<td style="text-align:center">a{1,3}/.test(‘aaabbb’);</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td style="text-align:center">{n,}</td>
+<td style="text-align:center">匹配最少出现 n 次</td>
+<td style="text-align:center">/a{3,}/.test(‘aabbb’);</td>
+<td style="text-align:center">false</td>
+</tr>
+</tbody>
+</table>
+<h2 id="贪性匹配-greediness"><a class="header-anchor" href="#贪性匹配-greediness">¶</a>贪性匹配（greediness）</h2>
+<p>从字面意思我们就可以知道，所谓的&quot;贪婪&quot;的意思就是，如果符合要求就一直往后匹配，一直到无法匹配为止，这就是贪性匹配。默认情况下，<code>?</code>、<code>+</code>、<code>*</code>、<code>{n}</code>、<code>{n,m}</code>、<code>{n,}</code>都是贪婪的，也就是说，它会根据前导字符去匹配尽可能多的内容。</p>
+<blockquote>
+<p>贪性匹配就是匹配尽可能 <code>多</code> 的内容。</p>
+</blockquote>
+<p>假如我们有一个字符串 <code>This is a &lt;EM&gt;first&lt;/EM&gt; test</code>，我们使用 <code>/&lt;.+&gt;/g</code> 来匹配，我们期望匹配到两段文本，第一段为 <code>&lt;EM&gt;</code>，第二段匹配文本为 <code>&lt;/EM&gt;</code>，但是只得到了一段匹配文本：<code>&lt;EM&gt;first&lt;/EM&gt;</code>，很显然结果不尽人意，并不是我们想要的。</p>
+<p>出现这种情况的罪魁祸首就是 <code>+</code> 是 <code>贪性匹配（greedy）</code> 的，正则表达式引擎执行 <code>+</code> 量词时尽可能的重复匹配前面的符号 <code>.</code>  <code>回溯</code>（即：正则表达式放弃上一次匹配，吐出一个匹配的字符给剩下的字符串），再一次使用下一个正则表达式符号来匹配剩下的字符串，如此反复 <code>回溯</code> 直到匹配成功或回溯到 0。通过下面的例子，可以更加直观的解释他的过程。</p>
+<p><code>&lt;.+&gt;</code> 匹配字符串 <code>This is a &lt;EM&gt;first&lt;/EM&gt; test</code> 的过程：</p>
+<ol>
+<li>第一个符号为 <code>&lt;</code>，所以它将会匹配到字符串中的第一个 <code>&lt;</code> 字符。</li>
+<li>第二个符号为 <code>.</code>，匹配任意字符（除了换行），使用 <code>+</code> 重复匹配，所以它将会不断重复匹配，直到他匹配到句尾，则匹配失败，<code>.+</code> 匹配了 <code>EM&gt;first&lt;/EM&gt; test</code>。</li>
+<li>到目前为止 <code>&lt;.+</code> 匹配的字符串为：<code>&lt;EM&gt;first&lt;/EM&gt; test</code>。</li>
+<li>正则表达式引擎开始对下一个正则表达式符号 <code>&gt;</code> 进行匹配，但字符串还未匹配的只剩下换行符了，于是匹配失败。</li>
+<li>由于第三个符号 <code>&gt;</code> 匹配失败，正则表达式引擎回溯，回溯会使 <code>.+</code> <code>减少（吐出）</code>一个字符，回溯后的匹配状况是 <code>.+</code> 匹配 <code>EM&gt;first&lt;/EM&gt; tes</code>。</li>
+<li>正则表达式引擎使用符号 <code>&gt;</code> 匹配 <code>t</code>，结果依然不匹配。</li>
+<li>如果重复 <code>5</code>、<code>6</code> 两步，直到 <code>.+</code> 匹配 <code>EM&gt;first&lt;/EM</code> 时，正则表达式使用符号 <code>&gt;</code> 匹配 <code>&gt; test</code>，匹配成功。</li>
+<li>正则表达式引擎报告 <code>&lt;EM&gt;first&lt;/EM&gt;</code> 就是匹配上的文本。</li>
+</ol>
+<h2 id="可选性-optional"><a class="header-anchor" href="#可选性-optional">¶</a>可选性（optional）</h2>
+<p>我们都知道量词 <code>?</code> 可以使前一个正则表达式字符是可选的，如：<code>colou?r</code> 可以匹配 <code>colour</code> 和 <code>color</code>。当然你也可以使用括号 <code>()</code> 将一些字符或规则标识为可选的，如：Nov(ember)? 将会匹配 <code>Nov</code> 和 <code>November</code>，当然你也可以使用 <code>{0,1}</code> 拉替代 <code>?</code>，他们是等价的。</p>
+<p>默认情况下 <code>?</code> 也是 <code>贪性匹配</code> 的，即：他会优先尝试匹配该字符存在的情况，如果匹配失败，则尝试匹配该字符不存在的情况。例如：<br>
+我们用 <code>Feb 23(rd)?</code> 表达式匹配 <code>Today is Feb 23rd, 2003</code> 文本，匹配结果是 <code>Feb 23rd</code> 而不是 <code>Feb 23</code>。</p>
+<p>如果是：<code>Feb 23(rd)??</code> 呢？结果却是 <code>Feb 23</code>，是不是很奇妙，下面我们将会详细解答惰性匹配的原理。</p>
+<h2 id="惰性匹配-laziness"><a class="header-anchor" href="#惰性匹配-laziness">¶</a>惰性匹配（laziness）</h2>
+<p>惰性模式就是一旦匹配到合适的就结束，不在继续匹配下去了，在重复量词后面添加问号 <code>?</code> 即可形成惰性匹配。惰性匹配会尽可能少的匹配字符，但是必须要满足整个匹配模式。</p>
+<blockquote>
+<p>惰性匹配就是匹配尽可能 <code>少</code> 的内容。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">量词</th>
+<th style="text-align:center">匹配规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">??</td>
+<td style="text-align:center">匹配出现 0 次或 1 次，优先匹配 0 次</td>
+</tr>
+<tr>
+<td style="text-align:center">+?</td>
+<td style="text-align:center">匹配出现 1 次或多次，尽可能重复少的次数，不过最少次数是 1</td>
+</tr>
+<tr>
+<td style="text-align:center">*?</td>
+<td style="text-align:center">匹配出现 0 次或 1 次或多次，尽可能重复少的次数</td>
+</tr>
+<tr>
+<td style="text-align:center">{n}?</td>
+<td style="text-align:center">匹配刚好出现 n 次</td>
+</tr>
+<tr>
+<td style="text-align:center">{n,m}?</td>
+<td style="text-align:center">匹配最少出现 n 次最多出现 m 次，尽可能重复少的次数，不过最少次数是 n</td>
+</tr>
+<tr>
+<td style="text-align:center">{n,}?</td>
+<td style="text-align:center">匹配最少出现 n 次，尽可能重复少的次数，不过最少次数是 n</td>
+</tr>
+</tbody>
+</table>
+<p><code>&lt;.+?&gt;</code> 匹配字符串 <code>This is a &lt;EM&gt;first&lt;/EM&gt; test</code> 的过程：</p>
+<ol>
+<li>第一个符号为 <code>&lt;</code>，所以它将会匹配到字符串中的第一个 <code>&lt;</code> 字符。</li>
+<li>第二个符号为 <code>.</code>，匹配任意字符（除了换行），使用 <code>+?</code> 重复匹配，因为是惰性匹配，所以 <code>+</code> 会尽可能少的匹配（最少一次），第一次 <code>.+</code> 匹配了 <code>E</code>。</li>
+<li>正则表达式引擎开始对下一个正则表达式符号 <code>&gt;</code> 进行匹配，剩下的字符串 <code>M&gt;first&lt;/EM&gt; test</code> 的第一个字符为 <code>M</code>，于是匹配失败。</li>
+<li>由于第三个符号 <code>&gt;</code> 匹配失败，正则表达式引擎回溯，回溯会使 <code>.+</code> <code>扩大（吞入）</code>一个字符，而不是贪性匹配的<code>减少</code>一个字符，回溯后的匹配状况是 <code>.+</code> 匹配 <code>EM</code>。</li>
+<li>正则表达式引擎开始对下一个正则表达式符号 <code>&gt;</code> 进行匹配，剩下的字符串 <code>&gt;first&lt;/EM&gt; test</code> 的第一个字符为 <code>&gt;</code>，于是匹配成功。</li>
+<li>正则表达式引擎报告 <code>&lt;EM&gt;</code> 就是匹配上的文本。</li>
+</ol>
+<h2 id="总结"><a class="header-anchor" href="#总结">¶</a>总结</h2>
+<p>贪性匹配，正则引擎会一直匹配到字符串最后；当匹配为 <code>false</code> 时，就回溯以找到倒数第一个匹配位置，返回匹配结果。</p>
+<p>惰性匹配，正则引擎会匹配到符合 <code>pattern</code> 的末尾位置那个字符，然后再往后走一步，发现匹配为 <code>false</code> 时，就回溯以找到最近一个匹配为 <code>true</code> 的位置，返回匹配结果。</p>
+<p>改善 <code>贪性</code>、<code>惰性</code>，减少回溯次数，能够有利于正则表达式的执行效率，写出更好的正则表达式。</p>
+<p>如我们可以使用 <code>&lt;[^&gt;]+&gt;</code> 来取代 <code>&lt;.+?&gt;</code> 和 <code>&lt;.+&gt;</code>，这样回溯次数就降到了 <code>0</code> 次，当然，效率和耗时都是最佳的。</p>
+<h2 id="参考连接"><a class="header-anchor" href="#参考连接">¶</a>参考连接</h2>
+<p><a href="http://www.regular-expressions.info/optional.html" target="_blank" rel="noopener">Optional Items</a><br>
+<a href="http://www.regular-expressions.info/repeat.html" target="_blank" rel="noopener">Repetition with Star and Plus</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+<div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="Charles Liao wechat" style="width: 200px; max-width: 100%;">
+    <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="http://oq3ny21e5.bkt.clouddn.com/wechat-reward-image.jpg" alt="Charles Liao WeChat Pay">
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="http://oq3ny21e5.bkt.clouddn.com/alipay-reward-image.jpg" alt="Charles Liao Alipay">
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/正则表达式/" rel="tag"># 正则表达式</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/27/java-线程安全与非线程安全/" rel="next" title="Java 线程安全与非线程安全">
+                <i class="fa fa-chevron-left"></i> Java 线程安全与非线程安全
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/06/03/正则表达式-回溯/" rel="prev" title="正则表达式 - 回溯">
+                正则表达式 - 回溯 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yODcxMy81Mjg0"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="http://oq3ny21e5.bkt.clouddn.com/avatar-blog.jpeg" alt="Charles Liao">
+          <p class="site-author-name" itemprop="name">Charles Liao</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/charleslxh" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/3241956382/profile" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.jianshu.com/u/2a21365fabf1" target="_blank" title="简书">
+                  
+                    <i class="fa fa-fw fa-gift"></i>
+                  
+                  简书
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.zhihu.com/people/liao-xue-hui-30/activities" target="_blank" title="知乎">
+                  
+                    <i class="fa fa-fw fa-share-alt"></i>
+                  
+                  知乎
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.douban.com/people/161625203/" target="_blank" title="豆瓣">
+                  
+                    <i class="fa fa-fw fa-book"></i>
+                  
+                  豆瓣
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://www.linkedin.com/in/%E5%AD%A6%E8%BE%89-%E5%BB%96-a4b0a5102/" target="_blank" title="领英">
+                  
+                    <i class="fa fa-fw fa-linkedin-square"></i>
+                  
+                  领英
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://toutiao.io/u/366658" title="开发者头条" target="_blank">开发者头条</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://www.daniujia.com?hmsr=blog.charleslxh.com" title="大牛家-为企业寻找专家" target="_blank">大牛家-为企业寻找专家</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#量词-quantifier"><span class="nav-number">1.</span> <span class="nav-text">¶量词（Quantifier）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#贪性匹配-greediness"><span class="nav-number">2.</span> <span class="nav-text">¶贪性匹配（greediness）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#可选性-optional"><span class="nav-number">3.</span> <span class="nav-text">¶可选性（optional）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#惰性匹配-laziness"><span class="nav-number">4.</span> <span class="nav-text">¶惰性匹配（laziness）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">¶总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考连接"><span class="nav-number">6.</span> <span class="nav-text">¶参考连接</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  <span class="author" itemprop="copyrightHolder">Charles Liao</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  版权所有 备案号：赣 ICP 备 17006601 号
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+  CHARLESLXH.COM
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fastclick/1.0.6/fastclick.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/jquery.lazyload/1.9.3/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (search_path.endsWith("json")) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("NV21xRl5ask9fATFPW4gWQMc-gzGzoHsz", "Wpxd8UMIE2ex6rsU6Vsi8hiP");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+          var TOTAL_COUNT_CONTAINER_REF = '.leancloud-visitors-total-count'
+          var totalCount = 0;
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            totalCount += time;
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+
+          // 设置访问总量
+          $(TOTAL_COUNT_CONTAINER_REF).text(totalCount);
+
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
