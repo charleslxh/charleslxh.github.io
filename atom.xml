@@ -145,9 +145,9 @@
     
       <category term="Firewall" scheme="http://blog.charleslxh.com/tags/firewall/"/>
     
-      <category term="Iptables" scheme="http://blog.charleslxh.com/tags/iptables/"/>
-    
       <category term="Security" scheme="http://blog.charleslxh.com/tags/security/"/>
+    
+      <category term="Iptables" scheme="http://blog.charleslxh.com/tags/iptables/"/>
     
   </entry>
   
@@ -748,9 +748,9 @@
     
       <category term="Firewall" scheme="http://blog.charleslxh.com/tags/firewall/"/>
     
-      <category term="Security" scheme="http://blog.charleslxh.com/tags/security/"/>
-    
       <category term="UFW" scheme="http://blog.charleslxh.com/tags/ufw/"/>
+    
+      <category term="Security" scheme="http://blog.charleslxh.com/tags/security/"/>
     
   </entry>
   
