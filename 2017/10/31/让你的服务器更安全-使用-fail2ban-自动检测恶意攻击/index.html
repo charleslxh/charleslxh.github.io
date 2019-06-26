@@ -41,6 +41,12 @@
 
 
 
+  
+  
+    
+  
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
 
 
 
@@ -78,7 +84,7 @@
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
     back2top: true,
     back2top_sidebar: false,
-    fancybox: false,
+    fancybox: true,
     fastclick: false,
     lazyload: false,
     tabs: true,
@@ -104,7 +110,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="让你的服务器更安全 - 使用 Fail2ban 自动检测恶意攻击">
 <meta property="og:url" content="http://blog.charleslxh.top/2017/10/31/让你的服务器更安全-使用-fail2ban-自动检测恶意攻击/index.html">
-<meta property="og:site_name" content="采菊杂记">
+<meta property="og:site_name" content="菊爷杂记">
 <meta property="og:description" content="对于 SSH 服务的常见的攻击就是暴力破解攻击——远程攻击者通过不同的密码来无限次地进行登录尝试。当然 SSH 可以设置使用非密码验证验证方式来对抗这种攻击，例如 公钥验证 或者 双重验证。将不同的验证方法的优劣处先放在一边，如果我们必须使用密码验证方式怎么办？你是如何保护你的 SSH 服务器免遭暴力破解攻击的呢？ fail2ban 是 Linux 上的一个著名的入侵保护的开源框架，它会监控多个系">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2017-10-31T03:48:35.000Z">
@@ -114,7 +120,7 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="采菊杂记" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="菊爷杂记" type="application/atom+xml">
 
 
 
@@ -130,7 +136,7 @@
   };
 </script>
 
-  <title>让你的服务器更安全 - 使用 Fail2ban 自动检测恶意攻击 | 采菊杂记</title>
+  <title>让你的服务器更安全 - 使用 Fail2ban 自动检测恶意攻击 | 菊爷杂记</title>
   
 
 
@@ -189,7 +195,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">采菊杂记</span>
+        <span class="site-title">菊爷杂记</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -267,7 +273,7 @@
       
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">22</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">21</span></a>
 
   </li>
         
@@ -285,7 +291,7 @@
       
     
 
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">8</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">7</span></a>
 
   </li>
         
@@ -303,7 +309,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">18</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">17</span></a>
 
   </li>
         
@@ -454,7 +460,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="采菊杂记">
+      <meta itemprop="name" content="菊爷杂记">
     </span>
 
     
@@ -842,7 +848,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-count">17</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -869,9 +875,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">分类</span>
                   
                 </div>
@@ -930,9 +934,7 @@
                     
                       
                     
-                      
-                    
-                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1026,6 +1028,10 @@
                     <span class="exturl" data-url="aHR0cHM6Ly93d3cuZGFuaXVqaWEuY29t" title="https://www.daniujia.com">大牛家 - 为企业对接专家</span>
                   </li>
                 
+                  <li class="links-of-blogroll-item">
+                    <span class="exturl" data-url="aHR0cHM6Ly93d3cucWl5dWVzdW8uY29t" title="https://www.qiyuesuo.com">契约所 - 专业的印控平台</span>
+                  </li>
+                
               </ul>
             </div>
           
@@ -1084,7 +1090,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">15k</span>
+    <span title="站点总字数">14k</span>
   
 
   
@@ -1157,6 +1163,8 @@
 
 
 
+  
+
 
 
 
@@ -1179,6 +1187,9 @@
 
   
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
 
 
   
@@ -1674,7 +1685,9 @@
   
   
   
-  <script src="/lib/bookmark/bookmark.min.js?v=1.0"></script>
+    
+  
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-bookmark@1/bookmark.min.js"></script>
   <script>
   
     bookmark.scrollToMark('auto', "#更多");
