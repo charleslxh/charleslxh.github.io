@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-cn">
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -96,13 +96,13 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
 
 
-  <meta name="keywords" content="Linux,Firewall,UFW,Security,">
+  <meta name="keywords" content="Linux,Firewall,Security,UFW,">
 
 
 
 
 
-  <link rel="alternate" href="/atom.xml" title="互联网那些事儿" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="采菊杂记" type="application/atom+xml">
 
 
 
@@ -115,13 +115,13 @@
 
 
 <meta name="description" content="UFW(Uncomplicated Firewall) 是一个非常容易上手的 iptables 类防火墙配置工具，这个工具可以对出入服务的网络数据进行分割、过滤、转发等等细微的控制，进而实现诸如防火墙、 NAT 等功能。它简化了 iptable 那复杂的配置过程。我们都知道 iptable 非常强大、灵活，但是对于初学者来学习如何使用它正确的配置防火墙是比较难的，但是你又想保护你的网络，UFW 将">
-<meta name="keywords" content="Linux,Firewall,UFW,Security">
+<meta name="keywords" content="Linux,Firewall,Security,UFW">
 <meta property="og:type" content="article">
 <meta property="og:title" content="让你的服务器更安全 - 使用 UFW 开启防火墙">
-<meta property="og:url" content="http://blog.charleslxh.com/2017/05/20/让你的服务器更安全-使用-UFW-开启防火墙/index.html">
-<meta property="og:site_name" content="互联网那些事儿">
+<meta property="og:url" content="http://blog.charleslxh.top/2017/05/20/让你的服务器更安全-使用-UFW-开启防火墙/index.html">
+<meta property="og:site_name" content="采菊杂记">
 <meta property="og:description" content="UFW(Uncomplicated Firewall) 是一个非常容易上手的 iptables 类防火墙配置工具，这个工具可以对出入服务的网络数据进行分割、过滤、转发等等细微的控制，进而实现诸如防火墙、 NAT 等功能。它简化了 iptable 那复杂的配置过程。我们都知道 iptable 非常强大、灵活，但是对于初学者来学习如何使用它正确的配置防火墙是比较难的，但是你又想保护你的网络，UFW 将">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale" content="zh-cn">
 <meta property="og:image" content="https://twemoji.maxcdn.com/2/72x72/1f602.png">
 <meta property="og:image" content="https://twemoji.maxcdn.com/2/72x72/1f604.png">
 <meta property="og:updated_time" content="2017-10-31T02:57:00.000Z">
@@ -142,7 +142,7 @@
     motion: true,
     duoshuo: {
       userId: '0',
-      author: '博主'
+      author: 'Author'
     },
     algolia: {
       applicationID: 'R2LOSP734T',
@@ -156,16 +156,16 @@
 
 
 
-  <link rel="canonical" href="http://blog.charleslxh.com/2017/05/20/让你的服务器更安全-使用-UFW-开启防火墙/">
+  <link rel="canonical" href="http://blog.charleslxh.top/2017/05/20/让你的服务器更安全-使用-UFW-开启防火墙/">
 
 
 
 
 
-  <title>让你的服务器更安全 - 使用 UFW 开启防火墙 | 互联网那些事儿</title>
+  <title>让你的服务器更安全 - 使用 UFW 开启防火墙 | 采菊杂记</title>
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-cn">
 
   
 
@@ -209,7 +209,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">互联网那些事儿</span>
+        <span class="site-title">采菊杂记</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -239,7 +239,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
-            首页
+            Home
           </a>
         </li>
       
@@ -249,7 +249,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
-            分类
+            Categories
           </a>
         </li>
       
@@ -259,7 +259,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
-            关于
+            About
           </a>
         </li>
       
@@ -269,7 +269,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
-            归档
+            Archives
           </a>
         </li>
       
@@ -279,7 +279,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
-            标签
+            Tags
           </a>
         </li>
       
@@ -289,7 +289,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
             
-            公益404
+            Commonweal 404
           </a>
         </li>
       
@@ -302,7 +302,7 @@
             
               <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
             
-            搜索
+            Search
           </a>
         </li>
       
@@ -321,7 +321,7 @@
       <i class="fa fa-times-circle"></i>
     </span>
     <div class="local-search-input-wrapper">
-      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
     </div>
   </div>
   <div id="local-search-result"></div>
@@ -354,7 +354,7 @@
   
 
   <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://blog.charleslxh.com/2017/05/20/让你的服务器更安全-使用-UFW-开启防火墙/">
+    <link itemprop="mainEntityOfPage" href="http://blog.charleslxh.top/2017/05/20/让你的服务器更安全-使用-UFW-开启防火墙/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Charles Liao">
@@ -363,7 +363,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="互联网那些事儿">
+      <meta itemprop="name" content="采菊杂记">
     </span>
 
     
@@ -381,9 +381,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">Posted on</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-20T09:58:52+08:00">
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-05-20T09:58:52+08:00">
                 2017-05-20
               </time>
             
@@ -402,7 +402,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">分类于</span>
+                <span class="post-meta-item-text">In</span>
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
@@ -429,7 +429,7 @@
                  <i class="fa fa-eye"></i>
                </span>
                
-                 <span class="post-meta-item-text">阅读次数 </span>
+                 <span class="post-meta-item-text">Visitors </span>
                
                  <span class="leancloud-visitors-count"></span>
              </span>
@@ -641,9 +641,9 @@
           
             <a href="/tags/firewall/" rel="tag"># Firewall</a>
           
-            <a href="/tags/ufw/" rel="tag"># UFW</a>
-          
             <a href="/tags/security/" rel="tag"># Security</a>
+          
+            <a href="/tags/ufw/" rel="tag"># UFW</a>
           
         </div>
       
@@ -746,10 +746,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
+            Table of Contents
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
+            Overview
           </li>
         </ul>
       
@@ -768,7 +768,7 @@
             <div class="site-state-item site-state-posts">
               <a href="/archives">
                 <span class="site-state-item-count">18</span>
-                <span class="site-state-item-name">日志</span>
+                <span class="site-state-item-name">posts</span>
               </a>
             </div>
           
@@ -779,7 +779,7 @@
             <div class="site-state-item site-state-categories">
               
                 <span class="site-state-item-count">8</span>
-                <span class="site-state-item-name">分类</span>
+                <span class="site-state-item-name">categories</span>
               
             </div>
           
@@ -790,7 +790,7 @@
             <div class="site-state-item site-state-tags">
               
                 <span class="site-state-item-count">22</span>
-                <span class="site-state-item-name">标签</span>
+                <span class="site-state-item-name">tags</span>
               
             </div>
           
@@ -934,7 +934,7 @@
   
   &copy;  2017 - 
   <span itemprop="copyrightYear">2019</span>
-  CHARLESLXH.COM
+  CHARLESLXH.TOP
 </div>
 
 

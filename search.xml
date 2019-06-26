@@ -41,8 +41,8 @@
       <tags>
         <tag>Linux</tag>
         <tag>Firewall</tag>
-        <tag>Security</tag>
         <tag>Iptables</tag>
+        <tag>Security</tag>
       </tags>
   </entry>
   <entry>
@@ -198,8 +198,8 @@
       <tags>
         <tag>Linux</tag>
         <tag>Firewall</tag>
-        <tag>UFW</tag>
         <tag>Security</tag>
+        <tag>UFW</tag>
       </tags>
   </entry>
   <entry>
