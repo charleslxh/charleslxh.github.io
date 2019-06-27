@@ -105,15 +105,22 @@
 
 
 
-  <meta name="keywords" content="MQTT">
+  <meta name="description" content="MQTT 全称为 Message Queuing Telemetry Transport（消息队列遥测传输）是一种基于发布/订阅范式的 轻量级 消息协议，由 IBM 发布。 MQTT 可以被解释为一种低开销，低带宽占用的即时通讯协议，可以用极少的代码和带宽的为连接远程设备提供实时可靠的消息服务，它适用于硬件性能低下的远程设备以及网络状况糟糕的环境下，因此 MQTT 协议在 IoT（Internet">
+<meta name="keywords" content="MQTT">
 <meta property="og:type" content="article">
-<meta property="og:title" content="MQTT-协议基本详解">
+<meta property="og:title" content="MQTT - 协议基本详解">
 <meta property="og:url" content="http://blog.charleslxh.top/2019/06/27/2019/mqtt-协议基本详解/index.html">
 <meta property="og:site_name" content="菊爷杂记">
+<meta property="og:description" content="MQTT 全称为 Message Queuing Telemetry Transport（消息队列遥测传输）是一种基于发布/订阅范式的 轻量级 消息协议，由 IBM 发布。 MQTT 可以被解释为一种低开销，低带宽占用的即时通讯协议，可以用极少的代码和带宽的为连接远程设备提供实时可靠的消息服务，它适用于硬件性能低下的远程设备以及网络状况糟糕的环境下，因此 MQTT 协议在 IoT（Internet">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-06-27T02:58:32.833Z">
+<meta property="og:image" content="http://blog.charleslxh.top/uploads/images/posts/mqtt/mqtt-flow.png">
+<meta property="og:image" content="http://blog.charleslxh.top/uploads/images/posts/mqtt/mqtt-protocol-format.png">
+<meta property="og:image" content="http://blog.charleslxh.top/uploads/images/posts/mqtt/mqtt-protocol-fixed-header.png">
+<meta property="og:updated_time" content="2019-06-27T10:53:25.240Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MQTT-协议基本详解">
+<meta name="twitter:title" content="MQTT - 协议基本详解">
+<meta name="twitter:description" content="MQTT 全称为 Message Queuing Telemetry Transport（消息队列遥测传输）是一种基于发布/订阅范式的 轻量级 消息协议，由 IBM 发布。 MQTT 可以被解释为一种低开销，低带宽占用的即时通讯协议，可以用极少的代码和带宽的为连接远程设备提供实时可靠的消息服务，它适用于硬件性能低下的远程设备以及网络状况糟糕的环境下，因此 MQTT 协议在 IoT（Internet">
+<meta name="twitter:image" content="http://blog.charleslxh.top/uploads/images/posts/mqtt/mqtt-flow.png">
 
 
 
@@ -133,7 +140,7 @@
   };
 </script>
 
-  <title>MQTT-协议基本详解 | 菊爷杂记</title>
+  <title>MQTT - 协议基本详解 | 菊爷杂记</title>
   
 
 
@@ -453,7 +460,7 @@
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Charles Liao">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/avatar.jpg">
+      <meta itemprop="image" content="/uploads/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
@@ -465,7 +472,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">MQTT-协议基本详解<span class="exturl post-edit-link" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NoYXJsZXNseGgvYmxvZy9ibG9iL21hc3Rlci9zb3VyY2UvX3Bvc3RzLzIwMTkvbXF0dC3ljY/orq7ln7rmnKzor6bop6MubWQ=" title="编辑"><i class="fa fa-pencil"></i></span>
+          <h2 class="post-title" itemprop="name headline">MQTT - 协议基本详解<span class="exturl post-edit-link" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NoYXJsZXNseGgvYmxvZy9ibG9iL21hc3Rlci9zb3VyY2UvX3Bvc3RzLzIwMTkvbXF0dC3ljY/orq7ln7rmnKzor6bop6MubWQ=" title="编辑"><i class="fa fa-pencil"></i></span>
 
               
             
@@ -491,7 +498,7 @@
                 
               
 
-              <time title="创建时间：2019-06-27 10:58:33 / 修改时间：10:58:32" itemprop="dateCreated datePublished" datetime="2019-06-27T10:58:33+08:00">2019-06-27</time>
+              <time title="创建时间：2019-06-27 10:58:33 / 修改时间：18:53:25" itemprop="dateCreated datePublished" datetime="2019-06-27T10:58:33+08:00">2019-06-27</time>
             
 
             
@@ -541,7 +548,7 @@
 
           
           
-            <span id="/2019/06/27/2019/mqtt-协议基本详解/" class="leancloud_visitors" data-flag-title="MQTT-协议基本详解">
+            <span id="/2019/06/27/2019/mqtt-协议基本详解/" class="leancloud_visitors" data-flag-title="MQTT - 协议基本详解">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -566,7 +573,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">0</span>
+                <span title="本文字数">5.5k</span>
               
 
               
@@ -580,7 +587,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">5 分钟</span>
               
             </div>
           
@@ -600,7 +607,404 @@
       
 
       
-        
+        <p>MQTT 全称为 <code>Message Queuing Telemetry Transport</code>（消息队列遥测传输）是一种基于发布/订阅范式的 <strong>轻量级</strong> 消息协议，由 IBM 发布。</p>
+<p>MQTT 可以被解释为一种低开销，低带宽占用的即时通讯协议，可以用极少的代码和带宽的为连接远程设备提供实时可靠的消息服务，它适用于硬件性能低下的远程设备以及网络状况糟糕的环境下，因此 MQTT 协议在 IoT（Internet of things，物联网），小型设备应用，移动应用等方面有较广泛的应用。</p>
+<p>IoT 设备要运作，就必须连接到互联网，设备才能相互协作，以及与后端服务协同工作。而互联网的基础网络协议是 TCP/IP，MQTT 协议是基于 TCP/IP 协议栈而构建的，因此它已经慢慢的已经成为了 IoT 通讯的标准。</p>
+<p>在简介完 MQTT 协议后，EMQ君将从其一些基本特点和基本概念为两部分，介绍 MQTT 协议。</p>
+<a id="more"></a>
+<h2 id="基本特点"><a class="header-anchor" href="#基本特点">¶</a>基本特点</h2>
+<p>MQTT 是一种 <strong>发布/订阅</strong> 传输协议，基本原理和实现如下：</p>
+<p><img src="/uploads/images/posts/mqtt/mqtt-flow.png" alt="MQTT 流程"></p>
+<ol>
+<li>
+<p>MQTT 协议提供一对多的消息发布，可以解除应用程序耦合，信息冗余小。该协议需要客户端和服务端，而协议中主要有三种身份：发布者（Publisher）、代理（Broker，服务器）、订阅者（Subscriber）。其中，消息的发布者和订阅者都是客户端，消息代理是服务器，而消息发布者可以同时是订阅者，实现了生产者与消费者的脱耦。</p>
+</li>
+<li>
+<p>使用 TCP/IP 提供网络连接，提供有序、无损、双向连接；MQTT 是一种连接协议，它指定了如何组织数据字节并通过 TCP/IP 网络传输它们。设备联网，也需要连接到互联网中，在大万维的世界中，TCP 如同汽车，有轮子就能用来运输数据，MQTT 就像是交通规则。在网络模型中，TCP是传输层协议，而 MQTT是在应用层，在 TCP 的上层，因此MQTT 也是基于这个而构建的，提高了可靠性。</p>
+</li>
+<li>
+<p>对负载内容屏蔽的消息传输；可以对消息订阅者所接受到的内容有所屏蔽。</p>
+</li>
+<li>
+<p>具体有三种消息发布的服务质量（<code>QoS</code>）</p>
+<ul>
+<li><code>至多一次（QoS0）</code>：消息发布完全依赖底层 TCP/IP 网络。会发生消息丢失或重复。这一级别可用于如下情况，环境传感器数据，丢失一次读记录无所谓，因为不久后还会有第二次发送。</li>
+<li><code>至少一次（QoS1）</code>：确保消息到达，但消息重复可能会发生。</li>
+<li><code>只有一次（QoS2）</code>：确保消息到达一次。这一级别可用于如下情况，在计费系统中，消息重复或丢失会导致不正确的结果。</li>
+</ul>
+</li>
+</ol>
+<ol start="5">
+<li>
+<p>小型传输，开销小，固定长度的头部是 2 字节，协议交换最小化，以降低网络流量；整体上协议可拆分为：固定头部+可变头部+消息体，这就是为什么在介绍里说它非常适合 <strong>在物联网领域，传感器与服务器的通信，信息的收集</strong>。</p>
+</li>
+<li>
+<p>使用 <code>Last Will</code> 和 <code>Testament</code> 特性通知有关各方客户端异常中断的机制；</p>
+<ul>
+<li><code>Last Will</code>：即遗言机制，用于通知同一主题下的其他设备发送遗言的设备已经断开了连接。</li>
+<li><code>Testament</code>：遗嘱机制，功能类似于Last Will。</li>
+</ul>
+</li>
+</ol>
+<h2 id="基本术语"><a class="header-anchor" href="#基本术语">¶</a>基本术语</h2>
+<h4 id="网络连接-network-connection"><a class="header-anchor" href="#网络连接-network-connection">¶</a>网络连接 Network Connection</h4>
+<p>MQTT使用的底层传输协议基础设施。</p>
+<ul>
+<li>客户端使用它连接服务端。</li>
+<li>它提供有序的、可靠的、双向字节流传输。</li>
+</ul>
+<h4 id="应用消息-application-message"><a class="header-anchor" href="#应用消息-application-message">¶</a>应用消息 Application Message</h4>
+<p>MQTT协议通过网络传输应用数据，应用消息通过MQTT传输时，它们有关联的服务质量（QoS）和主题（Topic）。</p>
+<h4 id="客户端-client"><a class="header-anchor" href="#客户端-client">¶</a>客户端 Client</h4>
+<p>使用 MQTT 的程序或设备，客户端总是通过网络连接到服务端，它可以：</p>
+<ul>
+<li>发布应用消息给其它相关的客户端。</li>
+<li>订阅以请求接受相关的应用消息</li>
+<li>取消订阅以移除接受应用消息的请求。</li>
+<li>从服务端断开连接。</li>
+</ul>
+<h4 id="服务端-server"><a class="header-anchor" href="#服务端-server">¶</a>服务端 Server</h4>
+<p>一个程序或设备，作为发送消息的客户端和请求订阅的客户端之间的中介，他需要：</p>
+<ul>
+<li>接受来自客户端的网络连接</li>
+<li>接受客户端发布的应用消息</li>
+<li>处理客户端的订阅和取消订阅请求。</li>
+<li>转发应用消息给符合条件的客户端订阅。</li>
+<li>订阅 Subscription</li>
+<li>订阅包含一个主题过滤器（Topic Filter）和一个最大的服务质量（QoS）等级。订阅与单个会话（Session）关联，会话可以包含多于一个的订阅，会话的每个订阅都有一个不同的主题过滤器。</li>
+</ul>
+<h4 id="主题名-topic-name"><a class="header-anchor" href="#主题名-topic-name">¶</a>主题名 Topic Name</h4>
+<p>附加在应用消息上的一个标签，服务端已知且与订阅匹配，服务端发送应用消息的一个副本给每一个匹配的客户端订阅。</p>
+<h4 id="主题过滤器-topic-filter"><a class="header-anchor" href="#主题过滤器-topic-filter">¶</a>主题过滤器 Topic Filter</h4>
+<p>订阅中包含的一个表达式，用于表示相关的一个或多个主题，主题过滤器可以使用通配符。</p>
+<h4 id="会话-session"><a class="header-anchor" href="#会话-session">¶</a>会话 Session</h4>
+<p>客户端和服务端之间的状态交互，一些会话持续时长与网络连接一样，另一些可以在客户端和服务端的多个连续网络连接间扩展。</p>
+<h4 id="控制报文-mqtt-control-packet"><a class="header-anchor" href="#控制报文-mqtt-control-packet">¶</a>控制报文 MQTT Control Packet</h4>
+<p>通过网络连接发送的信息数据包。MQTT规范定义了十四种不同类型的控制报文，其中一个（PUBLISH报文）用于传输应用消息。</p>
+<h2 id="进一步了解-mqtt3"><a class="header-anchor" href="#进一步了解-mqtt3">¶</a>进一步了解 MQTT3</h2>
+<p>MQTT3（当前版本 3.1.1）是目前使用的最为广泛的 MQTT 协议标准。尽管 MQTT5 标准已经发布，并且带来了一些令人振奋的新特性，但是在整个应用场景上，从后台服务到消息中间件再到客户端 SDK 等环节上的产品升级并没有都完成，再加上既有部署的维护，业界从版本3到5的过渡可能会持续相当长一段时间，所以，对于刚加入物联网行业的生力军来说，现在来学习 MQTT 3 依然是一件很有意义的事情。</p>
+<h2 id="mqtt-协议的工作方式"><a class="header-anchor" href="#mqtt-协议的工作方式">¶</a>MQTT 协议的工作方式</h2>
+<p>前面简介中讲到，在一个QMTT协议中有三个角色会参与到整个通信过程，发布者（publisher）、代理（broker）和订阅者（subscriber）。有别于传统的客户端/服务器通讯协议，MQTT协议并不是端到端的，消息传递通过代理，包括会话（session）也不是建立在发布者和订阅者之间，而是建立在端和代理之间。代理解除了发布者和订阅者之间的耦合。<br>
+除了发布者和订阅者之间传递普通消息，代理还可以为发布者处理保留消息和遗愿消息，并可以更改服务质量（QoS）等级。</p>
+<h2 id="mqtt-控制报文格式"><a class="header-anchor" href="#mqtt-控制报文格式">¶</a>MQTT 控制报文格式</h2>
+<p>MQTT 协议通过交换预定义的MQTT控制报文来通信。这一节描述这些报文的格式。</p>
+<p>MQTT 控制报文由三部分组成，如下：</p>
+<p><img src="/uploads/images/posts/mqtt/mqtt-protocol-format.png" alt="MQTT 固定报头格式"></p>
+<h4 id="固定报头"><a class="header-anchor" href="#固定报头">¶</a>固定报头</h4>
+<p>每个 MQTT 控制报文都 <strong>必须</strong> 包含一个固定报头，用于描述该报文具体行为。</p>
+<p><img src="/uploads/images/posts/mqtt/mqtt-protocol-fixed-header.png" alt="MQTT 固定报头格式"></p>
+<h5 id="报文类型-协议名"><a class="header-anchor" href="#报文类型-协议名">¶</a>报文类型（协议名）</h5>
+<p><strong>报文类型（协议名）</strong> 用首字节的四位比特（[7-4]）来分别表示 16 中报文类型（0 - 15），不同的值二进制表示方法如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">协议名</th>
+<th style="text-align:center">值</th>
+<th style="text-align:center">报文流动方向</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Reserved</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">禁止</td>
+<td style="text-align:center">保留</td>
+</tr>
+<tr>
+<td style="text-align:center">CONNECT</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">客户端到服务端</td>
+<td style="text-align:center">客户端请求连接服务端</td>
+</tr>
+<tr>
+<td style="text-align:center">CONNACK</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">服务端到客户端</td>
+<td style="text-align:center">连接报文确认</td>
+</tr>
+<tr>
+<td style="text-align:center">PUBLISH</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">两个方向都允许</td>
+<td style="text-align:center">发布消息</td>
+</tr>
+<tr>
+<td style="text-align:center">PUBACK</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">两个方向都允许</td>
+<td style="text-align:center">QoS 1消息发布收到确认</td>
+</tr>
+<tr>
+<td style="text-align:center">PUBREC</td>
+<td style="text-align:center">5</td>
+<td style="text-align:center">两个方向都允许</td>
+<td style="text-align:center">发布收到（保证交付第一步）</td>
+</tr>
+<tr>
+<td style="text-align:center">PUBREL</td>
+<td style="text-align:center">6</td>
+<td style="text-align:center">两个方向都允许</td>
+<td style="text-align:center">发布释放（保证交付第二步）</td>
+</tr>
+<tr>
+<td style="text-align:center">PUBCOMP</td>
+<td style="text-align:center">7</td>
+<td style="text-align:center">两个方向都允许</td>
+<td style="text-align:center">QoS 2消息发布完成（保证交互第三步）</td>
+</tr>
+<tr>
+<td style="text-align:center">SUBSCRIBE</td>
+<td style="text-align:center">8</td>
+<td style="text-align:center">客户端到服务端</td>
+<td style="text-align:center">客户端订阅请求</td>
+</tr>
+<tr>
+<td style="text-align:center">SUBACK</td>
+<td style="text-align:center">9</td>
+<td style="text-align:center">服务端到客户端</td>
+<td style="text-align:center">订阅请求报文确认</td>
+</tr>
+<tr>
+<td style="text-align:center">UNSUBSCRIBE</td>
+<td style="text-align:center">10</td>
+<td style="text-align:center">客户端到服务端</td>
+<td style="text-align:center">客户端取消订阅请求</td>
+</tr>
+<tr>
+<td style="text-align:center">UNSUBACK</td>
+<td style="text-align:center">11</td>
+<td style="text-align:center">服务端到客户端</td>
+<td style="text-align:center">取消订阅报文确认</td>
+</tr>
+<tr>
+<td style="text-align:center">PINGREQ</td>
+<td style="text-align:center">12</td>
+<td style="text-align:center">客户端到服务端</td>
+<td style="text-align:center">心跳请求</td>
+</tr>
+<tr>
+<td style="text-align:center">PINGRESP</td>
+<td style="text-align:center">13</td>
+<td style="text-align:center">服务端到客户端</td>
+<td style="text-align:center">心跳响应</td>
+</tr>
+<tr>
+<td style="text-align:center">DISCONNECT</td>
+<td style="text-align:center">14</td>
+<td style="text-align:center">客户端到服务端</td>
+<td style="text-align:center">客户端断开连接</td>
+</tr>
+<tr>
+<td style="text-align:center">Reserved</td>
+<td style="text-align:center">15</td>
+<td style="text-align:center">禁止</td>
+<td style="text-align:center">保留</td>
+</tr>
+</tbody>
+</table>
+<h5 id="标志位"><a class="header-anchor" href="#标志位">¶</a>标志位</h5>
+<p>固定报头第1个字节的剩余的 4 位（[3-0]）包含每个 MQTT 控制报文类型特定的标志，见以下表格。表格中任何标记为“保留”的标志位，都是保留给以后使用的，<strong>必须</strong> 设置为表格中列出的值 [MQTT-2.2.2-1]。如果收到非法的标志，接收者 <strong>必须</strong> 关闭网络连接。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">控制报文</th>
+<th style="text-align:center">固定报头标志</th>
+<th style="text-align:center">Bit 3</th>
+<th style="text-align:center">Bit 2</th>
+<th style="text-align:center">Bit 1</th>
+<th style="text-align:center">Bit 0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">CONNECT</td>
+<td style="text-align:center">Reserved</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">CONNACK</td>
+<td style="text-align:center">Reserved</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">PUBLISH</td>
+<td style="text-align:center">Used in MQTT 3.1.1</td>
+<td style="text-align:center">DUP<sup>1</sup></td>
+<td style="text-align:center">QoS<sup>2</sup></td>
+<td style="text-align:center">QoS<sup>2</sup></td>
+<td style="text-align:center">RETAIN<sup>3</sup></td>
+</tr>
+<tr>
+<td style="text-align:center">PUBACK</td>
+<td style="text-align:center">Reserved</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">PUBREC</td>
+<td style="text-align:center">Reserved</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">PUBREL</td>
+<td style="text-align:center">Reserved</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">PUBCOMP</td>
+<td style="text-align:center">Reserved</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">SUBSCRIBE</td>
+<td style="text-align:center">Reserved</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">SUBACK</td>
+<td style="text-align:center">Reserved</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">UNSUBSCRIBE</td>
+<td style="text-align:center">Reserved</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">UNSUBACK</td>
+<td style="text-align:center">Reserved</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">PINGREQ</td>
+<td style="text-align:center">Reserved</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">PINGRESP</td>
+<td style="text-align:center">Reserved</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+<tr>
+<td style="text-align:center">DISCONNECT</td>
+<td style="text-align:center">Reserved</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+<td style="text-align:center">0</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>DUP<sup>1</sup> =控制报文的重复分发标志</li>
+<li>QoS<sup>2</sup> = PUBLISH报文的服务质量等级</li>
+<li>RETAIN<sup>3</sup> = PUBLISH报文的保留标志</li>
+</ul>
+<p>PUBLISH控制报文中的DUP, QoS和RETAIN标志的描述见 3.3.1节。</p>
+<h5 id="剩余长度"><a class="header-anchor" href="#剩余长度">¶</a>剩余长度</h5>
+<p><strong>剩余长度</strong> 表示当前报文后面还有多少字节，从第二个字节开始，使用 <a href="">变长编码</a> 方案来表示剩余长度，<strong>最多使用 4 个字节，最少使用 1 个字节。</strong></p>
+<p><strong>什么是 <strong>变长编码</strong> 方案？</strong></p>
+<p>变长编码，准确的说字节数与数值的大小有关，60 使用一个字节表示，180 却要使用 2 个字节表示。具体表示方法如下：</p>
+<blockquote>
+<p>对小于 128 的值它使用单字节编码，更大的数值如下处理：每个字节只是用 <strong>低 7 位</strong>（[6 - 0]）来表示有效位，最高有效位（第 7 位）表示一个 <strong>真/假</strong> 标志，标志后面的字节是否也是表示长度。</p>
+</blockquote>
+<p>例如：<code>64</code> 使用一个字节就可以表示（<code>01000000</code>）；但是 <code>321 = 65 + 2 x 128</code> 需要两个字节来表示（<code>11000001 00000010</code>），第一个表示 <code>65 + 128 = 193</code>，第二个字节为 <code>2</code>。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">字节数</th>
+<th style="text-align:center">最小值</th>
+<th style="text-align:center">最大值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">0 (0x00)</td>
+<td style="text-align:center">127 (0x7F)</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">128 (0x80, 0x01)</td>
+<td style="text-align:center">16 383 (0xFF, 0x7F)</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">16384 (0x80, 0x80, 0x01)</td>
+<td style="text-align:center">2 097 151 (0xFF, 0xFF, 0x7F)</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">2097152 (0x80, 0x80, 0x80, 0x01)</td>
+<td style="text-align:center">268 435 455 (0xFF, 0xFF, 0xFF, 0x7F)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="可变报头"><a class="header-anchor" href="#可变报头">¶</a>可变报头</h4>
+<p>某些 MQTT 控制报文包含一个可变报头部分。它在固定报头和负载之间。可变报头的内容根据报文类型的不同而不同。可变报头的报文标识符（Packet Identifier）字段存在于在多个类型的报文里。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Bit</th>
+<th style="text-align:center">7  - 0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">byte 1</td>
+<td style="text-align:center">报文标识符 MSB</td>
+</tr>
+<tr>
+<td style="text-align:center">byte 2</td>
+<td style="text-align:center">报文标识符 LSB</td>
+</tr>
+</tbody>
+</table>
+<p>很多控制报文的可变报头部分包含一个两字节的报文标识符字段。这些报文是 PUBLISH（QoS &gt; 0时）， PUBACK，PUBREC，PUBREL，PUBCOMP，SUBSCRIBE, SUBACK，UNSUBSCIBE，UNSUBACK。</p>
+<p>SUBSCRIBE，UNSUBSCRIBE和PUBLISH（QoS大于0）控制报文 <strong>必须</strong> 包含一个非零的16位报文标识符（Packet Identifier）[MQTT-2.3.1-1]。客户端每次发送一个新的这些类型的报文时都<strong>必须</strong>分配一个当前未使用的报文标识符 [MQTT-2.3.1-2]。如果一个客户端要重发这个特殊的控制报文，在随后重发那个报文时，它<strong>必须</strong>使用相同的标识符。当客户端处理完这个报文对应的确认后，这个报文标识符就释放可重用。QoS 1 的 PUBLISH 对应的是 PUBACK，QoS 2 的 PUBLISH 对应的是 PUBCOMP，与SUBSCRIBE或UNSUBSCRIBE对应的分别是 SUBACK 或 UNSUBACK [MQTT-2.3.1-3]。发送一个 QoS 0 的 PUBLISH 报文时，相同的条件也适用于服务端 [MQTT-2.3.1-4]。</p>
+<p>QoS等于 0 的 PUBLISH 报文 <strong>不能</strong> 包含报文标识符 [MQTT-2.3.1-5]。</p>
+<p>PUBACK, PUBREC, PUBREL 报文 <strong>必须</strong> 包含与最初发送的PUBLISH报文相同的报文标识符 [MQTT-2.3.1-6]。类似地，SUBACK 和 UNSUBACK <strong>必须</strong> 包含在对应的 SUBSCRIBE 和 UNSUBSCRIBE 报文中使用的报文标识符 [MQTT-2.3.1-7]。</p>
+<h4 id="有效载荷"><a class="header-anchor" href="#有效载荷">¶</a>有效载荷</h4>
+<p>具体协议内容，不同协议有不同的载荷。</p>
+<h2 id="mqtt-控制报文详解"><a class="header-anchor" href="#mqtt-控制报文详解">¶</a>MQTT 控制报文详解</h2>
+<p>该部分内容，请查看我的另一篇博客 <a href="/2019/06/27/2019/mqtt-%E6%8E%A7%E5%88%B6%E6%8A%A5%E6%96%87%E8%AF%A6%E6%83%85">MQTT - 控制报文详情/2019/06/27/2019/mqtt-控制报文详情</a></p>
+
       
     </div>
 
@@ -616,7 +1020,7 @@
 
     
       <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center;">
-  <img id="wechat_subscriber_qcode" src="/uploads/wechat-qcode.jpg" alt="Charles Liao wechat" style="width: 200px; max-width: 100%;">
+  <img id="wechat_subscriber_qcode" src="/uploads/images/wechat-qcode.jpg" alt="Charles Liao wechat" style="width: 200px; max-width: 100%;">
   <div>关注我，及时获取我的最新动态</div>
 </div>
 
@@ -640,7 +1044,7 @@
         
       
       <div style="display: inline-block">
-        <img src="/uploads/wechat-reward-image.jpg" alt="Charles Liao 微信支付">
+        <img src="/uploads/images/wechat-reward-image.jpg" alt="Charles Liao 微信支付">
         <p>微信支付</p>
       </div>
     
@@ -649,7 +1053,7 @@
         
       
       <div style="display: inline-block">
-        <img src="/uploads/alipay-reward-image.jpg" alt="Charles Liao 支付宝">
+        <img src="/uploads/images/alipay-reward-image.jpg" alt="Charles Liao 支付宝">
         <p>支付宝</p>
       </div>
     
@@ -677,7 +1081,7 @@
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
     
-    <a href="http://blog.charleslxh.top/2019/06/27/2019/mqtt-协议基本详解/" title="MQTT-协议基本详解">http://blog.charleslxh.top/2019/06/27/2019/mqtt-协议基本详解/</a>
+    <a href="http://blog.charleslxh.top/2019/06/27/2019/mqtt-协议基本详解/" title="MQTT - 协议基本详解">http://blog.charleslxh.top/2019/06/27/2019/mqtt-协议基本详解/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li>
@@ -762,12 +1166,21 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="/uploads/avatar.jpg" alt="Charles Liao">
+              <img class="site-author-image" itemprop="image" src="/uploads/images/avatar.jpg" alt="Charles Liao">
             
               <p class="site-author-name" itemprop="name">Charles Liao</p>
               <div class="site-description motion-element" itemprop="description"></div>
@@ -985,6 +1398,23 @@
       </div>
 
       
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本特点"><span class="nav-number">1.</span> <span class="nav-text">¶基本特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本术语"><span class="nav-number">2.</span> <span class="nav-text">¶基本术语</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#网络连接-network-connection"><span class="nav-number">2.0.1.</span> <span class="nav-text">¶网络连接 Network Connection</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#应用消息-application-message"><span class="nav-number">2.0.2.</span> <span class="nav-text">¶应用消息 Application Message</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#客户端-client"><span class="nav-number">2.0.3.</span> <span class="nav-text">¶客户端 Client</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#服务端-server"><span class="nav-number">2.0.4.</span> <span class="nav-text">¶服务端 Server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主题名-topic-name"><span class="nav-number">2.0.5.</span> <span class="nav-text">¶主题名 Topic Name</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主题过滤器-topic-filter"><span class="nav-number">2.0.6.</span> <span class="nav-text">¶主题过滤器 Topic Filter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#会话-session"><span class="nav-number">2.0.7.</span> <span class="nav-text">¶会话 Session</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#控制报文-mqtt-control-packet"><span class="nav-number">2.0.8.</span> <span class="nav-text">¶控制报文 MQTT Control Packet</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#进一步了解-mqtt3"><span class="nav-number">3.</span> <span class="nav-text">¶进一步了解 MQTT3</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mqtt-协议的工作方式"><span class="nav-number">4.</span> <span class="nav-text">¶MQTT 协议的工作方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mqtt-控制报文格式"><span class="nav-number">5.</span> <span class="nav-text">¶MQTT 控制报文格式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#固定报头"><span class="nav-number">5.0.1.</span> <span class="nav-text">¶固定报头</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#报文类型-协议名"><span class="nav-number">5.0.1.1.</span> <span class="nav-text">¶报文类型（协议名）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#标志位"><span class="nav-number">5.0.1.2.</span> <span class="nav-text">¶标志位</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#剩余长度"><span class="nav-number">5.0.1.3.</span> <span class="nav-text">¶剩余长度</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可变报头"><span class="nav-number">5.0.2.</span> <span class="nav-text">¶可变报头</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#有效载荷"><span class="nav-number">5.0.3.</span> <span class="nav-text">¶有效载荷</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mqtt-控制报文详解"><span class="nav-number">6.</span> <span class="nav-text">¶MQTT 控制报文详解</span></a></li></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
       
 
@@ -1013,7 +1443,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">51k</span>
+    <span title="站点总字数">56k</span>
   
 
   
@@ -1024,7 +1454,7 @@
     
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
     
-    <span title="站点阅读时长">46 分钟</span>
+    <span title="站点阅读时长">51 分钟</span>
   
 </div>
 
