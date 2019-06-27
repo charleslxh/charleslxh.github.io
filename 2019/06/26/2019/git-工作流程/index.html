@@ -105,14 +105,24 @@
 
 
 
-  <meta property="og:type" content="article">
-<meta property="og:title" content="自动检测恶意攻击">
-<meta property="og:url" content="http://blog.charleslxh.top/2017/10/31/自动检测恶意攻击/index.html">
+  <meta name="description" content="有一套 规范、严谨 的开发流程是一个团队提高工作效率，减少工作冲突的重要途径，以下使我们公司目前使用的开发流程，请大家 务必严格 遵循该流程。">
+<meta name="keywords" content="Git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git 工作流程">
+<meta property="og:url" content="http://blog.charleslxh.top/2019/06/26/2019/git-工作流程/index.html">
 <meta property="og:site_name" content="菊爷杂记">
+<meta property="og:description" content="有一套 规范、严谨 的开发流程是一个团队提高工作效率，减少工作冲突的重要途径，以下使我们公司目前使用的开发流程，请大家 务必严格 遵循该流程。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2017-10-31T02:54:06.000Z">
+<meta property="og:image" content="http://blog.charleslxh.top/uploads/images/posts/git/git-flow/git-flow.png">
+<meta property="og:image" content="http://blog.charleslxh.top/uploads/images/posts/git/git-flow/main-branches@2x.png">
+<meta property="og:image" content="http://blog.charleslxh.top/uploads/images/posts/git/git-flow/fb@2x.png">
+<meta property="og:image" content="http://blog.charleslxh.top/uploads/images/posts/git/git-flow/merge-without-ff@2x.png">
+<meta property="og:image" content="http://blog.charleslxh.top/uploads/images/posts/git/git-flow/hotfix-branches@2x.png">
+<meta property="og:updated_time" content="2019-06-27T06:20:57.931Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="自动检测恶意攻击">
+<meta name="twitter:title" content="Git 工作流程">
+<meta name="twitter:description" content="有一套 规范、严谨 的开发流程是一个团队提高工作效率，减少工作冲突的重要途径，以下使我们公司目前使用的开发流程，请大家 务必严格 遵循该流程。">
+<meta name="twitter:image" content="http://blog.charleslxh.top/uploads/images/posts/git/git-flow/git-flow.png">
 
 
 
@@ -122,7 +132,7 @@
 
   
   
-  <link rel="canonical" href="http://blog.charleslxh.top/2017/10/31/自动检测恶意攻击/">
+  <link rel="canonical" href="http://blog.charleslxh.top/2019/06/26/2019/git-工作流程/">
 
 
 
@@ -132,7 +142,7 @@
   };
 </script>
 
-  <title>自动检测恶意攻击 | 菊爷杂记</title>
+  <title>Git 工作流程 | 菊爷杂记</title>
   
 
 
@@ -269,7 +279,7 @@
       
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">21</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签<span class="badge">23</span></a>
 
   </li>
         
@@ -287,7 +297,7 @@
       
     
 
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">7</span></a>
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类<span class="badge">9</span></a>
 
   </li>
         
@@ -305,7 +315,7 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">17</span></a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档<span class="badge">20</span></a>
 
   </li>
         
@@ -447,7 +457,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.charleslxh.top/2017/10/31/自动检测恶意攻击/">
+    <link itemprop="mainEntityOfPage" href="http://blog.charleslxh.top/2019/06/26/2019/git-工作流程/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Charles Liao">
@@ -464,7 +474,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">自动检测恶意攻击<span class="exturl post-edit-link" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NoYXJsZXNseGgvYmxvZy9ibG9iL21hc3Rlci9zb3VyY2UvX3Bvc3RzL+iHquWKqOajgOa1i+aBtuaEj+aUu+WHuy5tZA==" title="编辑"><i class="fa fa-pencil"></i></span>
+          <h2 class="post-title" itemprop="name headline">Git 工作流程<span class="exturl post-edit-link" data-url="aHR0cHM6Ly9naXRodWIuY29tL2NoYXJsZXNseGgvYmxvZy9ibG9iL21hc3Rlci9zb3VyY2UvX3Bvc3RzLzIwMTkvZ2l0LeW3peS9nOa1geeoiy5tZA==" title="编辑"><i class="fa fa-pencil"></i></span>
 
               
             
@@ -490,12 +500,46 @@
                 
               
 
-              <time title="创建时间：2017-10-31 10:54:06" itemprop="dateCreated datePublished" datetime="2017-10-31T10:54:06+08:00">2017-10-31</time>
+              <time title="创建时间：2019-06-26 10:45:37" itemprop="dateCreated datePublished" datetime="2019-06-26T10:45:37+08:00">2019-06-26</time>
             
 
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-06-27 14:20:57" itemprop="dateModified" datetime="2019-06-27T14:20:57+08:00">2019-06-27</time>
+              
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -509,8 +553,8 @@
                 </span>
             
                 <span class="post-meta-item-text">评论数：</span>
-                <a href="/2017/10/31/自动检测恶意攻击/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/31/自动检测恶意攻击/" itemprop="commentCount"></span>
+                <a href="/2019/06/26/2019/git-工作流程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/06/26/2019/git-工作流程/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -518,7 +562,7 @@
 
           
           
-            <span id="/2017/10/31/自动检测恶意攻击/" class="leancloud_visitors" data-flag-title="自动检测恶意攻击">
+            <span id="/2019/06/26/2019/git-工作流程/" class="leancloud_visitors" data-flag-title="Git 工作流程">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -543,7 +587,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">0</span>
+                <span title="本文字数">6k</span>
               
 
               
@@ -557,7 +601,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">5 分钟</span>
               
             </div>
           
@@ -577,7 +621,150 @@
       
 
       
-        
+        <p>有一套 <strong>规范</strong>、<strong>严谨</strong> 的开发流程是一个团队提高工作效率，减少工作冲突的重要途径，以下使我们公司目前使用的开发流程，请大家 <strong>务必严格</strong> 遵循该流程。</p>
+<a id="more"></a>
+<h2 id="流程说明"><a class="header-anchor" href="#流程说明">¶</a>流程说明</h2>
+<p><img src="/uploads/images/posts/git/git-flow/git-flow.png" alt="git-flow"></p>
+<h2 id="分支概述"><a class="header-anchor" href="#分支概述">¶</a>分支概述</h2>
+<p>从上图，我们可以大概清楚整个开发流程，大概了解各个开发分支的作用与关系，下面我们将详细概述他们。</p>
+<p><code>Git</code> 分支一般分为两种：<strong>长期支持分支</strong>，<strong>短期支持分支</strong>。<em>长期支持</em> 的分支是受保护的，长期维护、迭代和更新的，是不能被删除的；<em>短期支持</em> 分支一般是用于实现某个新功能、修复长期支持分支上的问题而产生的，他们都是基于长期分支的小分支，在它们的使命完成后都需要被删除。</p>
+<p>长期支持的分支有：</p>
+<ul>
+<li><code>master</code>：主分支，负责记录上线版本的迭代，该分支代码与线上代码是完全一致的。</li>
+<li><code>develop</code>：开发分支，该分支记录相对稳定的版本，所有的 <code>feature</code> 分支和 <code>bugfix</code> 分支都从该分支创建。</li>
+</ul>
+<p>短期支持分支有：</p>
+<ul>
+<li><code>feature/*</code>：特性（功能）分支，用于开发新的功能，不同的功能创建不同的功能分支，功能分支开发完成并自测通过之后，需要合并到 <code>develop</code> 分支，之后删除该分支。</li>
+<li><code>bugfix/*</code>：<code>bug</code> 修复分支，用于修复不紧急的 <code>bug</code>，普通 <code>bug</code> 均需要创建 <code>bugfix</code> 分支开发，开发完成自测没问题后合并到 <code>develop</code> 分支后，删除该分支。</li>
+<li><code>release/*</code>：发布分支，用于代码上线准备，该分支从 <code>develop</code> 分支创建，创建之后由测试同学发布到测试环境进行测试，测试过程中发现 <code>bug</code> 需要开发人员在该release分支上进行bug修复，所有bug修复完后，在上线之前，需要合并该 <code>release</code> 分支到 <code>master</code> 分支和 <code>develop</code> 分支。</li>
+<li><code>hotfix/*</code>：紧急 <code>bug</code> 修复分支，该分支只有在紧急情况下使用，从 <code>master</code> 分支创建，用于紧急修复线上 <code>bug</code>，修复完成后，需要合并该分支到 <code>master</code> 分支以便上线，同时需要再合并到 <code>develop</code> 分支。</li>
+</ul>
+<h3 id="长期支持分支"><a class="header-anchor" href="#长期支持分支">¶</a>长期支持分支</h3>
+<p><img src="/uploads/images/posts/git/git-flow/main-branches@2x.png" alt="git-flow"></p>
+<h4 id="master"><a class="header-anchor" href="#master">¶</a>master</h4>
+<p><strong>一切源于 <code>master</code></strong>。</p>
+<p>一个丰富、复杂的代码仓库都是以 <code>master</code> 分支开始的，相信 <code>git</code> 用户都会非常了解这个分支，没错它就是我们的主分支，他的代码与线上的代码一模一样（这点，每个项目管理员都必须保证），所以他是稳定的、干净的、经过严格测试过的。</p>
+<h4 id="develop"><a class="header-anchor" href="#develop">¶</a>develop</h4>
+<p><code>develop</code> 一开始是从 <code>master</code> 切出来复制版，它永远跑在 <code>master</code> 的前面，它包含了一切未来即将上线的功能。</p>
+<p>所有 <strong>新功能</strong> 都是基于 <code>develop</code> 分支做开发，当然，部分小的修改可以直接在这个分支上提交代码，但提交者必须明确自己在做什么，必须对自己严谨，一般不推荐。</p>
+<h3 id="短期支持分支"><a class="header-anchor" href="#短期支持分支">¶</a>短期支持分支</h3>
+<p>在主分支（长期支持分支）之后，我们使用了大量的短期分支，通过这些短期分支来协助开发，充分的利用 <code>git</code> 分支的特性，使每个分支的功能更加 <em>明确</em> 与 <em>简单</em> ，不同于长期分支，这些分支都有一个较短的生命周期。</p>
+<p>任何短期分支都有一个明确的目的，并且必须遵守严格的规则。</p>
+<blockquote>
+<p>我们都必须遵循：所有的短期分支功能必须做到单一、明确，而不应该出现过于复杂的业务逻辑，更不应该跨业务。</p>
+</blockquote>
+<h4 id="feature"><a class="header-anchor" href="#feature">¶</a>Feature</h4>
+<p><code>Feature</code> 分支用于开发新功能，俗称 <strong>功能分支</strong>，该分支完成后将会合并入 <code>develop</code> 分支，并删除。</p>
+<p>该分支 <strong>必须</strong> 基于 <code>develop</code> ，分支功能完成后 <strong>必须</strong> 合并到 <code>develop</code>。</p>
+<p><strong>命名规范：除了 <code>master</code>、<code>develop</code>、<code>release-*</code>、<code>bugfix-*</code> 或 <code>hotfix-*</code> 之外的任何东西，最好名字能概括分支的功能，但不宜过长。</strong></p>
+<p><img src="/uploads/images/posts/git/git-flow/fb@2x.png" alt="git-flow"></p>
+<h5 id="示例"><a class="header-anchor" href="#示例">¶</a>示例</h5>
+<ol>
+<li>创建一个新功能分支。</li>
+</ol>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git checkout -t origin/develop -b myfeature</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Switched to a new branch <span class="string">"myfeature"</span></span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>提交更新。</li>
+</ol>
+  <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git add -A</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -m <span class="string">'Your commit message here.'</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git fetch</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git pull --rebase</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push origin myfeature -f</span></span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：<br>
+- 一个分支一条 <code>commit</code>，如果后续有更新，请使用 <code>git commit --amend</code> 提交更改。<br>
+- <code>push</code> 代码前 <strong>必须</strong> 拉取远程最新代码，以防止其他人与产生冲突。</p>
+<ol start="3">
+<li>功能完成，将该分支合并到 <code>develop</code> 分支。</li>
+</ol>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout develop</span><br><span class="line"><span class="comment"># Switched to branch 'develop'</span></span><br><span class="line">$ git merge --no-ff myfeature</span><br><span class="line"><span class="comment"># Updating ea1b82a..05e9557</span></span><br><span class="line"><span class="comment"># (Summary of changes)</span></span><br><span class="line">$ git branch -d myfeature</span><br><span class="line"><span class="comment"># Deleted branch myfeature (was 05e9557).</span></span><br><span class="line">$ git push origin develop</span><br></pre></td></tr></table></figure>
+<p><code>--no-ff</code> 选项为强制关闭 <code>Fast-Forward</code> 模式，即每次合并都会产生一个 <code>commit</code>，需要用户指定 <code>message</code> 内容，该操作可以避免丢失部分信息。</p>
+<p><code>fast-forward</code> 方式就是当条件允许的时候，<code>git</code> 直接把 <code>HEAD</code> 指针指向合并分支的头，完成合并。属于 <strong>快进方式</strong>，不过这种情况如果删除分支，则会丢失分支信息。因为在这个过程中没有创建 <code>commit</code>。</p>
+<p><img src="/uploads/images/posts/git/git-flow/merge-without-ff@2x.png" alt="git-flow"></p>
+<ol start="4">
+<li>功能分支完成使命，删除。</li>
+</ol>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -D myfeature</span><br><span class="line"><span class="comment"># Deleted branch myfeature (was ff452fe).</span></span><br><span class="line">$ git push origin :myfeature</span><br><span class="line"><span class="comment"># To git@git.domain.com:group/project_name.git</span></span><br><span class="line"><span class="comment">#   - [deleted]         myfeature</span></span><br></pre></td></tr></table></figure>
+<h4 id="release"><a class="header-anchor" href="#release">¶</a>Release</h4>
+<p><code>Release</code> 分支用于准备即将上线的内容，此外，该分支可以对 <strong>版本号</strong>、<strong>构建日期</strong> 进行更改。通过 <strong>发布分支</strong> 来完成这些事情，<code>develop</code> 分支就继续接受下一次需要发布的功能、<code>Bug</code> 修复等等，从而不需要等待 <code>master</code> 发布完成后。</p>
+<p>该分支 <strong>必须</strong> 基于 <code>develop</code> ，分支功能完成后 <strong>必须</strong> 合并到 <code>develop</code> 和 <code>master</code>。</p>
+<p><strong>命名规范：<code>release-*</code></strong>。</p>
+<h5 id="示例-v2"><a class="header-anchor" href="#示例-v2">¶</a>示例</h5>
+<p>例如：目前正式环境的版本为 <code>1.1.5</code>，而此时有两个功能分支 <code>feature/A</code> 和 <code>feature/B</code>，其中 <code>feature/A</code> 是本次需要部署到正式环境的内容，版本号为 <code>1.2.0</code>。而 <code>feature/B</code> 是准备在 <code>1.3.0</code> 中发布的新功能。所以，我们需要先将 <code>feature/A</code> 合并到 <code>develop</code> 分支，然后基于当前 <code>develop</code> 分支中创建一个 <code>release-1.2</code> 分支，这样 <code>develop</code> 就被释放了，他可以继续接受其他的新功能了，等待下一次发布。</p>
+<ol>
+<li>创建发布分支。</li>
+</ol>
+<p>发布分支是从 <code>develop</code> 分支创建的，创建的时候 <strong>务必</strong> 确保当前 <code>develop</code> 的所有功能都是本次上线的功能，并且是经过测试的，下一次上线的功能需要在发布分支创建之后再合并入 <code>develop</code>。</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -t origin/develop -b release-1.2.0</span><br><span class="line"><span class="comment"># Switched to a new branch "release-1.2.0"</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>更新元信息：版本好、构建时间等等。</li>
+</ol>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ./bump-version.sh 1.2.0</span><br><span class="line"><span class="comment"># Files modified successfully, version bumped to 1.2.0.</span></span><br><span class="line">$ git commit -a -m <span class="string">"Bumped version number to 1.2.0"</span></span><br><span class="line"><span class="comment"># [release-1.2.0 74d9424] Bumped version number to 1.2.0</span></span><br><span class="line"><span class="comment">#   1 files changed, 1 insertions(+), 1 deletions(-)</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>合并到 <code>master</code>。</li>
+</ol>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout master</span><br><span class="line"><span class="comment"># Switched to branch 'master'</span></span><br><span class="line">$ git merge --no-ff release-1.2.0</span><br><span class="line"><span class="comment"># Merge made by recursive.</span></span><br><span class="line"><span class="comment"># (Summary of changes)</span></span><br><span class="line">$ git push origin master</span><br><span class="line">$ git tag -a 1.2.0</span><br><span class="line">$ git push origin 1.2.0</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>合并到 <code>develop</code>。</li>
+</ol>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout develop</span><br><span class="line"><span class="comment"># Switched to branch 'develop'</span></span><br><span class="line">$ git merge --no-ff release-1.2.0</span><br><span class="line"><span class="comment"># Merge made by recursive.</span></span><br><span class="line"><span class="comment"># (Summary of changes)</span></span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>删除发布分支。</li>
+</ol>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -D release-1.2.0</span><br><span class="line"><span class="comment"># Deleted branch release-1.2.0 (was ff452fe).</span></span><br></pre></td></tr></table></figure>
+<h4 id="hotfix"><a class="header-anchor" href="#hotfix">¶</a>Hotfix</h4>
+<p><code>Hotfix</code> 分支跟 <code>Release</code> 分支差不多，都是为了准备下一次上线内容，不过他用于处理 <strong>紧急的</strong> 的线上环境的 <code>Bug</code>，<code>Hotfix</code> 分支必须从 <code>master</code> 分支创建。</p>
+<p><code>Hotfix</code> 分支的本质作用为：当一个人紧急修复正式环境某个 <code>Bug</code> 时不会影响其他开发人员（<code>develop</code> 分支）的工作进度。</p>
+<p>该分支 <strong>必须</strong> 基于 <code>master</code> ，分支功能完成后 <strong>必须</strong> 合并到 <code>develop</code> 和 <code>master</code> 。</p>
+<p><strong>命名规范：<code>hotfix-*</code></strong>。</p>
+<p><img src="/uploads/images/posts/git/git-flow/hotfix-branches@2x.png" alt="git-flow"></p>
+<h5 id="示例-v3"><a class="header-anchor" href="#示例-v3">¶</a>示例</h5>
+<p>例如：目前正式环境的版本为 <code>1.2.0</code>，但是，发现线上有一些 <code>Bug</code>，需要紧急修复，但是 <code>develop</code> 分支上的新功能还不稳定，不能发布，所以我们需要使用 <code>hotfix</code> 分支来修复线上 <code>Bug</code>。</p>
+<ol>
+<li>创建 <code>hotfix</code> 分支。</li>
+</ol>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout -t origin/master -b hotfix-1.2.1</span><br><span class="line">Switched to a new branch <span class="string">"hotfix-1.2.1"</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>修复 <code>Bug</code> 之后，提交更改。</li>
+</ol>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git commit -m <span class="string">"Fixed severe production problem"</span></span><br><span class="line"><span class="comment"># [hotfix-1.2.1 abbe5d6] Fixed severe production problem</span></span><br><span class="line"><span class="comment">#   5 files changed, 32 insertions(+), 17 deletions(-)</span></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>提升版本号，然后提交。</li>
+</ol>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ ./bump-version.sh 1.2.1</span><br><span class="line"><span class="comment"># Files modified successfully, version bumped to 1.2.1.</span></span><br><span class="line">$ git commit -a -m <span class="string">"Bumped version number to 1.2.1"</span></span><br><span class="line"><span class="comment"># [hotfix-1.2.1 41e61bb] Bumped version number to 1.2.1</span></span><br><span class="line"><span class="comment">#   1 files changed, 1 insertions(+), 1 deletions(-)</span></span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>合并到 <code>master</code>。</li>
+</ol>
+<p>将修复过的程序发布到正式环境。</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout master</span><br><span class="line"><span class="comment"># Switched to branch 'master'</span></span><br><span class="line">$ git merge --no-ff hotfix-1.2.1</span><br><span class="line"><span class="comment"># Merge made by recursive.</span></span><br><span class="line"><span class="comment"># (Summary of changes)</span></span><br><span class="line">$ git push origin master</span><br><span class="line">$ git tag -a 1.2.1</span><br><span class="line">$ git push origin 1.2.1</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>合并到 <code>develop</code>。</li>
+</ol>
+<p>为了确保下一次发布包含该修复的问题，我们需要将该 <code>hotfix</code> 分支合并入 <code>develop</code> 分支。</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ git checkout develop</span><br><span class="line"><span class="comment"># Switched to branch 'develop'</span></span><br><span class="line">$ git merge --no-ff hotfix-1.2.1</span><br><span class="line"><span class="comment"># Merge made by recursive.</span></span><br><span class="line"><span class="comment"># (Summary of changes)</span></span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>：如果有 <code>未发布</code> 的 <strong>发布分支</strong> 存在，则需要将该 <code>hotfix</code> 分支合并入 <strong>发布分支</strong>，而不是 <code>develop</code> 分支，因为最终发布分支也会被合并到 <code>develop</code> 分支，如果 <code>develop</code> 非常紧急的需要使用 <code>hotfix</code> 上修复的内容，也可以合并到 <code>develop</code> 分支，这都不会有影响。</p>
+<ol start="6">
+<li>删除该分支。</li>
+</ol>
+<p>该功能分支使命结束后，删除它。</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git branch -d hotfix-1.2.1</span><br><span class="line"><span class="comment"># Deleted branch hotfix-1.2.1 (was abbe5d6).</span></span><br></pre></td></tr></table></figure>
+<h3 id="版本标记"><a class="header-anchor" href="#版本标记">¶</a>版本标记</h3>
+<p>同大多数 <code>VCS</code> 一样，<code>Git</code> 也可以对某一时间点上的版本打上标签。人们在发布某个软件版本（比如 <code>v1.0</code> 等等）的时候，经常这么做。</p>
+<p><code>Git</code> 使用的标签有两种类型：</p>
+<ul>
+<li>轻量级的（lightweight）：轻量级标签就像是个不会变化的分支，实际上它就是个指向特定提交对象的引用。</li>
+<li>含附注的（annotated）：含附注标签，实际上是存储在仓库中的一个独立对象，它有自身的校验和信息，包含着标签的名字，电子邮件地址和日期，以及标签说明，标签本身也允许使用 <code>GNU Privacy Guard (GPG)</code> 来签署或验证。一般我们都建议使用含附注型的标签，以便保留相关信息；</li>
+</ul>
+<p>当然，如果只是临时性加注标签，或者不需要旁注额外信息，用 <em>轻量级标签</em> 也没问题。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXQtc2NtLmNvbS9ib29rL3poL3YxL0dpdC0lRTUlOUYlQkElRTclQTElODAtJUU2JTg5JTkzJUU2JUEwJTg3JUU3JUFEJUJF" title="https://git-scm.com/book/zh/v1/Git-%E5%9F%BA%E7%A1%80-%E6%89%93%E6%A0%87%E7%AD%BE">详情查看 - 如何打标签？<i class="fa fa-external-link"></i></span></p>
+<h2 id="使用-git-flow-简化操作"><a class="header-anchor" href="#使用-git-flow-简化操作">¶</a>使用 git flow 简化操作</h2>
+<p><code>git flow</code> 是 <code>git</code> 的一个插件，可以极大程度的简化执行 <code>git</code> 标准分支流程的操作，可以在 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3BldGVydmFuZGVyZG9lcy9naXRmbG93LWF2aA==" title="https://github.com/petervanderdoes/gitflow-avh">gitflow-avh<i class="fa fa-external-link"></i></span> 安装。</p>
+<p>详情参考： <a href="/docs/knowledges/git/tools#git-flow">Git 相关工具介绍 - Git flow</a>。</p>
+<h2 id="特别鸣谢"><a class="header-anchor" href="#特别鸣谢">¶</a>特别鸣谢</h2>
+<ul>
+<li><span class="exturl" data-url="aHR0cDovL252aWUuY29tL3Bvc3RzL2Etc3VjY2Vzc2Z1bC1naXQtYnJhbmNoaW5nLW1vZGVsLw==" title="http://nvie.com/posts/a-successful-git-branching-model/">A successful Git branching model<i class="fa fa-external-link"></i></span> - <span class="exturl" data-url="aHR0cDovL252aWUuY29tL2Fib3V0Lw==" title="http://nvie.com/about/">Vincent Driessen<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL215bHhzdy9ncm93aW5nLXVwL2Jsb2IvbWFzdGVyL2RvYy8lRTclQTAlOTQlRTUlOEYlOTElRTUlOUIlQTIlRTklOTglOUZHSVQlRTUlQkMlODAlRTUlOEYlOTElRTYlQjUlODElRTclQTglOEIlRTYlOTYlQjAlRTQlQkElQkElRTUlQUQlQTYlRTQlQjklQTAlRTYlOEMlODclRTUlOEQlOTcubWQ=" title="https://github.com/mylxsw/growing-up/blob/master/doc/%E7%A0%94%E5%8F%91%E5%9B%A2%E9%98%9FGIT%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B%E6%96%B0%E4%BA%BA%E5%AD%A6%E4%B9%A0%E6%8C%87%E5%8D%97.md">研发团队GIT开发流程新人学习指南<i class="fa fa-external-link"></i></span> - <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL215bHhzdw==" title="https://github.com/mylxsw">管宜尧<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXQtc2NtLmNvbS9ib29rL3poL3YxL0dpdC0lRTUlODglODYlRTYlOTQlQUYtJUU1JTg4JUE5JUU3JTk0JUE4JUU1JTg4JTg2JUU2JTk0JUFGJUU4JUJGJTlCJUU4JUExJThDJUU1JUJDJTgwJUU1JThGJTkxJUU3JTlBJTg0JUU1JUI3JUE1JUU0JUJEJTlDJUU2JUI1JTgxJUU3JUE4JThC" title="https://git-scm.com/book/zh/v1/Git-%E5%88%86%E6%94%AF-%E5%88%A9%E7%94%A8%E5%88%86%E6%94%AF%E8%BF%9B%E8%A1%8C%E5%BC%80%E5%8F%91%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B">Git 分支 - 利用分支进行开发的工作流程<i class="fa fa-external-link"></i></span></li>
+<li><span class="exturl" data-url="aHR0cDovL3d3dy5ydWFueWlmZW5nLmNvbS9ibG9nLzIwMTIvMDcvZ2l0Lmh0bWw=" title="http://www.ruanyifeng.com/blog/2012/07/git.html">Git分支管理策略<i class="fa fa-external-link"></i></span> - <span class="exturl" data-url="aHR0cDovL3d3dy5ydWFueWlmZW5nLmNvbS8=" title="http://www.ruanyifeng.com/">阮一峰<i class="fa fa-external-link"></i></span></li>
+</ul>
+
       
     </div>
 
@@ -654,7 +841,7 @@
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
     
-    <a href="http://blog.charleslxh.top/2017/10/31/自动检测恶意攻击/" title="自动检测恶意攻击">http://blog.charleslxh.top/2017/10/31/自动检测恶意攻击/</a>
+    <a href="http://blog.charleslxh.top/2019/06/26/2019/git-工作流程/" title="Git 工作流程">http://blog.charleslxh.top/2019/06/26/2019/git-工作流程/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <span class="exturl" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC9kZWVkLnpo"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</span> 许可协议。转载请注明出处！</li>
@@ -665,6 +852,15 @@
 
     <footer class="post-footer">
       
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/git/" rel="tag"><i class="fa fa-tag"></i> Git</a>
+          
+        </div>
+      
 
       
       
@@ -674,8 +870,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/31/让你的服务器更安全-使用-Iptables-防火墙/" rel="next" title="让你的服务器更安全 - 使用 Iptables 防火墙">
-                <i class="fa fa-chevron-left"></i> 让你的服务器更安全 - 使用 Iptables 防火墙
+              <a href="/2019/06/25/2019/git-基本知识/" rel="next" title="Git-基本知识">
+                <i class="fa fa-chevron-left"></i> Git-基本知识
               </a>
             
           </div>
@@ -684,8 +880,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/10/31/让你的服务器更安全-使用-fail2ban-自动检测恶意攻击/" rel="prev" title="让你的服务器更安全 - 使用 Fail2ban 自动检测恶意攻击">
-                让你的服务器更安全 - 使用 Fail2ban 自动检测恶意攻击 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/06/27/2019/gitlab-ci-持续集成/" rel="prev" title="GitLab-CI-持续集成">
+                GitLab-CI-持续集成 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -734,8 +930,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -752,7 +957,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -779,7 +984,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">7</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">分类</span>
                   
                 </div>
@@ -838,7 +1047,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">21</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -949,6 +1162,23 @@
       </div>
 
       
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#流程说明"><span class="nav-number">1.</span> <span class="nav-text">¶流程说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分支概述"><span class="nav-number">2.</span> <span class="nav-text">¶分支概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#长期支持分支"><span class="nav-number">2.1.</span> <span class="nav-text">¶长期支持分支</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#master"><span class="nav-number">2.1.1.</span> <span class="nav-text">¶master</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#develop"><span class="nav-number">2.1.2.</span> <span class="nav-text">¶develop</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#短期支持分支"><span class="nav-number">2.2.</span> <span class="nav-text">¶短期支持分支</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#feature"><span class="nav-number">2.2.1.</span> <span class="nav-text">¶Feature</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#示例"><span class="nav-number">2.2.1.1.</span> <span class="nav-text">¶示例</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#release"><span class="nav-number">2.2.2.</span> <span class="nav-text">¶Release</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#示例-v2"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">¶示例</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#hotfix"><span class="nav-number">2.2.3.</span> <span class="nav-text">¶Hotfix</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#示例-v3"><span class="nav-number">2.2.3.1.</span> <span class="nav-text">¶示例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#版本标记"><span class="nav-number">2.3.</span> <span class="nav-text">¶版本标记</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-git-flow-简化操作"><span class="nav-number">3.</span> <span class="nav-text">¶使用 git flow 简化操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特别鸣谢"><span class="nav-number">4.</span> <span class="nav-text">¶特别鸣谢</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
       
 
@@ -977,7 +1207,7 @@
     
       <span class="post-meta-item-text">站点总字数：</span>
     
-    <span title="站点总字数">14k</span>
+    <span title="站点总字数">51k</span>
   
 
   
@@ -988,7 +1218,7 @@
     
       <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
     
-    <span title="站点阅读时长">13 分钟</span>
+    <span title="站点阅读时长">46 分钟</span>
   
 </div>
 
@@ -1483,38 +1713,30 @@
   
   <script>
     
-    function showTime(Counter) {
-      var entries = [];
+    function addCount(Counter) {
       var $visitors = $('.leancloud_visitors');
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
 
-      $visitors.each(function() {
-        entries.push( $(this).attr('id').trim() );
-      });
-
-      Counter('get', '/classes/Counter', { where: JSON.stringify({ url: { '$in': entries } }) })
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
         .done(function({ results }) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.url;
-            var time = item.time;
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for (var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if (countSpan.text() == '') {
-              countSpan.text(0);
-            }
+          if (results.length > 0) {
+            var counter = results[0];
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.time + 1);
+            
+            Counter('put', '/classes/Counter/' + counter.objectId, JSON.stringify({ time: { '__op': 'Increment', 'amount': 1 } }))
+            
+              .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+              })
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! More info at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
           }
         })
         .fail(function ({ responseJSON }) {
@@ -1539,9 +1761,9 @@
             });
           };
           
-            if ($('.post-title-link').length >= 1) {
-              showTime(Counter);
-            }
+            const localhost = /http:\/\/(localhost|127.0.0.1|0.0.0.0)/;
+            if (localhost.test(document.URL)) return;
+            addCount(Counter);
           
         });
     });
