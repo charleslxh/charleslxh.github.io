@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://blog.charleslxh.top/"/>
-  <updated>2019-06-28T06:40:47.311Z</updated>
+  <updated>2019-07-03T05:32:19.760Z</updated>
   <id>http://blog.charleslxh.top/</id>
   
   <author>
@@ -14,6 +14,62 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PHP 基础：include 和 require 的区别</title>
+    <link href="http://blog.charleslxh.top/2019/07/03/2019/php-include-vs-require/"/>
+    <id>http://blog.charleslxh.top/2019/07/03/2019/php-include-vs-require/</id>
+    <published>2019-07-03T03:26:22.592Z</published>
+    <updated>2019-07-03T05:32:19.760Z</updated>
+    
+    <content type="html"><![CDATA[<p><code>include</code>、<code>include_once</code>、<code>require</code> 和 <code>require_once</code> 都是 PHP 引入其他 PHP 文件的基础函数，功能本职上没什么区别，但是具体的行为上存在一些差异。</p>
+<a id="more"></a>
+<p><code>include</code> 或 <code>require</code> 都可以在 <strong>执行期间</strong> 从 <strong>本地</strong> 或 <strong>远程</strong> 加载 PHP 文件并执行。如果加载成功，返回引入文件的返回值（默认 1），否则返回 FALSE，并且发出一个警告（<strong>require 抛出一个致命错误，会导致进程中断运行，这是 require 和 include 的主要区别。</strong>）</p>
+<p><code>include_once</code> 与 <code>include</code> 作用一样，都是在执行期间引入一个文件并执行。<strong>唯一的区别是：引入文件只会包含一次，就是多次引入的过程中，会检查是否已经引入过，如果引入过，则不会二次引入，直接返回 <code>TRUE</code>。这样做的目的主要是为了确保变量、函数不会重复定义。</strong></p>
+<p><code>require_once</code> 与 <code>include_once</code> 一致，他是 <code>require</code> 的 <strong>once</strong> 版本。</p>
+<blockquote>
+<p>当一个文件被包含时，当前 <code>include</code> 或 <code>require</code> 语句所在的作用域 <strong>会作用于</strong> 被包含的文件中，也就是说引入文件之前的变量之类的都可以在包含文件中调用。但是所有在包含文件中定义的函数和类都具有全局作用域。</p>
+</blockquote>
+<blockquote>
+<p>返回值：引入文件成功返回 <code>1</code>，失败返回 FALSE，可以在引入文件中使用 <code>return</code> 来改变返回值！</p>
+</blockquote>
+<blockquote>
+<p>require 和 include 几乎完全一样，除了处理失败的方式不同之外。require 在出错时产生 E_COMPILE_ERROR 级别的错误。换句话说将导致脚本中止而 include 只产生警告（E_WARNING），脚本会继续运行。</p>
+</blockquote>
+<h2 id="实例"><a class="header-anchor" href="#实例">¶</a>实例</h2>
+<ol>
+<li>示例一</li>
+</ol>
+<p><code>vars.php</code> 文件如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$name = <span class="string">"Charles Liao"</span></span><br><span class="line">$email = <span class="string">"charles.liao@163.com"</span>;</span><br></pre></td></tr></table></figure>
+<p><code>test.php</code> 文件如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">echo</span> <span class="string">"Test $name $email;"</span> <span class="comment">// 输出：Test</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">include</span> <span class="string">'non-exists.php'</span>; <span class="comment">// 发出警告</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">'vars.php'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"Test $name $email;"</span> <span class="comment">// 输出：Test Charles Liao charles.liao@163.com</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">require</span> <span class="string">'non-exists.php'</span>; <span class="comment">// 抛出异常，中断进程</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>示例二</li>
+</ol>
+<p><code>configs.php</code> 文件如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">return</span> [</span><br><span class="line">    ip =&gt; <span class="string">'127.0.0.1'</span>,</span><br><span class="line">    port =&gt; <span class="number">8080</span>,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p><code>test.php</code> 文件如下：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"> </span><br><span class="line">$configs = <span class="keyword">include_once</span> <span class="string">'configs.php'</span>;</span><br><span class="line"></span><br><span class="line">var_dump($configs); <span class="comment">// [ip =&gt; '127.0.0.1', port =&gt; 8080,]</span></span><br><span class="line"></span><br><span class="line">$configs = <span class="keyword">include_once</span> <span class="string">'configs.php'</span>;</span><br><span class="line"></span><br><span class="line">var_dump($configs); <span class="comment">// nothing</span></span><br></pre></td></tr></table></figure>
+<h2 id="参考链接"><a class="header-anchor" href="#参考链接">¶</a>参考链接</h2>
+<p><span class="exturl" data-url="aHR0cHM6Ly93d3cucGhwLm5ldC9tYW51YWwvemgvZnVuY3Rpb24uaW5jbHVkZS5waHA=" title="https://www.php.net/manual/zh/function.include.php">PHP 手册 - include<i class="fa fa-external-link"></i></span><br>
+<span class="exturl" data-url="aHR0cHM6Ly93d3cucGhwLm5ldC9tYW51YWwvemgvZnVuY3Rpb24uaW5jbHVkZV9vbmNlLnBocA==" title="https://www.php.net/manual/zh/function.include_once.php">PHP 手册 - include_once<i class="fa fa-external-link"></i></span><br>
+<span class="exturl" data-url="aHR0cHM6Ly93d3cucGhwLm5ldC9tYW51YWwvemgvZnVuY3Rpb24ucmVxdWlyZS5waHA=" title="https://www.php.net/manual/zh/function.require.php">PHP 手册 - require<i class="fa fa-external-link"></i></span><br>
+<span class="exturl" data-url="aHR0cHM6Ly93d3cucGhwLm5ldC9tYW51YWwvemgvZnVuY3Rpb24ucmVxdWlyZV9vbmNlLnBocA==" title="https://www.php.net/manual/zh/function.require_once.php">PHP 手册 - require_once<i class="fa fa-external-link"></i></span></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;code&gt;include&lt;/code&gt;、&lt;code&gt;include_once&lt;/code&gt;、&lt;code&gt;require&lt;/code&gt; 和 &lt;code&gt;require_once&lt;/code&gt; 都是 PHP 引入其他 PHP 文件的基础函数，功能本职上没什么区别，但是具体的行为上存在一些差异。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="PHP" scheme="http://blog.charleslxh.top/categories/php/"/>
+    
+    
+      <category term="PHP" scheme="http://blog.charleslxh.top/tags/php/"/>
+    
+  </entry>
   
   <entry>
     <title>MQTT - 控制报文详情</title>
@@ -2551,164 +2607,6 @@
       <category term="Linux" scheme="http://blog.charleslxh.top/tags/linux/"/>
     
       <category term="Security" scheme="http://blog.charleslxh.top/tags/security/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>让你的服务器更安全 - 使用 UFW 开启防火墙</title>
-    <link href="http://blog.charleslxh.top/2017/05/20/2017/%E8%AE%A9%E4%BD%A0%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9B%B4%E5%AE%89%E5%85%A8-%E4%BD%BF%E7%94%A8-UFW-%E5%BC%80%E5%90%AF%E9%98%B2%E7%81%AB%E5%A2%99/"/>
-    <id>http://blog.charleslxh.top/2017/05/20/2017/让你的服务器更安全-使用-UFW-开启防火墙/</id>
-    <published>2017-05-20T01:58:52.000Z</published>
-    <updated>2017-10-31T02:57:00.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><code>UFW</code>(Uncomplicated Firewall) 是一个非常容易上手的 <code>iptables</code> 类防火墙配置工具，这个工具可以对出入服务的网络数据进行分割、过滤、转发等等细微的控制，进而实现诸如防火墙、 <code>NAT</code> 等功能。它简化了 <code>iptable</code> 那复杂的配置过程。我们都知道 <code>iptable</code> 非常强大、灵活，但是对于初学者来学习如何使用它正确的配置防火墙是比较难的，但是你又想保护你的网络，<code>UFW</code> 将会是你最好的选择。</p>
-<a id="more"></a>
-<p>下面我将会解释如何在 <code>Ubuntu 14.04</code> 中使用 <code>UFW</code> 安装、配置防火墙。</p>
-<h2 id="使用前提"><a class="header-anchor" href="#使用前提">¶</a>使用前提</h2>
-<p>在你使用这片教材之前，我希望你有一个独立的 <code>no-root</code> 超级管理员用户 - 拥有 <code>root</code> 的所有权限。你可以查看我这篇文章 <a href="/2017/05/20/%E8%AE%A9%E4%BD%A0%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9B%B4%E5%AE%89%E5%85%A8-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE/">让你的服务器更安全 - 初始化服务器配置</a> 中创建用户相关步骤。</p>
-<p>一般来说 <code>UFW</code> 是默认会被安装的，假如你的系统中没有安装，你可以使用 <code>apt-get</code> 来安装。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install ufw</span><br></pre></td></tr></table></figure>
-<h2 id="使用-ipv6"><a class="header-anchor" href="#使用-ipv6">¶</a>使用 IPv6</h2>
-<p>如果你的 <code>Ubuntu</code> 服务器已启用 <code>IPv6</code>，为了确保 <code>UFW</code> 能支持 <code>IPv6</code> 协议。</p>
-<p>打开 <code>UFW</code> 的相关配置，使用你最喜欢的编辑器，这里我使用 <code>vim</code> ：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vim /etc/default/ufw</span><br></pre></td></tr></table></figure>
-<p>然后，确认 <code>IPv6</code> 是否设置成 <code>yes</code>，如果没有则设置为 <code>yes</code>，大致如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">IPV6=yes</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p>退出并保存，当 <code>UFW</code> 开启时，它将会同时支持 <code>IPv4</code> 和 <code>IPv6</code> 的配置规则。</p>
-<h2 id="查看-ufw-状态和配置规则"><a class="header-anchor" href="#查看-ufw-状态和配置规则">¶</a>查看 UFW 状态和配置规则</h2>
-<p>在任何时间，你都可以检查它的状态和配置规则，如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ufw status verbose</span><br></pre></td></tr></table></figure>
-<p>默认情况下，<code>UFW</code> 并没有开启，它将会输出如下结果：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Output:</span></span><br><span class="line">Status: inactive</span><br></pre></td></tr></table></figure>
-<p>假如你已经开启了防火墙，它将会输出状态为 <code>active</code>，并列出你所配置的规则。例如：你允许来自任何地方的 <code>SSH</code> 连接，将将会输出如下结果：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Output</span></span><br><span class="line">Status: active</span><br><span class="line">Logging: on (low)</span><br><span class="line">Default: deny (incoming), allow (outgoing), disabled (routed)</span><br><span class="line">New profiles: skip</span><br><span class="line"></span><br><span class="line">To                         Action      From</span><br><span class="line">--                         ------      ----</span><br><span class="line">22/tcp                     ALLOW IN    Anywhere</span><br></pre></td></tr></table></figure>
-<p>像这样通过 <code>status</code> 就可以检查你的防火墙状态和配置了。</p>
-<blockquote>
-<p><strong>注意：在开启防火墙之前，你需要确保你允许了 SSH 连接，否则当你关闭远程连接后，你就无法再连上了。博主自己就曾用这招坑了自己！<img class="emoji" draggable="false" alt="😂" src="https://twemoji.maxcdn.com/2/72x72/1f602.png"></strong></p>
-</blockquote>
-<h2 id="设置默认规则"><a class="header-anchor" href="#设置默认规则">¶</a>设置默认规则</h2>
-<p>当你需要开始配置你的防火墙规则时，首先，你需要设置默认规则：拒绝所有流入连接，允许流出连接。意思是，不允许任何人连接你的主机，允许主机内的任何应用访问外部网络。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ufw default deny incoming</span><br><span class="line">$ sudo ufw default allow outgoing</span><br></pre></td></tr></table></figure>
-<h2 id="开启-ssh-连接"><a class="header-anchor" href="#开启-ssh-连接">¶</a>开启 SSH 连接</h2>
-<p>上面我们已经设置了默认不接受任何外来连接，同样也包括了 <code>SSH</code> 使用的 <code>22</code> 端口。所以，为了我们能通过 <code>SSH</code> 来操作主机，所以我们需要配置允许 <code>SSH</code> 连接到我们的主机上。</p>
-<p>通过如下命令来配置：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> sudo ufw allow ssh</span></span><br></pre></td></tr></table></figure>
-<p>这个配置将会允许所有 <code>22</code> 端口上的连接，默认 <code>22</code> 端口是被 <code>SSH</code> 监听的。<code>UFW</code> 知道什么是 <code>ssh</code>，因为它在 <code>/etc/services</code> 中已经被定义好了。</p>
-<p>当然我们也可以指定允许 <code>22</code> 端口的所有连接：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ufw allow 22</span><br></pre></td></tr></table></figure>
-<p>这个和上面一个命令的作用是一样的。</p>
-<h2 id="开启-ufw"><a class="header-anchor" href="#开启-ufw">¶</a>开启 UFW</h2>
-<p>上面已经允许 <code>SSH</code> 连接，我们就可以放心的开启防火墙了，使用如下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ufw <span class="built_in">enable</span></span><br></pre></td></tr></table></figure>
-<p>在这个过程中，你将会收到一条警告信息（<code>command may disrupt existing ssh connections.</code>），需要你手动确认，输入 <code>y</code> 按回车即可。</p>
-<p><img class="emoji" draggable="false" alt="😄" src="https://twemoji.maxcdn.com/2/72x72/1f604.png"> 太棒了，我们已经开启了防火墙，你可以再一次通过 <code>sudo ufw status verbose</code> 来查看。</p>
-<h2 id="配置其他规则"><a class="header-anchor" href="#配置其他规则">¶</a>配置其他规则</h2>
-<h3 id="http-https"><a class="header-anchor" href="#http-https">¶</a>HTTP/HTTPS</h3>
-<p>当我们部署 <code>WEB</code> 引用服务器时，我们需要使用 <code>80</code> 或 <code>443</code> 端口来接受请求，这是我们需要开启这两个端口，操作如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ufw allow http</span><br><span class="line">$ sudo ufw allow https</span><br></pre></td></tr></table></figure>
-<p>或者，你可以指定端口：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ufw allow 80</span><br><span class="line">$ sudo ufw allow 443</span><br></pre></td></tr></table></figure>
-<h3 id="ftp"><a class="header-anchor" href="#ftp">¶</a>FTP</h3>
-<p><code>FTP</code> 连接一般用于非加密文件传输，它默认监听 <code>21</code> 端口，也许你永远都不会用到。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ufw allow ftp</span><br></pre></td></tr></table></figure>
-<p>或者，你可以指定端口：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ufw allow 21/tcp</span><br></pre></td></tr></table></figure>
-<h2 id="指定端口范围"><a class="header-anchor" href="#指定端口范围">¶</a>指定端口范围</h2>
-<p>你可以指定一个端口范围，来配置防火墙策略，当有些服务需要使用多个端口时，这个就起到了作用。</p>
-<p>如，为了允许所有 <code>X11</code> 连接，他们使用的端口范围是 <code>6000</code> ~ <code>6007</code>，你可以这样配置：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ufw allow 6000:6007/tcp</span><br><span class="line">$ sudo ufw allow 6000:6007/udp</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>指定端口范围时，你必须指定协议类型（<code>TCP</code> 或 <code>UDP</code>）。</strong></p>
-</blockquote>
-<h2 id="指定-ip-地址"><a class="header-anchor" href="#指定-ip-地址">¶</a>指定 IP 地址</h2>
-<p>使用 <code>UFW</code> 工作的时候，你可以指定 <code>IP</code> 地址，例如：假如你想允许来自某一个 <code>IP</code> 所有连接，你可以指定 <code>from</code> 这个 <code>IP</code> 地址。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ufw allow from 192.168.66.213</span><br></pre></td></tr></table></figure>
-<p>上面的配置将会允许 <code>192.168.66.213</code> 连接到我们主机的任何开放了的端口。</p>
-<p>我们还可以指定只允许某个 <code>IP</code> 到主机某一个端口的连接，拒绝某个 <code>IP</code> 到主机其他所有端口的连接，我们可以这样做：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ufw allow from 192.168.66.213 to any port 80</span><br></pre></td></tr></table></figure>
-<p>上面配置中，我们只允许 <code>192.168.66.213</code> 连接到我们的 <code>80</code> 端口。</p>
-<h2 id="配置子网"><a class="header-anchor" href="#配置子网">¶</a>配置子网</h2>
-<p>当你需要允许子网内所有的 <code>IP</code>，你可以 <code>CIDR</code> 的格式来配置，例如：当你需要允许 <code>IP</code> 地址从 <code>192.168.1.1</code> 到 <code>192.168.1.254</code> 内所有 <code>IP</code> 的连接时，你可以这样配置：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ufw allow from 192.168.1.1/24</span><br></pre></td></tr></table></figure>
-<p>当然，像上面一样，我们也可以同时指定端口号：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ufw allow from 192.168.1.1/24 to any port 22</span><br></pre></td></tr></table></figure>
-<p>上面配置中，我们允许 <code>192.168.1.1/24</code> 内的所有主机通过 <code>SSH</code> 连接我们的主机。</p>
-<h2 id="指定网络接口"><a class="header-anchor" href="#指定网络接口">¶</a>指定网络接口</h2>
-<p>如果您想创建只适用于特定网络接口的防火墙规则，您可以通过指定 <code>allow in on</code> 加上<strong>网络接口的名称</strong> 来配置规则。</p>
-<p>在配置之前你可以先查找所有的网络接口，再配置：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ip addr</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Output Excerpt:</span></span><br><span class="line">...</span><br><span class="line">2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state</span><br><span class="line">...</span><br><span class="line">3: eth1: &lt;BROADCAST,MULTICAST&gt; mtu 1500 qdisc noop state DOWN group default </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-<p>上面列举了网络接口的一些信息，他们通常叫做 <code>eth0</code> 或 <code>eth1</code> 之类的名字。</p>
-<p>假如你的 <code>eth0</code> 为公网地址，你同事需要向外开放 <code>80</code> 端口，你可以如下操作：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ufw allow <span class="keyword">in</span> on eth0 to any port 80</span><br></pre></td></tr></table></figure>
-<p>上面配置中，你的服务器将会接受来自于公网的 HTTP 请求。</p>
-<p>另外，假如你想你的 <code>MySQL</code> 服务器（监听 <code>3306</code>）只接受通过内网网卡 <code>eth1</code> 的请求，你可以这样：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ufw allow <span class="keyword">in</span> on eth1 to any port 3306</span><br></pre></td></tr></table></figure>
-<p>如上配置中，只有在用一个内网中的服务器才能连接你的 <code>MySQL</code> 服务器。</p>
-<h2 id="添加拒绝连接规则"><a class="header-anchor" href="#添加拒绝连接规则">¶</a>添加拒绝连接规则</h2>
-<p>假如你没有修改过我们上面设置过的默认规则，它将会拒绝所有的外来连接，通常情况下，这样大大的简化了你配置一系列的防火墙规则，比如要求你创建指定端口啊，指定 <code>IP</code> 啊等等。但是，如果你想拒绝某个 <code>IP</code> 源或者某个网段的特定连接；也许你知道攻击源就来自于某个 <code>IP</code> 或某个网段；再者，你想把默认外接规则(incomming rule) 设置为 <strong>allow</strong>，这是你就需要指定某些拒绝规则了。</p>
-<p>配置 <em>拒绝规则</em> ，更我们上面配置 <em>允许规则</em> 是一样的方式，只不过将 <code>allow</code> 改为 <code>deny</code>。</p>
-<p>如：拒绝所有 HTTP 连接，即：拒绝所有连接 <code>80</code> 端口。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ufw deny http</span><br></pre></td></tr></table></figure>
-<p>当然，也可以指定端口号：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ufw deny 80</span><br></pre></td></tr></table></figure>
-<p>拒绝某一个 <code>192.168.1.10</code> 通过 <code>SSH</code> 连接到我们的主机上：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ufw deny from 192.168.1.10 to any port 22</span><br></pre></td></tr></table></figure>
-<p>如果你想书写更多的 <em>拒绝规则</em> ，请参考之前描述的 <em>允许规则</em> 书写方式，将 <code>allow</code> 改为 <code>deny</code> 即可。</p>
-<p>现在我们知道如何添加 <em>允许规则</em> 和 <em>拒绝规则</em>，但是我们还不知道如何删除规则，没关系，我们再往下看。</p>
-<h2 id="删除规则"><a class="header-anchor" href="#删除规则">¶</a>删除规则</h2>
-<p>众所周知，如何删除一条防火墙规则和如何创建一条防火墙规则一样重要，<code>UFW</code> 提供了两种路径删除他们：</p>
-<ul>
-<li><a href="#%E6%8C%87%E5%AE%9A%E8%A7%84%E5%88%99%E5%BA%8F%E5%8F%B7%E5%88%A0%E9%99%A4">通过规则序号来删除</a></li>
-<li><a href="#%E6%8C%87%E5%AE%9A%E5%AE%9E%E9%99%85%E8%A7%84%E5%88%99%E5%88%A0%E9%99%A4">通过实际规则来删除</a></li>
-</ul>
-<h3 id="指定规则序号删除"><a class="header-anchor" href="#指定规则序号删除">¶</a>指定规则序号删除</h3>
-<p>每一个规则在创建时都会分配一个序号，你可以将它理解为数据库的自增 <code>ID</code> 吧，可以通过他来进行更方便的操作，你可以通过如下方式查看序号：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ufw status numbered</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Numbered Output:</span><br><span class="line">Status: active</span><br><span class="line"></span><br><span class="line">     To                         Action      From</span><br><span class="line">     --                         ------      ----</span><br><span class="line">[ 1] 22                         ALLOW IN    15.15.15.0/24</span><br><span class="line">[ 2] 80                         ALLOW IN    Anywhere</span><br></pre></td></tr></table></figure>
-<p>假如你想删除第 <code>2</code> 条规则，拒绝所有指向 <code>80</code> 端口的连接，如下操作：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ufw delete 2</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>注意：如果你启用了 IPv6 规则，这同时也将删除相应的 IPv6 规则。</strong></p>
-</blockquote>
-<h3 id="指定实际规则删除"><a class="header-anchor" href="#指定实际规则删除">¶</a>指定实际规则删除</h3>
-<p>如果你不想通过 <em>规则序号</em> 来删除，你可以指定 <strong>创建时的参数格式</strong> 来删除，例如：当你使用 <code>sudo ufw allow http</code> 创建的规则时，你可以通过如下方式删除：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ufw delete allow http</span><br></pre></td></tr></table></figure>
-<p>同样你可以指定端口号来替代服务名：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ufw delete allow 80</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>注意：这种方式将会同时删除相应的 IPv4 和 IPv6规则。</strong></p>
-</blockquote>
-<h2 id="关闭-ufw"><a class="header-anchor" href="#关闭-ufw">¶</a>关闭 UFW</h2>
-<p>现在，由于某些我们不想开启防火墙了，我们可以关闭它：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ufw <span class="built_in">disable</span></span><br></pre></td></tr></table></figure>
-<h2 id="重置-ufw-的配置"><a class="header-anchor" href="#重置-ufw-的配置">¶</a>重置 UFW 的配置</h2>
-<p>将入你配置了好多规则，但是你现在需要重新配置，抛弃之前的配置规则，你可以这么做：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo ufw reset</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><strong>这个命令将会删除你之前配置的所有规则，但是默认规则将会被保留。</strong></p>
-</blockquote>
-<h2 id="总结"><a class="header-anchor" href="#总结">¶</a>总结</h2>
-<p>服务器安全一直都是一个重要的话题，开启防火墙使我们保护服务器安全的重要手段之一，所以，无论什么情况下，我们都应该为服务器开启防火墙。当然，开放 <code>SSH</code> 也是必不可少的，与此同时，你可以允许一些连接到您的服务器，同时并限制一些不必要的连接，这样您的服务器才会更加的安全的提供服务。</p>
-<p>想了解更多的 <code>UFW</code> 防火墙配置，你可以参考这篇文章：<span class="exturl" data-url="aHR0cHM6Ly93d3cuZGlnaXRhbG9jZWFuLmNvbS9jb21tdW5pdHkvdHV0b3JpYWxzL3Vmdy1lc3NlbnRpYWxzLWNvbW1vbi1maXJld2FsbC1ydWxlcy1hbmQtY29tbWFuZHM=" title="https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands">UFW Essentials: Common Firewall Rules and Commands<i class="fa fa-external-link"></i></span></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;code&gt;UFW&lt;/code&gt;(Uncomplicated Firewall) 是一个非常容易上手的 &lt;code&gt;iptables&lt;/code&gt; 类防火墙配置工具，这个工具可以对出入服务的网络数据进行分割、过滤、转发等等细微的控制，进而实现诸如防火墙、 &lt;code&gt;NAT&lt;/code&gt; 等功能。它简化了 &lt;code&gt;iptable&lt;/code&gt; 那复杂的配置过程。我们都知道 &lt;code&gt;iptable&lt;/code&gt; 非常强大、灵活，但是对于初学者来学习如何使用它正确的配置防火墙是比较难的，但是你又想保护你的网络，&lt;code&gt;UFW&lt;/code&gt; 将会是你最好的选择。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Linux" scheme="http://blog.charleslxh.top/categories/linux/"/>
-    
-    
-      <category term="Linux" scheme="http://blog.charleslxh.top/tags/linux/"/>
-    
-      <category term="Firewall" scheme="http://blog.charleslxh.top/tags/firewall/"/>
-    
-      <category term="Security" scheme="http://blog.charleslxh.top/tags/security/"/>
-    
-      <category term="UFW" scheme="http://blog.charleslxh.top/tags/ufw/"/>
     
   </entry>
   
